@@ -26,3 +26,6 @@
 .main-bg{
     background-color: var(--main-color) !important;
 }
+.home-bg{
+    background-color: var(--home-color);
+}
