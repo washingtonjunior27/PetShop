@@ -1,31 +1,47 @@
-<?php require "Header.php" ?>
+<?php require __DIR__ . "/../Layouts/Header.php" ?>
 
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">Clientes</h1>
+    <h1 class="fs-3 fw-bold my-5">Veterinarios</h1>
 
     <div class="container p-0 my-4">
         <div class="row g-3">
             <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
                 <div class="rounded">
-                    <h2 class="fs-4 fw-bold ">Cadastrar Clientes</h2>
+                    <h2 class="fs-4 fw-bold ">Cadastrar Veterinarios</h2>
                     <form class="mt-3">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
-                            <input type="text" name="nome" class="form-control" id="nome" placeholder="Informe o nome do cliente">
+                            <input type="text" name="nome" class="form-control" id="nome" placeholder="Informe o nome do veterinario">
+                        </div>
+                        <div class="mb-3">
+                            <label for="login" class="form-label">Login</label>
+                            <input type="text" name="login" class="form-control" id="login" placeholder="Informe o login do veterinario">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Informe o email do cliente">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Informe o email do veterinario">
                         </div>
                         <div class="mb-3">
                             <label for="telefone" class="form-label">Telefone</label>
-                            <input type="number" name="telefone" class="form-control" id="telefone" placeholder="Informe o telefone do cliente">
+                            <input type="number" name="telefone" class="form-control" id="telefone" placeholder="Informe o telefone do veterinario">
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
                             <select name="role" id="role" class="form-select" disabled>
-                                <option value="Cliente" selected>Cliente</option>
+                                <option value="Veterinario" selected>Veterinario</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="crmv" class="form-label">CRMV</label>
+                            <input type="text" name="crmv" class="form-control" id="crmv" placeholder="Informe o crmv do veterinario">
+                        </div>
+                        <div class="mb-3">
+                            <label for="especialidade" class="form-label">Especialidade</label>
+                            <input type="text" name="especialidade" class="form-control" id="especialidade" placeholder="Informe o especialidade do veterinario">
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Informe a senha do veterinario">
                         </div>
                         <button type="submit" class="btn btn-primary main-bg w-25">Cadastrar</button>
                     </form>
@@ -39,14 +55,14 @@
                 </form>
 
                 <div class="bg-white shadow-lg p-3 rounded mt-3">
-                    <h2 class="fs-4 fw-bold ">Lista de Clientes</h2>
+                    <h2 class="fs-4 fw-bold ">Lista de Veterinarios</h2>
 
                     <div class="rounded">
                         <div
                             class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
                             <div class="d-flex flex-column text-light gap-1">
                                 <small>Washington.Junior</small>
-                                <small>92981599075</small>
+                                <small>Cardiologista</small>
                                 <small>Ativo</small>
                             </div>
                             <div class="d-flex flex-column align-items-center text-light gap-2">
@@ -84,6 +100,6 @@
     </div>
 </div>
 
-<?php require "MobileSidenav.php" ?>
+<?php require __DIR__ . "/../Layouts/MobileSidenav.php" ?>
 
-<?php require "Footer.php" ?>
+<?php require __DIR__ . "/../Layouts/Footer.php" ?>

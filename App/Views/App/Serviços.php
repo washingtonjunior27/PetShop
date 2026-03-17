@@ -1,29 +1,29 @@
-<?php require "Header.php" ?>
+<?php require __DIR__ . "/../Layouts/Header.php" ?>
 
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">Vacinas</h1>
+    <h1 class="fs-3 fw-bold my-5">Serviços</h1>
 
     <div class="container p-0 my-4">
         <div class="row g-3">
             <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
                 <div class="rounded">
-                    <h2 class="fs-4 fw-bold ">Cadastrar Vacinas</h2>
+                    <h2 class="fs-4 fw-bold ">Cadastrar Serviços</h2>
                     <form class="mt-3">
                         <div class="mb-3">
-                            <label for="nome_vacina" class="form-label">Nome</label>
-                            <input type="text" name="nome_vacina" class="form-control" id="nome_vacina" placeholder="Informe o nome da vacina">
+                            <label for="nome_servico" class="form-label">Nome</label>
+                            <input type="text" name="nome_servico" class="form-control" id="nome_servico" placeholder="Informe o nome do serviço">
                         </div>
                         <div class="mb-3">
-                            <label for="preço_vacina" class="form-label">Preço</label>
-                            <input type="text" name="preço_vacina" class="form-control" id="preço_vacina" placeholder="Informe o preço da vacina">
+                            <label for="preço_servico" class="form-label">Preço</label>
+                            <input type="text" name="preço_servico" class="form-control" id="preço_servico" placeholder="Informe o preço do serviço">
                         </div>
                         <div class="mb-3">
-                            <label for="duracao_vacina" class="form-label">Duração para Retorno (Caso necessário)</label>
-                            <input type="text" name="duracao_vacina" class="form-control" id="duracao_vacina" placeholder="Informe a duração da vacina">
+                            <label for="duracao_servico" class="form-label">Duração</label>
+                            <input type="text" name="duracao_servico" class="form-control" id="duracao_servico" placeholder="Informe a duração do serviço">
                         </div>
                         <div class="mb-3">
-                            <label for="descricao_vacina" class="form-label">Descrição</label>
-                            <textarea class="form-control" name="descricao_vacina" placeholder="Descreva para que serve a vacina caso desejar" id="descricao_vacina" rows="5"></textarea>
+                            <label for="descricao_servico" class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao_servico" placeholder="Descreva o serviço caso desejar" id="descricao_servico" rows="5"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary main-bg w-25">Cadastrar</button>
                     </form>
@@ -37,14 +37,15 @@
                 </form>
 
                 <div class="bg-white shadow-lg p-3 rounded mt-3">
-                    <h2 class="fs-4 fw-bold ">Lista de Vacinas</h2>
+                    <h2 class="fs-4 fw-bold ">Lista de Serviços</h2>
 
                     <div class="rounded">
                         <div
                             class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
                             <div class="d-flex flex-column text-light gap-1">
-                                <small>V8</small>
+                                <small>Banho</small>
                                 <small>R$60,00</small>
+                                <small>60 minutos</small>
                             </div>
                             <div class="d-flex flex-column align-items-center text-light gap-2">
                                 <form action="">
@@ -81,6 +82,6 @@
     </div>
 </div>
 
-<?php require "MobileSidenav.php" ?>
+<?php require __DIR__ . "/../Layouts/MobileSidenav.php" ?>
 
-<?php require "Footer.php" ?>
+<?php require __DIR__ . "/../Layouts/Footer.php" ?>

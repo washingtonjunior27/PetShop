@@ -35,7 +35,7 @@ switch ($hojeDiaSemana) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petshop</title>
-    <link rel="stylesheet" href="public/Assets/css/styles.css">
+    <link rel="stylesheet" href="/petshop/public/Assets/css/styles.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- GOOGLE FONTS POPPINS -->
@@ -58,7 +58,7 @@ switch ($hojeDiaSemana) {
                     <h4 class="fs-2 text-light">PetShop</h4>
                 </div>
                 <div class="sidenav-links d-flex flex-column align-items-center gap-4 mt-4">
-                    <?php require "Sidenav.php" ?>
+                    <?php require __DIR__ . "/Sidenav.php" ?>
                 </div>
             </div>
 

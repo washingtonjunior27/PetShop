@@ -1,0 +1,15 @@
+{
+    "name": "washingtonjunior/petshop",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Washington Junior",
+            "email": "washjunior4444@gmail.com"
+        }
+    ],
+    "require": {}
+}

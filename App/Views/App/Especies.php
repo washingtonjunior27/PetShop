@@ -1,4 +1,4 @@
-<?php require "Header.php" ?>
+<?php require __DIR__ . "/../Layouts/Header.php" ?>
 
 <div class="container">
     <h1 class="fs-3 fw-bold my-5">Espécies</h1>
@@ -64,6 +64,6 @@
 
 </div>
 
-<?php require "MobileSidenav.php" ?>
+<?php require __DIR__ . "/../Layouts/MobileSidenav.php" ?>
 
-<?php require "Footer.php" ?>
+<?php require __DIR__ . "/../Layouts/Footer.php" ?>
