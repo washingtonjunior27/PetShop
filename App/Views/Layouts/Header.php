@@ -65,7 +65,7 @@ switch ($hojeDiaSemana) {
             <div class="col-md-9 p-0">
                 <nav class="navbar navbar-expand-md navbar-dark main-bg p-3" style="height: 80px;">
                     <div class="container">
-                        <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, Admin 👋 | <?= $hojeData, " " . $diaSemana ?>
+                        <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, <?= $user['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana ?>
                         </h2>
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#sidebarMenu">
@@ -73,9 +73,9 @@ switch ($hojeDiaSemana) {
                         </button>
 
                         <div class="ms-auto text-white d-flex gap-2">
-                            <a href="#" class="nav-link">Admin</a>
+                            <a href="#" class="nav-link"><?= $user['login'] ?></a>
                             <span>|</span>
-                            <a href="#" class="nav-link">Sair</a>
+                            <a href="<?= BASE_URL ?>/logout" class="nav-link">Sair</a>
                         </div>
                     </div>
                 </nav>

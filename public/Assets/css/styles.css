@@ -29,3 +29,12 @@
 .home-bg{
     background-color: var(--home-color);
 }
+.active{
+    background-color: white !important;
+    padding: 10px 0;
+    
+}
+.active span, .active i{
+    color: black !important;
+
+}

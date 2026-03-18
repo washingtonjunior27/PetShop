@@ -1,5 +1,3 @@
-<?php require __DIR__ . "/../Layouts/Header.php" ?>
-
 <div class="container">
     <h1 class="fs-3 fw-bold my-5">Clientes</h1>
 
@@ -83,7 +81,3 @@
         </div>
     </div>
 </div>
-
-<?php require __DIR__ . "/../Layouts/MobileSidenav.php" ?>
-
-<?php require __DIR__ . "/../Layouts/Footer.php" ?>

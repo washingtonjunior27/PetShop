@@ -1,7 +1,5 @@
-<?php require __DIR__ . "/../Layouts/Header.php" ?>
-
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">Usuários</h1>
+    <h1 class="fs-3 fw-bold my-5">USUARIOS</h1>
 
     <div class="container p-0 my-4">
         <div class="row g-3">
@@ -93,7 +91,3 @@
         </div>
     </div>
 </div>
-
-<?php require __DIR__ . "/../Layouts/MobileSidenav.php" ?>
-
-<?php require __DIR__ . "/../Layouts/Footer.php" ?>
