@@ -25,9 +25,7 @@
     <div class="main-bg min-vh-100 d-flex justify-content-center align-items-center p-3">
         <div class="bg-white shadow-sm rounded row overflow-hidden g-0" style="max-width: 1100px; width: 100%;">
 
-            <div class="col-md-6 d-none d-md-block">
-                <img src="/petshop/public/Assets/img/img1.jpg" alt="Imagem" class="w-100 h-100">
-            </div>
+
 
             <form class="col-md-6 p-3 d-flex flex-column justify-content-center" method="POST" action="<?= BASE_URL ?>/novaSenha">
 
@@ -51,8 +49,13 @@
                     <input type="password" class="form-control" name="confirmarSenha" placeholder="Confirme sua senha">
                 </div>
 
-                <button type="submit" class="btn main-bg text-light w-100">Alterar</button>
+                <button type="submit" class="btn main-bg text-light w-100 mb-4">Alterar</button>
+                <a class="justify-content-end d-flex" href="<?= BASE_URL ?>/logout">Voltar à tela de login</a>
             </form>
+
+            <div class="col-md-6 d-none d-md-block">
+                <img src="/petshop/public/Assets/img/img2.jpg" alt="Imagem" class="w-100 h-100">
+            </div>
         </div>
     </div>
 

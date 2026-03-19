@@ -31,10 +31,15 @@ switch ($route) {
         $pageController->Inicio($user);
         break;
     case "funcionarios":
-        $usuarioController->CreateFuncionarioController();
         $results = $usuarioController->ReadFuncionarioController();
         $user = $authController->InicioController();
         $pageController->Funcionarios($user, $results);
+        break;
+    case "funcionarios/CriarFuncionario":
+        $usuarioController->CreateFuncionarioController();
+        break;
+    case "funcionarios/ExcluirFuncionario":
+        $usuarioController->DeleteFuncionarioController();
         break;
     case "veterinarios":
         $user = $authController->InicioController();
@@ -64,4 +69,7 @@ switch ($route) {
     case "logout":
         $authController->LogoutController();
         break;
+    default:
+        http_response_code(404);
+        exit;
 }

@@ -21,6 +21,7 @@ class UsuariosController
 
     public function CreateFuncionarioController()
     {
+
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $this->usuario->setNome(trim($_POST['nome'] ?? ""));
             $this->usuario->setLogin(trim($_POST['login'] ?? ""));
@@ -47,6 +48,10 @@ class UsuariosController
 
     public function ReadFuncionarioController()
     {
+        if ($_SESSION['user']['role'] != "Admin") {
+            header("location: " . BASE_URL . "/home");
+            exit;
+        }
         $page = $_GET['page'] ?? 1;
         $page = (int) $page;
         $limit = 4;
@@ -65,5 +70,21 @@ class UsuariosController
             'totalFuncionarios' => $totalCeil,
             'currentPage' => $page
         ];
+    }
+
+    public function DeleteFuncionarioController()
+    {
+        $this->usuario->setId($_POST['id_usuario']);
+
+        if ($_SESSION['user']['role'] != "Admin") {
+            header("location: " . BASE_URL . "/login");
+            exit;
+        }
+
+        $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
+
+        $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
+        header("location: " . BASE_URL . "/funcionarios");
+        exit;
     }
 }

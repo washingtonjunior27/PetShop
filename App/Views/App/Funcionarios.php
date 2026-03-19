@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">Funcionarios</h1>
+    <h1 class="fs-3 fw-bold my-5">FUNCIONARIOS</h1>
 
     <div class="container p-0 my-4">
         <div class="row g-3">
@@ -23,7 +23,7 @@
                     <?php }
                     unset($_SESSION['sucesso']) ?>
 
-                    <form class="mt-3" method="POST" action="<?= BASE_URL ?>/funcionarios">
+                    <form class="mt-3" method="POST" action="<?= BASE_URL ?>/funcionarios/CriarFuncionario">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" name="nome" class="form-control" id="nome" placeholder="Informe o nome do funcionario">
@@ -67,28 +67,43 @@
                     <h2 class="fs-4 fw-bold ">Lista de usuários</h2>
 
                     <div class="rounded">
-                        <?php foreach ($funcionarios as $result) { ?>
-                            <div
-                                class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                                <div class="d-flex flex-column text-light gap-1">
-                                    <small><?= $result['login'] ?></small>
-                                    <small><?= $result['role'] ?></small>
-                                    <small><?= $result['status'] ?></small>
+                        <?php
+                        if (count($funcionarios) > 0) {
+                            foreach ($funcionarios as $result) { ?>
+                                <div
+                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column text-light gap-1">
+                                        <small><?= $result['login'] ?></small>
+                                        <small><?= $result['role'] ?></small>
+                                        <small><?= $result['status'] ?></small>
+                                    </div>
+                                    <div class="d-flex align-items-center text-light gap-2">
+                                        <form action="">
+                                            <button class="btn btn-warning">Editar</button>
+                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#excluirFuncionario<?= $result['id'] ?>">
+                                            Excluir
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="d-flex flex-column align-items-center text-light gap-2">
-                                    <form action="">
-                                        <button class="btn btn-warning">Editar</button>
-                                    </form>
-                                    <form action="">
-                                        <button class="btn btn-danger">Excluir</button>
-                                    </form>
+                            <?php }
+                        } else { ?>
+                            <div
+                                class="text-light main-bg py-4 d-flex align-items-center justify-content-center rounded mt-4 px-3">
+                                <div class="d-flex flex-column text-light gap-1">
+                                    <h5 class="mb-0">Nenhum funcionário encontrado!</h5>
                                 </div>
                             </div>
                         <?php } ?>
-
                     </div>
                 </div>
 
+
+                <?php
+                foreach ($funcionarios as $result) {
+                    require __DIR__ . "/../Modals/ExcluirFuncionario.php";
+                }
+                ?>
 
                 <nav class="mt-2 d-flex justify-content-center">
                     <ul class="pagination">

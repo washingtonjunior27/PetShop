@@ -95,6 +95,14 @@ class UsuariosRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // DELETAR USUARIO
+    public function DeleteUsuarioRepository($id_usuario)
+    {
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id' => $id_usuario]);
+    }
+
     // ENCONTRAR USUARIO
     public function TrackUserRepository($usuarioColumn, $usuarioData)
     {

@@ -6,18 +6,24 @@
         <span class="text-light fs-6 fw-semibold">Inicio</span>
     </a>
 </div>
-<div class="sidenav-item w-100 ps-5 <?= $page == "funcionarios" ? "active" : "" ?>">
-    <a href="<?= BASE_URL ?>/funcionarios" class="nav-link d-flex align-items-center gap-3 ">
-        <i class="fa-solid fa-users text-light fs-2"></i>
-        <span class="text-light fs-6 fw-semibold">Funcionários</span>
-    </a>
-</div>
-<div class="sidenav-item w-100 ps-5 <?= $page == "veterinarios" ? "active" : "" ?>">
-    <a href="<?= BASE_URL ?>/veterinarios" class="nav-link d-flex align-items-center gap-3 ">
-        <i class="fa-solid fa-user-doctor text-light fs-2"></i>
-        <span class="text-light fs-6 fw-semibold">Veterinarios</span>
-    </a>
-</div>
+
+<!-- APENAS ADMIN PODE CADASTRAR FUNCIONARIOS E VETERINARIOS -->
+<?php if ($_SESSION['user']['role'] === "Admin") { ?>
+    <div class="sidenav-item w-100 ps-5 <?= $page == "funcionarios" ? "active" : "" ?>">
+        <a href="<?= BASE_URL ?>/funcionarios" class="nav-link d-flex align-items-center gap-3 ">
+            <i class="fa-solid fa-users text-light fs-2"></i>
+            <span class="text-light fs-6 fw-semibold">Funcionários</span>
+        </a>
+    </div>
+    <div class="sidenav-item w-100 ps-5 <?= $page == "veterinarios" ? "active" : "" ?>">
+        <a href="<?= BASE_URL ?>/veterinarios" class="nav-link d-flex align-items-center gap-3 ">
+            <i class="fa-solid fa-user-doctor text-light fs-2"></i>
+            <span class="text-light fs-6 fw-semibold">Veterinarios</span>
+        </a>
+    </div>
+<?php } ?>
+
+
 <div class="sidenav-item w-100 ps-5 <?= $page == "clientes" ? "active" : "" ?>">
     <a href="<?= BASE_URL ?>/clientes" class="nav-link d-flex align-items-center gap-3 ">
         <i class="fa-solid fa-user text-light fs-2"></i>
