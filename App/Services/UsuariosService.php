@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UsuariosRepository;
+use App\Models\Usuarios;
 
 class UsuariosService
 {
@@ -13,26 +14,36 @@ class UsuariosService
         $this->usuarioRepository = new UsuariosRepository();
     }
 
-    public function LoginService($usuarioLogin, $usuarioSenha)
+    public function CreateUsuarioService(Usuarios $usuario)
     {
-        if (!$usuarioLogin || !$usuarioSenha) {
-            return ['erro' => 'Preencha os campos vazios!'];
+        if (
+            !$usuario->getNome() || !$usuario->getLogin() || !$usuario->getEmail() ||
+            !$usuario->getTelefone() || !$usuario->getRole() || !$usuario->getSenha()
+        ) {
+            return ['erro' => 'Preencha todos os campos!'];
         }
 
-        $result = $this->usuarioRepository->TrackUserController("login", $usuarioLogin);
-
-        if (!$result) {
-            return ['erro' => "Usuario não encontrado!"];
+        if (strlen($usuario->getSenha()) < 6) {
+            return ['erro' => "Senha deve ter no minimo 6 caracteres!"];
         }
 
-        if (!password_verify($usuarioSenha, $result['senha'])) {
-            return ['erro' => "Senha inválida!"];
+        $result = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
+
+        if ($result) {
+            return ['erro' => "Login indisponivel!"];
         }
 
-        if ($result['status'] != "Ativo") {
-            return ['erro' => "Usuario está inativo!"];
-        }
+        $options = [
+            "memory_cost" => 65000,
+            "time_cost" => 3,
+            "threads" => 2
+        ];
 
-        return $result;
+        $senha_hash = password_hash($usuario->getSenha(), PASSWORD_ARGON2ID, $options);
+        $usuario->setSenha($senha_hash);
+
+        $this->usuarioRepository->CreateUsuarioRepository($usuario);
+
+        return ["sucesso" => "Usuario cadastrado com sucesso!"];
     }
 }

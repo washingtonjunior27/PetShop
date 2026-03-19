@@ -4,6 +4,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use App\Controllers\PagesController;
 use App\Controllers\AuthController;
+use App\Controllers\UsuariosController;
 
 session_start();
 
@@ -13,6 +14,7 @@ $route = $_GET['route'] ?? "login";
 
 $pageController = new PagesController();
 $authController = new AuthController();
+$usuarioController = new UsuariosController();
 
 switch ($route) {
     case "":
@@ -20,13 +22,19 @@ switch ($route) {
         $pageController->Login();
         $authController->LoginController();
         break;
+    case "novaSenha":
+        $pageController->NovaSenha();
+        $authController->NovaSenhaController();
+        break;
     case "home":
         $user = $authController->InicioController();
         $pageController->Inicio($user);
         break;
-    case "usuarios":
+    case "funcionarios":
+        $usuarioController->CreateFuncionarioController();
+        $results = $usuarioController->ReadFuncionarioController();
         $user = $authController->InicioController();
-        $pageController->Usuarios($user);
+        $pageController->Funcionarios($user, $results);
         break;
     case "veterinarios":
         $user = $authController->InicioController();

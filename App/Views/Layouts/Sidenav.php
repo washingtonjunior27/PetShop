@@ -6,10 +6,10 @@
         <span class="text-light fs-6 fw-semibold">Inicio</span>
     </a>
 </div>
-<div class="sidenav-item w-100 ps-5 <?= $page == "usuarios" ? "active" : "" ?>">
-    <a href="<?= BASE_URL ?>/usuarios" class="nav-link d-flex align-items-center gap-3 ">
+<div class="sidenav-item w-100 ps-5 <?= $page == "funcionarios" ? "active" : "" ?>">
+    <a href="<?= BASE_URL ?>/funcionarios" class="nav-link d-flex align-items-center gap-3 ">
         <i class="fa-solid fa-users text-light fs-2"></i>
-        <span class="text-light fs-6 fw-semibold">Usuarios</span>
+        <span class="text-light fs-6 fw-semibold">Funcionários</span>
     </a>
 </div>
 <div class="sidenav-item w-100 ps-5 <?= $page == "veterinarios" ? "active" : "" ?>">

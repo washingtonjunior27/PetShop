@@ -9,6 +9,11 @@ class PagesController
         require __DIR__ . "/../Views/Auth/Login.php";
     }
 
+    public function NovaSenha()
+    {
+        require __DIR__ . "/../Views/Auth/NovaSenha.php";
+    }
+
     public function Inicio($user)
     {
         extract($user ?? []);
@@ -19,12 +24,13 @@ class PagesController
         require __DIR__ . "/../Views/Layouts/Footer.php";
     }
 
-    public function Usuarios($user)
+    public function Funcionarios($user, $results)
     {
-        extract($user ?? []);
+        extract($results);
+        extract(['usuario' => $user] ?? []);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
-        require __DIR__ . "/../Views/App/Usuarios.php";
+        require __DIR__ . "/../Views/App/Funcionarios.php";
         require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
         require __DIR__ . "/../Views/Layouts/Footer.php";
     }
