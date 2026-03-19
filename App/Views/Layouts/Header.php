@@ -57,7 +57,7 @@ switch ($hojeDiaSemana) {
                     <i class="fa-solid fa-paw fs-2 text-light"></i>
                     <h4 class="fs-2 text-light">PetShop</h4>
                 </div>
-                <div class="sidenav-links d-flex flex-column align-items-center gap-4 mt-4">
+                <div class="sidenav-links d-flex flex-column align-items-center gap-4 mt-4 pb-3">
                     <?php require __DIR__ . "/Sidenav.php" ?>
                 </div>
             </div>
@@ -65,7 +65,7 @@ switch ($hojeDiaSemana) {
             <div class="col-md-9 p-0">
                 <nav class="navbar navbar-expand-md navbar-dark main-bg p-3" style="height: 80px;">
                     <div class="container">
-                        <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, <?= $user['usuario']['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana ?>
+                        <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, <?= $user['usuario']['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana . " | " . $user['usuario']['role'] ?>
                         </h2>
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#sidebarMenu">
