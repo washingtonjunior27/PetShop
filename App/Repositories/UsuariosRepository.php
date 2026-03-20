@@ -53,48 +53,7 @@ class UsuariosRepository
         return $this->CountHelperRepository($sql, $search);
     }
 
-    // HELPER PARA CONTAR OS FUNCIONARIOS
-    public function CountHelperRepository($sql, $search)
-    {
-        $params = [];
 
-        if (!empty($search)) {
-            $sql .= " AND (login LIKE :search OR role LIKE :search OR status LIKE :search)";
-            $searchItem = "%" . $search . "%";
-            $params[":search"] = $searchItem;
-        }
-
-        $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute($params);
-        return $stmt->fetchColumn();
-    }
-
-    // HELPER PARA LER E PESQUISAR
-    public function ReadHelperRepository($sql, $search, $limit, $offset)
-    {
-        $params = [];
-
-        if (!empty($search)) {
-            $sql .= " AND (login LIKE :search OR role LIKE :search OR status LIKE :search)";
-            $searchItem = "%" . $search . "%";
-            $params["search"] = $searchItem;
-        }
-
-        $sql .= " LIMIT :limit OFFSET :offset";
-
-        $stmt = $this->pdo->prepare($sql);
-
-        foreach ($params as $key => $value) {
-            $stmt->bindValue(":$key", $value);
-        }
-
-        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
-        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
-
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     // EDITAR USUARIO
     public function UpdateUsuarioRepository(Usuarios $usuario)
@@ -137,6 +96,23 @@ class UsuariosRepository
         ]);
     }
 
+    // LER E PESQUISAR Clientes
+    public function ReadClienteRepository($search, $limit, $offset)
+    {
+        $sql = "SELECT * FROM usuarios WHERE 1 = 1 AND role = 'Cliente'";
+
+        $result = $this->ReadHelperRepository($sql, $search, $limit, $offset);
+
+        return $result;
+    }
+    // CONTAR TODOS OS Clientes
+    public function CountClienteRepository($search)
+    {
+        $sql = "SELECT COUNT(*) FROM usuarios WHERE 1 = 1 AND role = 'Cliente'";
+
+        return $this->CountHelperRepository($sql, $search);
+    }
+
 
     // --------------------------------------------------------------------------------------
     // HELPERS
@@ -158,5 +134,48 @@ class UsuariosRepository
             ":senha" => $senha,
             ":id" => $usuario_id
         ]);
+    }
+
+    // HELPER PARA CONTAR OS USUARIOS
+    public function CountHelperRepository($sql, $search)
+    {
+        $params = [];
+
+        if (!empty($search)) {
+            $sql .= " AND (nome LIKE :search OR login LIKE :search OR role LIKE :search OR telefone LIKE :search OR status LIKE :search)";
+            $searchItem = "%" . $search . "%";
+            $params[":search"] = $searchItem;
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($params);
+        return $stmt->fetchColumn();
+    }
+
+    // HELPER PARA LER E PESQUISAR
+    public function ReadHelperRepository($sql, $search, $limit, $offset)
+    {
+        $params = [];
+
+        if (!empty($search)) {
+            $sql .= " AND (nome LIKE :search OR login LIKE :search OR role LIKE :search OR telefone LIKE :search OR status LIKE :search)";
+            $searchItem = "%" . $search . "%";
+            $params["search"] = $searchItem;
+        }
+
+        $sql .= " LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

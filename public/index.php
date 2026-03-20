@@ -17,6 +17,7 @@ $authController = new AuthController();
 $usuarioController = new UsuariosController();
 
 switch ($route) {
+    // AUTH LOGIN
     case "":
     case "login":
         $pageController->Login();
@@ -26,10 +27,14 @@ switch ($route) {
         $pageController->NovaSenha();
         $authController->NovaSenhaController();
         break;
+
+    // DASHBOARD HOME
     case "home":
         $user = $authController->InicioController();
         $pageController->Inicio($user);
         break;
+
+    // FUNCIONARIOS
     case "funcionarios":
         $results = $usuarioController->ReadFuncionarioController();
         $user = $authController->InicioController();
@@ -44,17 +49,24 @@ switch ($route) {
     case "funcionarios/ExcluirFuncionario":
         $usuarioController->DeleteFuncionarioController();
         break;
+
+    // VETERINARIOS
     case "veterinarios":
         $user = $authController->InicioController();
         $pageController->Veterinarios($user);
         break;
+
+    // CLIENTES
     case "clientes":
+        $results = $usuarioController->ReadClientesController();
         $user = $authController->InicioController();
-        $pageController->Clientes($user);
+        $pageController->Clientes($user, $results);
         break;
     case "clientes/CriarCliente":
         $usuarioController->CreateClienteController();
         break;
+
+    // ESPECIES
     case "especies":
         $user = $authController->InicioController();
         $pageController->Especies($user);

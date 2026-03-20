@@ -144,4 +144,30 @@ class UsuariosController
             exit;
         }
     }
+
+    public function ReadClientesController()
+    {
+        if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
+            header("location: " . BASE_URL . "/home");
+            exit;
+        }
+        $page = $_GET['page'] ?? 1;
+        $page = (int) $page;
+        $limit = 4;
+        $offset = ($page - 1) * $limit;
+
+        $search = $_GET['search'] ?? "";
+
+        $results = $this->usuarioRepository->ReadClienteRepository($search, $limit, $offset);
+
+        $total = $this->usuarioRepository->CountClienteRepository($search);
+
+        $totalCeil = ceil($total / $limit);
+
+        return [
+            'clientes' => $results,
+            'totalClientes' => $totalCeil,
+            'currentPage' => $page
+        ];
+    }
 }

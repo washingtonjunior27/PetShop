@@ -3,7 +3,7 @@
 
     <div class="container p-0 my-4">
         <div class="row g-3">
-            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
+            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">
                 <div class="rounded">
                     <h2 class="fs-4 fw-bold ">Cadastrar Clientes</h2>
 
@@ -46,8 +46,8 @@
             </div>
 
             <div class="col-12 col-xl-5">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
+                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/clientes">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg" type="submit">Pesquisar</button>
                 </form>
 
@@ -55,40 +55,68 @@
                     <h2 class="fs-4 fw-bold ">Lista de Clientes</h2>
 
                     <div class="rounded">
-                        <div
-                            class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                            <div class="d-flex flex-column text-light gap-1">
-                                <small>Washington.Junior</small>
-                                <small>92981599075</small>
-                                <small>Ativo</small>
+                        <?php
+                        if (count($clientes) > 0) {
+                            foreach ($clientes as $cliente) { ?>
+                                <div
+                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column text-light gap-1">
+                                        <small><?= $cliente['nome'] ?></small>
+                                        <small><?= $cliente['telefone'] ?></small>
+                                        <small><?= $cliente['status'] ?></small>
+                                    </div>
+                                    <div class="d-flex align-items-center text-light gap-2">
+                                        <button class="btn btn-warning">Editar</button>
+                                        <button class="btn btn-danger">Excluir</button>
+                                    </div>
+                                </div>
+                            <?php }
+                        } else { ?>
+                            <div
+                                class="text-light main-bg py-2 d-flex align-items-center justify-content-center rounded mt-4 px-3">
+                                <div class="d-flex align-items-center text-light gap-1 p-3">
+                                    <h6 class="mb-0 fw-semibold">Nenhum usuário encontrado</h6>
+                                </div>
                             </div>
-                            <div class="d-flex flex-column align-items-center text-light gap-2">
-                                <form action="">
-                                    <button class="btn btn-warning">Editar</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-danger">Excluir</button>
-                                </form>
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
 
-                <nav class="mt-2 d-flex justify-content-center">
+                <!-- PAGINAÇÃO -->
+                <nav class="mt-2 d-flex justify-content-center align-items-center">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <?php
+                        $query = $_GET;
+                        unset($query['route']);
+                        $range = 2;
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalClientes, $currentPage + $range);
+                        ?>
+
+                        <?php if ($currentPage > 1) {
+                            $query['page'] = $currentPage - 1;
+                        ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?= BASE_URL ?>/clientes?<?= http_build_query($query) ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <?php } ?>
+
+                        <?php for ($i = $start; $i <= $end; $i++) {
+                            $query['page'] = $i; ?>
+                            <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/clientes?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                        <?php } ?>
+
+                        <?php if ($currentPage < $totalClientes) {
+                            $query['page'] = $currentPage + 1;
+                        ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?= BASE_URL ?>/clientes?<?= http_build_query($query) ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </nav>
             </div>

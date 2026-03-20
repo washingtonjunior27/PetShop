@@ -29,12 +29,12 @@
 .home-bg{
     background-color: var(--home-color);
 }
-.active{
+.active-sidenav{
     background-color: white !important;
     padding: 10px 0;
     
 }
-.active span, .active i{
+.active-sidenav span, .active-sidenav i{
     color: black !important;
 
 }

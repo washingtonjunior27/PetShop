@@ -139,7 +139,7 @@
 
                         <?php for ($i = $start; $i <= $end; $i++) {
                             $query['page'] = $i; ?>
-                            <li class="page-item <?= $i == $page ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/funcionarios?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                            <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/funcionarios?<?= http_build_query($query) ?>"><?= $i ?></a></li>
                         <?php } ?>
 
                         <?php if ($currentPage < $totalFuncionarios) {
