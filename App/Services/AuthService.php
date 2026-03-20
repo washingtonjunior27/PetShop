@@ -33,6 +33,10 @@ class AuthService
             return ['erro' => "Usuario está inativo!"];
         }
 
+        if ($result['role'] == "Cliente") {
+            return ['erro' => 'Usuário não encontrado!'];
+        }
+
         return $result;
     }
 

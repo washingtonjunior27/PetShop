@@ -19,6 +19,7 @@ class UsuariosController
         $this->usuarioRepository = new UsuariosRepository;
     }
 
+    // FUNCIONARIOS
     public function CreateFuncionarioController()
     {
 
@@ -72,6 +73,38 @@ class UsuariosController
         ];
     }
 
+    public function UpdateFuncionarioController()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+            $this->usuario->setId($id);
+            $this->usuario->setNome(trim($_POST['nome'] ?? ""));
+            $this->usuario->setLogin(trim($_POST['login'] ?? ""));
+            $this->usuario->setEmail(trim($_POST['email'] ?? ""));
+            $this->usuario->setTelefone(trim($_POST['telefone'] ?? ""));
+            $this->usuario->setRole(trim($_POST['role'] ?? ""));
+            $this->usuario->setStatus(trim($_POST['status']) ?? "");
+
+            $usuario = $this->usuarioService->UpdateUsuarioService($this->usuario);
+
+            if ($usuario['erro']) {
+                $_SESSION['erro'] = $usuario['erro'];
+                header("location: " . BASE_URL . "/funcionarios");
+                exit;
+            }
+
+            $_SESSION['sucesso'] = $usuario['sucesso'];
+            header("location: " . BASE_URL . "/funcionarios");
+            exit;
+        }
+    }
+
     public function DeleteFuncionarioController()
     {
         $this->usuario->setId($_POST['id_usuario']);
@@ -86,5 +119,29 @@ class UsuariosController
         $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
         header("location: " . BASE_URL . "/funcionarios");
         exit;
+    }
+
+    // CLIENTES
+    public function CreateClienteController()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->usuario->setNome(trim($_POST['nome'] ?? ""));
+            $this->usuario->setEmail(trim($_POST['email'] ?? ""));
+            $this->usuario->setTelefone(trim($_POST['telefone'] ?? ""));
+            $this->usuario->setRole(trim($_POST['role'] ?? ""));
+
+            $cliente = $this->usuarioService->CreateClienteService($this->usuario);
+
+            if ($cliente['erro']) {
+                $_SESSION['erro'] = $cliente['erro'];
+                header("location: " . BASE_URL . "/clientes");
+                exit;
+            }
+
+            $_SESSION['sucesso'] = $cliente['sucesso'];
+            header("location: " . BASE_URL . "/clientes");
+            exit;
+        }
     }
 }

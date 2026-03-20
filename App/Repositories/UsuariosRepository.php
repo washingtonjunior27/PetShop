@@ -17,6 +17,7 @@ class UsuariosRepository
         $this->pdo = $con->getConn();
     }
 
+    // FUNCIONARIOS
     // CRIAR USUARIO
     public function CreateUsuarioRepository(Usuarios $usuario)
     {
@@ -95,6 +96,23 @@ class UsuariosRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // EDITAR USUARIO
+    public function UpdateUsuarioRepository(Usuarios $usuario)
+    {
+        $sql = "UPDATE usuarios SET nome = :nome, login = :login, email = :email, telefone = :telefone, role = :role, status = :status
+        WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome" => $usuario->getNome(),
+            ":login" => $usuario->getLogin(),
+            ":email" => $usuario->getEmail(),
+            ":telefone" => $usuario->getTelefone(),
+            ":role" => $usuario->getRole(),
+            ":status" => $usuario->getStatus(),
+            ":id" => $usuario->getId()
+        ]);
+    }
+
     // DELETAR USUARIO
     public function DeleteUsuarioRepository($id_usuario)
     {
@@ -103,6 +121,25 @@ class UsuariosRepository
         $stmt->execute([':id' => $id_usuario]);
     }
 
+    // -------------------------------------------------------------------------------------
+    // CLIENTES
+    // CRIAR USUARIO
+    public function CreateClienteRepository(Usuarios $usuario)
+    {
+        $sql = "INSERT INTO usuarios (nome, email, telefone, role)
+        VALUES (:nome, :email, :telefone, :role)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome" => $usuario->getNome(),
+            ":email" => $usuario->getEmail(),
+            ":telefone" => $usuario->getTelefone(),
+            ":role" => $usuario->getRole()
+        ]);
+    }
+
+
+    // --------------------------------------------------------------------------------------
+    // HELPERS
     // ENCONTRAR USUARIO
     public function TrackUserRepository($usuarioColumn, $usuarioData)
     {

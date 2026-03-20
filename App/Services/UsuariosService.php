@@ -14,6 +14,7 @@ class UsuariosService
         $this->usuarioRepository = new UsuariosRepository();
     }
 
+    // FUNCIONARIOS
     public function CreateUsuarioService(Usuarios $usuario)
     {
         if (
@@ -43,6 +44,41 @@ class UsuariosService
         $usuario->setSenha($senha_hash);
 
         $this->usuarioRepository->CreateUsuarioRepository($usuario);
+
+        return ["sucesso" => "Usuario cadastrado com sucesso!"];
+    }
+
+    public function UpdateUsuarioService(Usuarios $usuario)
+    {
+        if (
+            !$usuario->getNome() || !$usuario->getLogin() || !$usuario->getEmail() ||
+            !$usuario->getTelefone() || !$usuario->getRole() || !$usuario->getStatus()
+        ) {
+            return ['erro' => 'Preencha todos os campos!'];
+        }
+
+        $result = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
+
+        if ($result && $result['id'] != $usuario->getId()) {
+            return ['erro' => "Login indisponivel!"];
+        }
+
+        $this->usuarioRepository->UpdateUsuarioRepository($usuario);
+
+        return ["sucesso" => "Usuario atualizado com sucesso!"];
+    }
+
+    // CLIENTES
+    public function CreateClienteService(Usuarios $usuario)
+    {
+        if (
+            !$usuario->getNome() || !$usuario->getEmail() ||
+            !$usuario->getTelefone() || !$usuario->getRole()
+        ) {
+            return ['erro' => 'Preencha todos os campos!'];
+        }
+
+        $this->usuarioRepository->CreateClienteRepository($usuario);
 
         return ["sucesso" => "Usuario cadastrado com sucesso!"];
     }

@@ -38,6 +38,9 @@ switch ($route) {
     case "funcionarios/CriarFuncionario":
         $usuarioController->CreateFuncionarioController();
         break;
+    case "funcionarios/EditarFuncionario":
+        $usuarioController->UpdateFuncionarioController();
+        break;
     case "funcionarios/ExcluirFuncionario":
         $usuarioController->DeleteFuncionarioController();
         break;
@@ -48,6 +51,9 @@ switch ($route) {
     case "clientes":
         $user = $authController->InicioController();
         $pageController->Clientes($user);
+        break;
+    case "clientes/CriarCliente":
+        $usuarioController->CreateClienteController();
         break;
     case "especies":
         $user = $authController->InicioController();

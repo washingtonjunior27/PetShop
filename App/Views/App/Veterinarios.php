@@ -25,9 +25,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <select name="role" id="role" class="form-select" disabled>
-                                <option value="Veterinario" selected>Veterinario</option>
-                            </select>
+                            <input type="text" class="form-control" name="role" id="role" value="Veterinario" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="crmv" class="form-label">CRMV</label>

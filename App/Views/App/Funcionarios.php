@@ -78,10 +78,28 @@
                                         <small><?= $result['status'] ?></small>
                                     </div>
                                     <div class="d-flex align-items-center text-light gap-2">
-                                        <form action="">
-                                            <button class="btn btn-warning">Editar</button>
-                                        </form>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#excluirFuncionario<?= $result['id'] ?>">
+                                        <button
+                                            data-bs-id="<?= $result['id'] ?>"
+                                            data-bs-nome="<?= $result['nome'] ?>"
+                                            data-bs-login="<?= $result['login'] ?>"
+                                            data-bs-email="<?= $result['email'] ?>"
+                                            data-bs-telefone="<?= $result['telefone'] ?>"
+                                            data-bs-role="<?= $result['role'] ?>"
+                                            data-bs-status="<?= $result['status'] ?>"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarFuncionarioModal">
+                                            Editar
+                                        </button>
+                                        <button
+                                            data-bs-id="<?= $result['id'] ?>"
+                                            data-bs-role="<?= $result['role'] ?>"
+                                            data-bs-login="<?= $result['login'] ?>"
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#excluirFuncionarioModal">
                                             Excluir
                                         </button>
                                     </div>
@@ -98,13 +116,7 @@
                     </div>
                 </div>
 
-
-                <?php
-                foreach ($funcionarios as $result) {
-                    require __DIR__ . "/../Modals/ExcluirFuncionario.php";
-                }
-                ?>
-
+                <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center">
                     <ul class="pagination">
                         <?php
@@ -146,3 +158,9 @@
         </div>
     </div>
 </div>
+
+<!-- MODALS -->
+<?php
+require __DIR__ . "/../Modals/ExcluirFuncionario.php";
+require __DIR__ . "/../Modals/EditarFuncionario.php";
+?>

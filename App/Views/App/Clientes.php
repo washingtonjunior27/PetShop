@@ -6,7 +6,24 @@
             <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
                 <div class="rounded">
                     <h2 class="fs-4 fw-bold ">Cadastrar Clientes</h2>
-                    <form class="mt-3">
+
+                    <?php if (isset($_SESSION['erro'])) { ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?= $_SESSION['erro'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php }
+                    unset($_SESSION['erro']) ?>
+
+                    <?php if (isset($_SESSION['sucesso'])) { ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?= $_SESSION['sucesso'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php }
+                    unset($_SESSION['sucesso']) ?>
+
+                    <form class="mt-3" method="POST" action="<?= BASE_URL ?>/clientes/CriarCliente">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" name="nome" class="form-control" id="nome" placeholder="Informe o nome do cliente">
@@ -21,9 +38,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <select name="role" id="role" class="form-select" disabled>
-                                <option value="Cliente" selected>Cliente</option>
-                            </select>
+                            <input value="Cliente" class="form-control" name="role" readonly>
                         </div>
                         <button type="submit" class="btn btn-primary main-bg w-25">Cadastrar</button>
                     </form>
