@@ -12,7 +12,7 @@
 
 <!-- DROPDOWN MENU USERS PARA ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= $page == "funcionarios" || $page == "veterinarios" ? "active" : "" ?>"
+    <a class="btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= $page == "funcionarios" || $page == "veterinarios" || $page == "clientes" ? "active" : "" ?>"
         data-bs-toggle="collapse"
         href="#usuariosSidebar"
         role="button"

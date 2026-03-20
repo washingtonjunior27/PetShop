@@ -28,11 +28,18 @@ class UsuariosService
             return ['erro' => "Senha deve ter no minimo 6 caracteres!"];
         }
 
-        $result = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
+        $resultLogin = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
 
-        if ($result) {
+        if ($resultLogin) {
             return ['erro' => "Login indisponivel!"];
         }
+
+        $resultEmail = $this->usuarioRepository->TrackUserRepository("email", $usuario->getEmail());
+
+        if ($resultEmail) {
+            return ['erro' => "Email indisponivel!"];
+        }
+
 
         $options = [
             "memory_cost" => 65000,
@@ -57,10 +64,16 @@ class UsuariosService
             return ['erro' => 'Preencha todos os campos!'];
         }
 
-        $result = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
+        $resultLogin = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
 
-        if ($result && $result['id'] != $usuario->getId()) {
+        if ($resultLogin && $resultLogin['id'] != $usuario->getId()) {
             return ['erro' => "Login indisponivel!"];
+        }
+
+        $resultEmail = $this->usuarioRepository->TrackUserRepository("email", $usuario->getEmail());
+
+        if ($resultEmail && $resultEmail['id'] != $usuario->getId()) {
+            return ['erro' => "Email indisponivel!"];
         }
 
         $this->usuarioRepository->UpdateUsuarioRepository($usuario);
@@ -76,6 +89,12 @@ class UsuariosService
             !$usuario->getTelefone() || !$usuario->getRole()
         ) {
             return ['erro' => 'Preencha todos os campos!'];
+        }
+
+        $resultEmail = $this->usuarioRepository->TrackUserRepository("email", $usuario->getEmail());
+
+        if ($resultEmail) {
+            return ['erro' => "Email indisponivel!"];
         }
 
         $this->usuarioRepository->CreateClienteRepository($usuario);
