@@ -55,7 +55,7 @@ class UsuariosRepository
 
 
 
-    // EDITAR USUARIO
+    // EDITAR FUNCIONARIO
     public function UpdateUsuarioRepository(Usuarios $usuario)
     {
         $sql = "UPDATE usuarios SET nome = :nome, login = :login, email = :email, telefone = :telefone, role = :role, status = :status
@@ -93,6 +93,21 @@ class UsuariosRepository
             ":email" => $usuario->getEmail(),
             ":telefone" => $usuario->getTelefone(),
             ":role" => $usuario->getRole()
+        ]);
+    }
+
+    // EDITAR CLIENTE
+    public function UpdateClienteRepository(Usuarios $usuario)
+    {
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, telefone = :telefone, role = :role
+        WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome" => $usuario->getNome(),
+            ":email" => $usuario->getEmail(),
+            ":telefone" => $usuario->getTelefone(),
+            ":role" => $usuario->getRole(),
+            ":id" => $usuario->getId()
         ]);
     }
 

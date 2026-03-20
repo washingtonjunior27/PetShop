@@ -65,6 +65,12 @@ switch ($route) {
     case "clientes/CriarCliente":
         $usuarioController->CreateClienteController();
         break;
+    case "clientes/EditarCliente":
+        $usuarioController->UpdateClienteController();
+        break;
+    case "clientes/ExcluirCliente":
+        $usuarioController->DeleteClienteController();
+        break;
 
     // ESPECIES
     case "especies":

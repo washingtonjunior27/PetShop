@@ -107,18 +107,20 @@ class UsuariosController
 
     public function DeleteFuncionarioController()
     {
-        $this->usuario->setId($_POST['id_usuario']);
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->usuario->setId($_POST['id_usuario']);
 
-        if ($_SESSION['user']['role'] != "Admin") {
-            header("location: " . BASE_URL . "/login");
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/login");
+                exit;
+            }
+
+            $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
+
+            $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/funcionarios");
             exit;
         }
-
-        $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
-
-        $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
-        header("location: " . BASE_URL . "/funcionarios");
-        exit;
     }
 
     // CLIENTES
@@ -169,5 +171,53 @@ class UsuariosController
             'totalClientes' => $totalCeil,
             'currentPage' => $page
         ];
+    }
+
+    public function UpdateClienteController()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+            $this->usuario->setId($id);
+            $this->usuario->setNome(trim($_POST['nome'] ?? ""));
+            $this->usuario->setEmail(trim($_POST['email'] ?? ""));
+            $this->usuario->setTelefone(trim($_POST['telefone'] ?? ""));
+            $this->usuario->setRole(trim($_POST['role'] ?? ""));
+
+            $usuario = $this->usuarioService->UpdateClienteService($this->usuario);
+
+            if ($usuario['erro']) {
+                $_SESSION['erro'] = $usuario['erro'];
+                header("location: " . BASE_URL . "/clientes");
+                exit;
+            }
+
+            $_SESSION['sucesso'] = $usuario['sucesso'];
+            header("location: " . BASE_URL . "/clientes");
+            exit;
+        }
+    }
+
+    public function DeleteClienteController()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->usuario->setId($_POST['id_cliente']);
+
+            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
+                header("location: " . BASE_URL . "/login");
+                exit;
+            }
+
+            $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
+
+            $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/clientes");
+            exit;
+        }
     }
 }

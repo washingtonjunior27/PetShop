@@ -66,8 +66,28 @@
                                         <small><?= $cliente['status'] ?></small>
                                     </div>
                                     <div class="d-flex align-items-center text-light gap-2">
-                                        <button class="btn btn-warning">Editar</button>
-                                        <button class="btn btn-danger">Excluir</button>
+                                        <button
+                                            data-bs-id="<?= $cliente['id'] ?>"
+                                            data-bs-nome="<?= $cliente['nome'] ?>"
+                                            data-bs-email="<?= $cliente['email'] ?>"
+                                            data-bs-telefone="<?= $cliente['telefone'] ?>"
+                                            data-bs-role="<?= $cliente['role'] ?>"
+                                            data-bs-status="<?= $cliente['status'] ?>"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarClienteModal">
+                                            Editar
+                                        </button>
+                                        <button
+                                            data-bs-id_cliente="<?= $cliente['id'] ?>"
+                                            data-bs-nome_cliente="<?= $cliente['nome'] ?>"
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#excluirClienteModal">
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             <?php }
@@ -81,6 +101,8 @@
                         <?php } ?>
                     </div>
                 </div>
+
+
 
                 <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center align-items-center">
@@ -120,6 +142,12 @@
                     </ul>
                 </nav>
             </div>
+
+            <!-- MODALS -->
+            <?php
+            require __DIR__ . "/../Modals/EditarCliente.php";
+            require __DIR__ . "/../Modals/ExcluirCliente.php";
+            ?>
 
         </div>
     </div>

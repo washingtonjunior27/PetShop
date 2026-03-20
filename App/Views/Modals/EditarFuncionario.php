@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mt-3" method="POST" action="<?= BASE_URL ?>/funcionarios/EditarFuncionario">
+                <form method="POST" action="<?= BASE_URL ?>/funcionarios/EditarFuncionario">
                     <input type="hidden" name="id" id="modal_id_usuario">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>

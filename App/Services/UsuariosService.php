@@ -101,4 +101,24 @@ class UsuariosService
 
         return ["sucesso" => "Usuario cadastrado com sucesso!"];
     }
+
+    public function UpdateClienteService(Usuarios $usuario)
+    {
+        if (
+            !$usuario->getNome() || !$usuario->getEmail() ||
+            !$usuario->getTelefone() || !$usuario->getRole()
+        ) {
+            return ['erro' => 'Preencha todos os campos!'];
+        }
+
+        $resultEmail = $this->usuarioRepository->TrackUserRepository("email", $usuario->getEmail());
+
+        if ($resultEmail && $resultEmail['id'] != $usuario->getId()) {
+            return ['erro' => "Email indisponivel!"];
+        }
+
+        $this->usuarioRepository->UpdateClienteRepository($usuario);
+
+        return ["sucesso" => "Usuario atualizado com sucesso!"];
+    }
 }
