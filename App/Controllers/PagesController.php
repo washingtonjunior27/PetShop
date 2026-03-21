@@ -54,9 +54,10 @@ class PagesController
         require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
         require __DIR__ . "/../Views/Layouts/Footer.php";
     }
-    public function Especies($user)
+    public function Especies($user, $results)
     {
-        extract($user ?? []);
+        extract($results);
+        extract(['usuario' => $user] ?? []);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Especies.php";

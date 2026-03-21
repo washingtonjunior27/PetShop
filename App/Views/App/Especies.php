@@ -32,8 +32,8 @@
             </div>
         </div>
 
-        <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
+        <form class="d-flex mt-3" role="search" method="GET" action="<?= BASE_URL ?>/especies">
+            <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
             <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
         </form>
 
@@ -41,38 +41,69 @@
             <h2 class="fs-4 fw-bold ">Lista de Espécies</h2>
 
             <div class="rounded">
-                <div
-                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                    <div class="d-flex flex-column text-light">
-                        <span>Cachorro</span>
+                <?php
+                if (count($especies)) {
+                    foreach ($especies as $especie) { ?>
+                        <div
+                            class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                            <div class="d-flex flex-column text-light">
+                                <span><?= $especie['nome_especie'] ?></span>
+                            </div>
+                            <div class="d-flex align-items-center text-light gap-2">
+                                <form action="">
+                                    <button class="btn btn-warning">Editar</button>
+                                </form>
+                                <form action="">
+                                    <button class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php  }
+                } else { ?>
+                    <div
+                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                        <div class="d-flex flex-column text-light">
+                            <span>Nenhuma espécie encontrada!</span>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center text-light gap-2">
-                        <form action="">
-                            <button class="btn btn-warning">Editar</button>
-                        </form>
-                        <form action="">
-                            <button class="btn btn-danger">Excluir</button>
-                        </form>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
 
-        <nav class="mt-2 d-flex justify-content-center">
+        <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <?php
+                $query = $_GET;
+                unset($query['route']);
+                $range = 2;
+                $start = max(1, $currentPage - $range);
+                $end = min($totalEspecies, $currentPage + $range);
+                ?>
+
+                <?php if ($currentPage > 1) {
+                    $query['page'] = $currentPage - 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/especies?<?= http_build_query($query) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php for ($i = $start; $i <= $end; $i++) {
+                    $query['page'] = $i; ?>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/especies?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                <?php } ?>
+
+                <?php if ($currentPage < $totalEspecies) {
+                    $query['page'] = $currentPage + 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/especies?<?= http_build_query($query) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
     </div>

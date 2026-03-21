@@ -80,8 +80,9 @@ switch ($route) {
 
     // ESPECIES
     case "especies":
+        $results = $especieController->ReadEspeciesController();
         $user = $authController->InicioController();
-        $pageController->Especies($user);
+        $pageController->Especies($user, $results);
         break;
     case "especies/CriarEspecie":
         $especieController->CreateEspecieController();
