@@ -52,8 +52,12 @@ switch ($route) {
 
     // VETERINARIOS
     case "veterinarios":
+        $results = $usuarioController->ReadVeterinarioController();
         $user = $authController->InicioController();
-        $pageController->Veterinarios($user);
+        $pageController->Veterinarios($user, $results);
+        break;
+    case "veterinarios/CriarVeterinario":
+        $usuarioController->CreateVeterinarioController();
         break;
 
     // CLIENTES

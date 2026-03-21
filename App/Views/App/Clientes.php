@@ -63,7 +63,7 @@
                                     <div class="d-flex flex-column text-light gap-1">
                                         <small><?= $cliente['nome'] ?></small>
                                         <small><?= $cliente['telefone'] ?></small>
-                                        <small><?= $cliente['status'] ?></small>
+                                        <small><?= $cliente['email'] ?></small>
                                     </div>
                                     <div class="d-flex align-items-center text-light gap-2">
                                         <button
