@@ -5,6 +5,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use App\Controllers\PagesController;
 use App\Controllers\AuthController;
 use App\Controllers\UsuariosController;
+use App\Controllers\EspeciesController;
 
 session_start();
 
@@ -15,6 +16,7 @@ $route = $_GET['route'] ?? "login";
 $pageController = new PagesController();
 $authController = new AuthController();
 $usuarioController = new UsuariosController();
+$especieController = new EspeciesController();
 
 switch ($route) {
     // AUTH LOGIN
@@ -81,6 +83,10 @@ switch ($route) {
         $user = $authController->InicioController();
         $pageController->Especies($user);
         break;
+    case "especies/CriarEspecie":
+        $especieController->CreateEspecieController();
+        break;
+    // RAÇAS
     case "racas":
         $user = $authController->InicioController();
         $pageController->Racas($user);

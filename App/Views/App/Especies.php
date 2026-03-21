@@ -5,7 +5,24 @@
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
                 <h2 class="fs-4 fw-bold ">Cadastrar Espécie</h2>
-                <form class="mt-3">
+
+                <?php if (isset($_SESSION['erro'])) { ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['erro'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php }
+                unset($_SESSION['erro']) ?>
+
+                <?php if (isset($_SESSION['sucesso'])) { ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['sucesso'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php }
+                unset($_SESSION['sucesso']) ?>
+
+                <form class="mt-3" method="POST" action="<?= BASE_URL ?>/especies/CriarEspecie">
                     <div class="mb-3">
                         <label for="nome_especie" class="form-label">Nome da Espécie</label>
                         <input type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
