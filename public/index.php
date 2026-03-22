@@ -2,109 +2,51 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use App\Controllers\PagesController;
-use App\Controllers\AuthController;
-use App\Controllers\UsuariosController;
-use App\Controllers\EspeciesController;
-
 session_start();
 
 define("BASE_URL", "/Petshop/public");
 
 $route = $_GET['route'] ?? "login";
+$parts = explode("/", $route);
 
-$pageController = new PagesController();
-$authController = new AuthController();
-$usuarioController = new UsuariosController();
-$especieController = new EspeciesController();
+$map = [
+    "login" => App\Controllers\AuthController::class,
+    "novaSenha" => App\Controllers\AuthController::class,
+    "logout" => App\Controllers\AuthController::class,
+    "home" => App\Controllers\AuthController::class,
+    "funcionarios" => App\Controllers\FuncionariosController::class,
+    "veterinarios" => App\Controllers\VeterinariosController::class,
+    "clientes" => App\Controllers\ClientesController::class,
+    "especies" => App\Controllers\EspeciesController::class,
+];
 
-switch ($route) {
-    // AUTH LOGIN
-    case "":
-    case "login":
-        $pageController->Login();
-        $authController->LoginController();
-        break;
-    case "novaSenha":
-        $pageController->NovaSenha();
-        $authController->NovaSenhaController();
-        break;
+$prefix = $parts[0];
 
-    // DASHBOARD HOME
-    case "home":
-        $user = $authController->InicioController();
-        $pageController->Inicio($user);
-        break;
+if (isset($parts[1]) && !empty($parts[1])) {
+    // Se a URL tem algo depois da barra (ex: /funcionarios/CriarFuncionario)
+    $method = $parts[1];
+} else {
+    // Se a URL NÃO tem nada depois da barra (ex: /home ou /login)
 
-    // FUNCIONARIOS
-    case "funcionarios":
-        $results = $usuarioController->ReadFuncionarioController();
-        $user = $authController->InicioController();
-        $pageController->Funcionarios($user, $results);
-        break;
-    case "funcionarios/CriarFuncionario":
-        $usuarioController->CreateFuncionarioController();
-        break;
-    case "funcionarios/EditarFuncionario":
-        $usuarioController->UpdateFuncionarioController();
-        break;
-    case "funcionarios/ExcluirFuncionario":
-        $usuarioController->DeleteFuncionarioController();
-        break;
+    // Lista de rotas que chamam funções com o próprio nome em vez de 'index'
+    $rotasEspeciais = ['home', 'novaSenha', 'logout'];
 
-    // VETERINARIOS
-    case "veterinarios":
-        $results = $usuarioController->ReadVeterinarioController();
-        $user = $authController->InicioController();
-        $pageController->Veterinarios($user, $results);
-        break;
-    case "veterinarios/CriarVeterinario":
-        $usuarioController->CreateVeterinarioController();
-        break;
+    if (in_array($prefix, $rotasEspeciais)) {
+        $method = $prefix; // Se a URL for /home, vai procurar function home()
+    } else {
+        $method = 'index'; // Para /login ou /funcionarios, vai procurar function index()
+    }
+}
 
-    // CLIENTES
-    case "clientes":
-        $results = $usuarioController->ReadClientesController();
-        $user = $authController->InicioController();
-        $pageController->Clientes($user, $results);
-        break;
-    case "clientes/CriarCliente":
-        $usuarioController->CreateClienteController();
-        break;
-    case "clientes/EditarCliente":
-        $usuarioController->UpdateClienteController();
-        break;
-    case "clientes/ExcluirCliente":
-        $usuarioController->DeleteClienteController();
-        break;
+if (isset($map[$prefix])) {
+    $classe = $map[$prefix];
+    $controller = new $classe;
 
-    // ESPECIES
-    case "especies":
-        $results = $especieController->ReadEspeciesController();
-        $user = $authController->InicioController();
-        $pageController->Especies($user, $results);
-        break;
-    case "especies/CriarEspecie":
-        $especieController->CreateEspecieController();
-        break;
-    // RAÇAS
-    case "racas":
-        $user = $authController->InicioController();
-        $pageController->Racas($user);
-        break;
-    case "servicos":
-        $user = $authController->InicioController();
-        $pageController->Servicos($user);
-        break;
-    case "vacinas":
-        $user = $authController->InicioController();
-        $pageController->Vacinas($user);
-        break;
-
-    case "logout":
-        $authController->LogoutController();
-        break;
-    default:
+    if (method_exists($controller, $method)) {
+        $controller->$method();
+    } else {
         http_response_code(404);
-        exit;
+    }
+} else {
+    http_response_code(404);
 }

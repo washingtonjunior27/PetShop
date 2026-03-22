@@ -19,6 +19,54 @@ class AuthController
         $this->usuariosRepositories = new UsuariosRepository();
     }
 
+    public function index()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->LoginController();
+            return;
+        }
+
+        require __DIR__ . "/../Views/Auth/Login.php";
+    }
+
+    public function novaSenha()
+    {
+        if (!isset($_SESSION['user'])) {
+            header("location: " . BASE_URL . "/login");
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->NovaSenhaController();
+            return;
+        }
+
+        require __DIR__ . "/../Views/Auth/NovaSenha.php";
+    }
+
+    public function logout()
+    {
+        $this->LogoutController();
+        return;
+    }
+
+    public function home()
+    {
+        if (!isset($_SESSION['user'])) {
+            header("location: " . BASE_URL . "/login");
+            exit;
+        }
+
+        $user = $this->InicioController();
+
+        extract($user ?? []);
+
+        require __DIR__ . "/../Views/Layouts/Header.php";
+        require __DIR__ . "/../Views/App/Home.php";
+        require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
+        require __DIR__ . "/../Views/Layouts/Footer.php";
+    }
+
     public function LoginController()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -53,26 +101,19 @@ class AuthController
 
     public function NovaSenhaController()
     {
-        if (!isset($_SESSION['user'])) {
-            header("location: " . BASE_URL . "/login");
+        $this->usuarios->setSenha($_POST['senha'] ?? "");
+        $confirmarSenha = $_POST['confirmarSenha'] ?? "";
+
+        $login = $this->authService->NovaSenhaService($this->usuarios->getSenha(), $confirmarSenha);
+
+        if (isset($login['erro'])) {
+            $_SESSION['erro'] = $login['erro'];
+            header('location: ' . BASE_URL . '/novaSenha');
             exit;
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            $this->usuarios->setSenha($_POST['senha'] ?? "");
-            $confirmarSenha = $_POST['confirmarSenha'] ?? "";
-
-            $login = $this->authService->NovaSenhaService($this->usuarios->getSenha(), $confirmarSenha);
-
-            if (isset($login['erro'])) {
-                $_SESSION['erro'] = $login['erro'];
-                header('location: ' . BASE_URL . '/novaSenha');
-                exit;
-            }
-
-            header("location: " . BASE_URL . "/home");
-            exit;
-        }
+        header("location: " . BASE_URL . "/home");
+        exit;
     }
 
     public function LogoutController()

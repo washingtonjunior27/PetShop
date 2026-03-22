@@ -5,21 +5,38 @@ namespace App\Controllers;
 use App\Models\Especies;
 use App\Services\EspeciesService;
 use App\Repositories\EspeciesRepository;
+use App\Controllers\AuthController;
 
 class EspeciesController
 {
     private $especie;
     private $especieService;
     private $especieRepository;
+    private $authController;
 
     public function __construct()
     {
         $this->especie = new Especies();
         $this->especieService = new EspeciesService();
         $this->especieRepository = new EspeciesRepository();
+        $this->authController = new AuthController();
     }
 
-    public function CreateEspecieController()
+    public function index()
+    {
+        $results = $this->EspeciesController();
+        $user = $this->authController->InicioController();
+
+        extract($results);
+        extract(['usuario' => $user] ?? []);
+
+        require __DIR__ . "/../Views/Layouts/Header.php";
+        require __DIR__ . "/../Views/App/Especies.php";
+        require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
+        require __DIR__ . "/../Views/Layouts/Footer.php";
+    }
+
+    public function CriarEspecie()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $this->especie->setNome_especie(trim($_POST['nome_especie'] ?? ""));
@@ -37,7 +54,7 @@ class EspeciesController
         }
     }
 
-    public function ReadEspeciesController()
+    public function EspeciesController()
     {
         if ($_SESSION['user']['role'] != "Admin") {
             header("location: " . BASE_URL . "/home");
