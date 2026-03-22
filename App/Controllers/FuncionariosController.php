@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\Usuarios;
 use App\Controllers\AuthController;
-use App\Services\UsuariosService;
-use App\Repositories\UsuariosRepository;
+use App\Repositories\FuncionariosRepository;
+use App\Services\FuncionariosService;
 
 class FuncionariosController
 {
@@ -17,8 +17,8 @@ class FuncionariosController
     public function __construct()
     {
         $this->usuario = new Usuarios;
-        $this->usuarioService = new UsuariosService;
-        $this->usuarioRepository = new UsuariosRepository;
+        $this->usuarioService = new FuncionariosService;
+        $this->usuarioRepository = new FuncionariosRepository;
         $this->authController = new AuthController;
     }
 
@@ -50,7 +50,7 @@ class FuncionariosController
             $this->usuario->setStatus("Ativo");
             $this->usuario->setPrimeiro_acesso(1);
 
-            $usuario = $this->usuarioService->CreateUsuarioService($this->usuario);
+            $usuario = $this->usuarioService->CreateFuncionarioService($this->usuario);
 
             if ($usuario['erro']) {
                 $_SESSION['erro'] = $usuario['erro'];
@@ -107,7 +107,7 @@ class FuncionariosController
             $this->usuario->setRole(trim($_POST['role'] ?? ""));
             $this->usuario->setStatus(trim($_POST['status']) ?? "");
 
-            $usuario = $this->usuarioService->UpdateUsuarioService($this->usuario);
+            $usuario = $this->usuarioService->UpdateFuncionarioService($this->usuario);
 
             if ($usuario['erro']) {
                 $_SESSION['erro'] = $usuario['erro'];

@@ -5,8 +5,8 @@ namespace App\Controllers;
 use App\Models\Usuarios;
 use App\Models\Veterinarios;
 use App\Controllers\AuthController;
-use App\Services\UsuariosService;
-use App\Repositories\UsuariosRepository;
+use App\Services\VeterinariosService;
+use App\Repositories\VeterinariosRepository;
 
 class VeterinariosController
 {
@@ -20,8 +20,8 @@ class VeterinariosController
     {
         $this->usuario = new Usuarios;
         $this->veterinario = new Veterinarios;
-        $this->usuarioService = new UsuariosService;
-        $this->usuarioRepository = new UsuariosRepository;
+        $this->usuarioService = new VeterinariosService;
+        $this->usuarioRepository = new VeterinariosRepository;
         $this->authController = new AuthController;
     }
 

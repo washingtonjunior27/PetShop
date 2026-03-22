@@ -4,19 +4,19 @@ namespace App\Controllers;
 
 use App\Models\Usuarios;
 use App\Services\AuthService;
-use App\Repositories\UsuariosRepository;
+use App\Repositories\FuncionariosRepository;
 
 class AuthController
 {
     private $usuarios;
     private $authService;
-    private $usuariosRepositories;
+    private $funcionarioRepository;
 
     public function __construct()
     {
         $this->usuarios = new Usuarios();
         $this->authService = new AuthService();
-        $this->usuariosRepositories = new UsuariosRepository();
+        $this->funcionarioRepository = new FuncionariosRepository();
     }
 
     public function index()
@@ -130,7 +130,7 @@ class AuthController
             exit;
         }
         $userId = $_SESSION['user']['id'];
-        $user = $this->usuariosRepositories->TrackUserRepository("id", $userId);
+        $user = $this->funcionarioRepository->TrackUserRepository("id", $userId);
         return ['usuario' => $user];
     }
 }

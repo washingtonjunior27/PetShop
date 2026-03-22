@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\Usuarios;
 use App\Controllers\AuthController;
-use App\Services\UsuariosService;
-use App\Repositories\UsuariosRepository;
+use App\Repositories\ClientesRepository;
+use App\Services\ClientesService;
 
 class ClientesController
 {
@@ -17,8 +17,8 @@ class ClientesController
     public function __construct()
     {
         $this->usuario = new Usuarios;
-        $this->usuarioService = new UsuariosService;
-        $this->usuarioRepository = new UsuariosRepository;
+        $this->usuarioService = new ClientesService;
+        $this->usuarioRepository = new ClientesRepository;
         $this->authController = new AuthController;
     }
 
@@ -124,7 +124,7 @@ class ClientesController
                 exit;
             }
 
-            $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
+            $this->usuarioRepository->DeleteClienteRepository($this->usuario->getId());
 
             $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
             header("location: " . BASE_URL . "/clientes");

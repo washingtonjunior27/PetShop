@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\UsuariosRepository;
+use App\Repositories\FuncionariosRepository;
 
 class AuthService
 {
@@ -10,7 +10,7 @@ class AuthService
 
     public function __construct()
     {
-        $this->usuarioRepository = new UsuariosRepository();
+        $this->usuarioRepository = new FuncionariosRepository();
     }
 
     public function LoginService($usuarioLogin, $usuarioSenha)
