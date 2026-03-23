@@ -50,12 +50,24 @@
                                 <span><?= $especie['nome_especie'] ?></span>
                             </div>
                             <div class="d-flex align-items-center text-light gap-2">
-                                <form action="">
-                                    <button class="btn btn-warning">Editar</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-danger">Excluir</button>
-                                </form>
+                                <button
+                                    data-bs-id_especie="<?= $especie['id_especie'] ?>"
+                                    data-bs-nome_especie="<?= $especie['nome_especie'] ?>"
+                                    type="button"
+                                    class="btn btn-warning"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editarEspecieModal">
+                                    Editar
+                                </button>
+                                <button
+                                    data-bs-id_especie="<?= $especie['id_especie'] ?>"
+                                    data-bs-nome_especie="<?= $especie['nome_especie'] ?>"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#excluirEspecieModal">
+                                    Excluir
+                                </button>
                             </div>
                         </div>
                     <?php  }
@@ -69,6 +81,11 @@
                 <?php } ?>
             </div>
         </div>
+
+        <?php
+        require __DIR__ . "/../Modals/EditarEspecie.php";
+        require __DIR__ . "/../Modals/ExcluirEspecie.php";
+        ?>
 
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">

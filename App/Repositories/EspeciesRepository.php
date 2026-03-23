@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Config\Connection;
+use App\Models\Especies;
 use PDO;
 use PDOException;
 
@@ -69,6 +70,25 @@ class EspeciesRepository
 
         $stmt->execute($params);
         return $stmt->fetchColumn();
+    }
+
+    //UPDATE
+    public function UpdateEspecieRepository(Especies $especie)
+    {
+        $sql = "UPDATE especies SET nome_especie = :nome_especie WHERE id_especie = :id_especie";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome_especie" => $especie->getNome_especie(),
+            ":id_especie" => $especie->getId_especie()
+        ]);
+    }
+
+    // DELETE
+    public function DeleteEspecieRepository($id_especie)
+    {
+        $sql = "DELETE FROM especies WHERE id_especie = :id_especie";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_especie' => $id_especie]);
     }
 
     // TRACK

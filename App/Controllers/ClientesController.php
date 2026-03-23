@@ -56,6 +56,9 @@ class ClientesController
 
             header("location: " . BASE_URL . "/clientes");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/clientes");
+            exit;
         }
     }
 
@@ -111,6 +114,9 @@ class ClientesController
 
             header("location: " . BASE_URL . "/clientes");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/clientes");
+            exit;
         }
     }
 
@@ -127,6 +133,9 @@ class ClientesController
             $this->usuarioRepository->DeleteClienteRepository($this->usuario->getId());
 
             $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/clientes");
+            exit;
+        } else {
             header("location: " . BASE_URL . "/clientes");
             exit;
         }

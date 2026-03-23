@@ -64,6 +64,9 @@ class VeterinariosController
             }
             header("location: " . BASE_URL . "/veterinarios");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/veterinarios");
+            exit;
         }
     }
 
@@ -96,6 +99,11 @@ class VeterinariosController
     public function EditarVeterinario()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
             $this->usuario->setId($_POST['id']);
             $this->usuario->setNome(trim($_POST['nome'] ?? ""));
             $this->usuario->setLogin(trim($_POST['login'] ?? ""));
@@ -116,6 +124,9 @@ class VeterinariosController
             }
             header("location: " . BASE_URL . "/veterinarios");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/veterinarios");
+            exit;
         }
     }
 
@@ -124,6 +135,11 @@ class VeterinariosController
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $this->usuario->setId($_POST['id_veterinario']);
 
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
             $result = $this->usuarioRepository->DeleteVeterinarioRepository($this->usuario->getId());
 
             if ($result['erro']) {
@@ -131,6 +147,9 @@ class VeterinariosController
             } else {
                 $_SESSION['sucesso'] = "Usuário excluido com sucesso!";
             }
+            header("location: " . BASE_URL . "/veterinarios");
+            exit;
+        } else {
             header("location: " . BASE_URL . "/veterinarios");
             exit;
         }

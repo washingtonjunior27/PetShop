@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Especies;
 use App\Repositories\EspeciesRepository;
 
 class EspeciesService
@@ -26,5 +27,22 @@ class EspeciesService
         $this->especiesRepository->CreateEspecieRepository($nomeEspecie);
 
         return ['sucesso' => "Especie cadastrada com sucesso!"];
+    }
+
+    public function UpdateEspecieService(Especies $especie)
+    {
+        if (!$especie->getNome_especie()) {
+            return ['erro' => "Preencha os campos vazios!"];
+        }
+
+        $trackEspecie = $this->especiesRepository->TrackEspecieRepository($especie->getNome_especie());
+
+        if ($trackEspecie && $trackEspecie['id_especie'] != $especie->getId_especie()) {
+            return ['erro' => "Espécie já está cadastrada!"];
+        }
+
+        $this->especiesRepository->UpdateEspecieRepository($especie);
+
+        return ['sucesso' => "Especie atualizada com sucesso!"];
     }
 }

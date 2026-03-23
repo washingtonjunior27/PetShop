@@ -51,6 +51,9 @@ class EspeciesController
 
             header("location: " . BASE_URL . "/especies");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/especies");
+            exit;
         }
     }
 
@@ -78,5 +81,51 @@ class EspeciesController
             'totalEspecies' => $totalCeil,
             'currentPage' => $page
         ];
+    }
+
+    public function EditarEspecie()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->especie->setId_especie($_POST['id_especie']);
+            $this->especie->setNome_especie(trim($_POST['nome_especie'] ?? ""));
+
+            $result = $this->especieService->UpdateEspecieService($this->especie);
+
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
+            }
+
+            header("location: " . BASE_URL . "/especies");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/especies");
+            exit;
+        }
+    }
+
+    public function ExcluirEspecie()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->especie->setId_especie($_POST['id_especie']);
+
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->especieRepository->DeleteEspecieRepository($this->especie->getId_especie());
+
+            $_SESSION['sucesso'] = "Espécie excluida com sucesso!";
+
+            header("location: " . BASE_URL . "/especies");
+            exit;
+        }
     }
 }

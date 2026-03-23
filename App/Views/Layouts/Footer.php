@@ -7,6 +7,7 @@
 <script src="/petshop/public/Assets/scripts/funcionarios.js"></script>
 <script src="/petshop/public/Assets/scripts/clientes.js"></script>
 <script src="/petshop/public/Assets/scripts/veterinarios.js"></script>
+<script src="/petshop/public/Assets/scripts/especies.js"></script>
 
 </body>
 

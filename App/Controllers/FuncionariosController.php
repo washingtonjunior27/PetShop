@@ -60,6 +60,9 @@ class FuncionariosController
 
             header("location: " . BASE_URL . "/funcionarios");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/funcionarios");
+            exit;
         }
     }
 
@@ -117,6 +120,9 @@ class FuncionariosController
 
             header("location: " . BASE_URL . "/funcionarios");
             exit;
+        } else {
+            header("location: " . BASE_URL . "/funcionarios");
+            exit;
         }
     }
 
@@ -126,13 +132,16 @@ class FuncionariosController
             $this->usuario->setId($_POST['id_usuario']);
 
             if ($_SESSION['user']['role'] != "Admin") {
-                header("location: " . BASE_URL . "/login");
+                header("location: " . BASE_URL . "/logout");
                 exit;
             }
 
             $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
 
             $_SESSION['sucesso'] = "Usuario Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/funcionarios");
+            exit;
+        } else {
             header("location: " . BASE_URL . "/funcionarios");
             exit;
         }
