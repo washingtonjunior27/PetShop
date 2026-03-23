@@ -92,4 +92,47 @@ class VeterinariosController
             'currentPage' => $page
         ];
     }
+
+    public function EditarVeterinario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->usuario->setId($_POST['id']);
+            $this->usuario->setNome(trim($_POST['nome'] ?? ""));
+            $this->usuario->setLogin(trim($_POST['login'] ?? ""));
+            $this->usuario->setEmail(trim($_POST['email'] ?? ""));
+            $this->usuario->setTelefone(trim($_POST['telefone'] ?? ""));
+            $this->usuario->setRole(trim($_POST['role'] ?? ""));
+            $this->usuario->setStatus(trim($_POST['status'] ?? ""));
+
+            $this->veterinario->setCrmv(trim($_POST['crmv'] ?? ""));
+            $this->veterinario->setEspecialidade(trim($_POST['especialidade'] ?? ""));
+
+            $result = $this->usuarioService->UpdateVeterinarioService($this->usuario, $this->veterinario);
+
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
+            }
+            header("location: " . BASE_URL . "/veterinarios");
+            exit;
+        }
+    }
+
+    public function ExcluirVeterinario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->usuario->setId($_POST['id_veterinario']);
+
+            $result = $this->usuarioRepository->DeleteVeterinarioRepository($this->usuario->getId());
+
+            if ($result['erro']) {
+                $_SESSION['erro'] = "Erro ao deletar usuário!";
+            } else {
+                $_SESSION['sucesso'] = "Usuário excluido com sucesso!";
+            }
+            header("location: " . BASE_URL . "/veterinarios");
+            exit;
+        }
+    }
 }

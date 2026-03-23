@@ -80,9 +80,32 @@ class VeterinariosRepository
         return $stmt->fetchColumn();
     }
 
+    // EDITAR VETERINARIO
+    public function UpdateVeterinarioRepository(Veterinarios $veterinario)
+    {
+        $sql = "UPDATE veterinarios SET crmv = :crmv, especialidade = :especialidade
+        WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":crmv" => $veterinario->getCrmv(),
+            ":especialidade" => $veterinario->getEspecialidade(),
+            ":id_usuario" => $veterinario->getId_usuario()
+        ]);
+    }
+
+    // DELETAR VETERINARIO
+    public function DeleteVeterinarioRepository($id_vet)
+    {
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id' => $id_vet]);
+        return true;
+    }
+
+    // PROCURAR VETERINARIO PELO CRMV
     public function TrackCrmvRepository($crmv)
     {
-        $sql = "SELECT crmv FROM veterinarios WHERE crmv = :crmv";
+        $sql = "SELECT * FROM veterinarios WHERE crmv = :crmv";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([":crmv" => $crmv]);
         return $stmt->fetch(PDO::FETCH_ASSOC);

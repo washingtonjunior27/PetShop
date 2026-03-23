@@ -83,4 +83,50 @@ class VeterinariosService
             return ['erro' => 'Erro ao cadastrar veterinário'];
         }
     }
+
+    // VETERINARIOS
+    public function UpdateVeterinarioService(Usuarios $usuario, Veterinarios $veterinario)
+    {
+        try {
+            $this->pdo->beginTransaction();
+
+            // VALIDAÇÕES USUARIO
+            if (
+                !$usuario->getNome() || !$usuario->getLogin() || !$usuario->getEmail() ||
+                !$usuario->getTelefone() || !$usuario->getRole() || !$usuario->getStatus() ||
+                !$veterinario->getCrmv() || !$veterinario->getEspecialidade()
+            ) {
+                return ['erro' => 'Preencha todos os campos!'];
+            }
+
+            $resultLogin = $this->usuarioRepository->TrackUserRepository("login", $usuario->getLogin());
+
+            if ($resultLogin && $resultLogin['id'] != $usuario->getId()) {
+                return ['erro' => "Login indisponivel!"];
+            }
+
+            $resultEmail = $this->usuarioRepository->TrackUserRepository("email", $usuario->getEmail());
+
+            if ($resultEmail && $resultEmail['id'] != $usuario->getId()) {
+                return ['erro' => "Email indisponivel!"];
+            }
+
+            $crmv_vet = $this->veterinarioRepository->TrackCrmvRepository($veterinario->getCrmv());
+
+            if ($crmv_vet && $crmv_vet['id_usuario'] != $usuario->getId()) {
+                return ['erro' => "CRMV já cadastrado!!"];
+            }
+
+            $this->usuarioRepository->UpdateUsuarioRepository($usuario);
+            $veterinario->setId_usuario($usuario->getId());
+            $this->veterinarioRepository->UpdateVeterinarioRepository($veterinario);
+
+            $this->pdo->commit();
+
+            return ["sucesso" => "Usuario cadastrado com sucesso!"];
+        } catch (\Throwable $th) {
+            $this->pdo->rollBack();
+            return ['erro' => $th->getMessage()];
+        }
+    }
 }

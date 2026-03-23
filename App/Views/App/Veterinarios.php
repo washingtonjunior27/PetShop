@@ -82,12 +82,30 @@
                                         <small><?= $veterinario['status'] ?></small>
                                     </div>
                                     <div class="d-flex flex-column align-items-center text-light gap-2">
-                                        <form action="">
-                                            <button class="btn btn-warning">Editar</button>
-                                        </form>
-                                        <form action="">
-                                            <button class="btn btn-danger">Excluir</button>
-                                        </form>
+                                        <button
+                                            data-bs-id_veterinario="<?= $veterinario['id'] ?>"
+                                            data-bs-nome_veterinario="<?= $veterinario['nome'] ?>"
+                                            data-bs-login_veterinario="<?= $veterinario['login'] ?>"
+                                            data-bs-email_veterinario="<?= $veterinario['email'] ?>"
+                                            data-bs-telefone_veterinario="<?= $veterinario['telefone'] ?>"
+                                            data-bs-status_veterinario="<?= $veterinario['status'] ?>"
+                                            data-bs-crmv="<?= $veterinario['crmv'] ?>"
+                                            data-bs-especialidade="<?= $veterinario['especialidade'] ?>"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarVeterinarioModal">
+                                            Editar
+                                        </button>
+                                        <button
+                                            data-bs-id_veterinario="<?= $veterinario['id'] ?>"
+                                            data-bs-nome_veterinario="<?= $veterinario['nome'] ?>"
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#excluirVeterinarioModal">
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             <?php    }
@@ -102,6 +120,11 @@
 
                     </div>
                 </div>
+
+                <?php
+                require __DIR__ . "/../Modals/EditarVeterinario.php";
+                require __DIR__ . "/../Modals/ExcluirVeterinario.php";
+                ?>
 
                 <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center align-items-center">
