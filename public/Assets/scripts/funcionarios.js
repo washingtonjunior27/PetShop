@@ -11,6 +11,7 @@ edit_modal.addEventListener("show.bs.modal", (e) => {
     const email = button.getAttribute('data-bs-email');
     const telefone = button.getAttribute('data-bs-telefone');
     const status = button.getAttribute('data-bs-status');
+    const role = button.getAttribute('data-bs-role');
     const radioStatus = edit_modal.querySelector(`input[name="status"][value="${status}"]`);
 
     edit_modal.querySelector('#modal_id_usuario').value = id_usuario;

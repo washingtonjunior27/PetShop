@@ -30,4 +30,21 @@ class RacasService
 
         return ['sucesso' => "Raça cadastrada com sucesso!"];
     }
+
+    public function UpdateRacasService(Racas $raca)
+    {
+        if (!$raca->getNome_raca() || !$raca->getId_especie_fk()) {
+            return ['erro' => "Prencha os campos vazios!"];
+        }
+
+        $result = $this->racasRepository->TrackRacaRepository($raca->getNome_raca(), $raca->getId_especie_fk());
+
+        if ($result) {
+            return ['erro' => "Raça já cadastrada!"];
+        }
+
+        $this->racasRepository->UpdateRacaRepository($raca);
+
+        return ['sucesso' => "Raça atualizada com sucesso!"];
+    }
 }

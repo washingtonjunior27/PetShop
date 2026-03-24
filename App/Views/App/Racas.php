@@ -56,16 +56,28 @@
                         <div
                             class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
                             <div class="d-flex flex-column text-light gap-1">
-                                <span><?= $raca['nome_especie'] ?></span>
                                 <span><?= $raca['nome_raca'] ?></span>
+                                <span><?= $raca['nome_especie'] ?></span>
                             </div>
                             <div class="d-flex align-items-center text-light gap-2">
-                                <form action="">
-                                    <button class="btn btn-warning">Editar</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-danger">Excluir</button>
-                                </form>
+                                <button
+                                    data-bs-id_raca="<?= $raca['id_raca'] ?>"
+                                    data-bs-nome_raca="<?= $raca['nome_raca'] ?>"
+                                    data-bs-id_especie_fk="<?= $raca['id_especie_fk'] ?>"
+                                    type="button"
+                                    class="btn btn-warning"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editarRacaModal">Editar
+                                </button>
+                                <button
+                                    data-bs-id_raca="<?= $raca['id_raca'] ?>"
+                                    data-bs-nome_raca="<?= $raca['nome_raca'] ?>"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#excluirRacaModal">
+                                    Excluir
+                                </button>
                             </div>
                         </div>
                     <?php    }
@@ -79,6 +91,11 @@
                 <?php } ?>
             </div>
         </div>
+
+        <?php
+        require __DIR__ . "/../Modals/EditarRaca.php";
+        require __DIR__ . "/../Modals/ExcluirRaca.php";
+        ?>
 
         <!-- PAGINAÇÃO -->
         <nav class="mt-2 d-flex justify-content-center align-items-center">

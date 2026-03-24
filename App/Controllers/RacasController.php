@@ -86,4 +86,51 @@ class RacasController
             'currentPage' => $page
         ];
     }
+    public function EditarRaca()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->racas->setId_raca($_POST['id_raca']);
+            $this->racas->setNome_raca(trim($_POST['nome_raca'] ?? ""));
+            $this->racas->setId_especie_fk((int) $_POST['id_especie_fk'] ?? 0);
+
+            $result = $this->racasService->UpdateRacasService($this->racas);
+
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
+            }
+
+            header("location: " . BASE_URL . "/racas");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/racas");
+            exit;
+        }
+    }
+    public function ExcluirRaca()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->racas->setId_raca(trim($_POST['id_raca']));
+
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->racasRepository->DeleteRacaRepository($this->racas->getId_raca());
+
+            $_SESSION['sucesso'] = "Raça excluida com sucesso!";
+            header("location: " . BASE_URL . "/racas");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/racas");
+            exit;
+        }
+    }
 }
