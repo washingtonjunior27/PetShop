@@ -19,6 +19,7 @@ $map = [
     "clientes" => App\Controllers\ClientesController::class,
     "especies" => App\Controllers\EspeciesController::class,
     "racas" => App\Controllers\RacasController::class,
+    "servicos" => App\Controllers\ServicosController::class,
 ];
 
 $prefix = $parts[0];

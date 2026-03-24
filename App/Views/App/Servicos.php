@@ -3,21 +3,38 @@
 
     <div class="container p-0 my-4">
         <div class="row g-3">
-            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
+            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">
                 <div class="rounded">
                     <h2 class="fs-4 fw-bold ">Cadastrar Serviços</h2>
-                    <form class="mt-3">
+
+                    <?php if (isset($_SESSION['erro'])) { ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?= $_SESSION['erro'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php }
+                    unset($_SESSION['erro']) ?>
+
+                    <?php if (isset($_SESSION['sucesso'])) { ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?= $_SESSION['sucesso'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php }
+                    unset($_SESSION['sucesso']) ?>
+
+                    <form class="mt-3" method="POST" action="<?= BASE_URL ?>/servicos/CriarServico">
                         <div class="mb-3">
                             <label for="nome_servico" class="form-label">Nome</label>
                             <input type="text" name="nome_servico" class="form-control" id="nome_servico" placeholder="Informe o nome do serviço">
                         </div>
                         <div class="mb-3">
                             <label for="preço_servico" class="form-label">Preço</label>
-                            <input type="text" name="preço_servico" class="form-control" id="preço_servico" placeholder="Informe o preço do serviço">
+                            <input min="1" step="0.01" type="number" name="preco_servico" class="form-control" id="preço_servico" placeholder="Informe o preço do serviço">
                         </div>
                         <div class="mb-3">
-                            <label for="duracao_servico" class="form-label">Duração</label>
-                            <input type="text" name="duracao_servico" class="form-control" id="duracao_servico" placeholder="Informe a duração do serviço">
+                            <label for="duracao_servico" class="form-label">Duração (Minutos)</label>
+                            <input min="1" step="1" type="number" name="duracao_minutos" class="form-control" id="duracao_minutos" placeholder="Informe a duração do serviço em minutos">
                         </div>
                         <div class="mb-3">
                             <label for="descricao_servico" class="form-label">Descrição</label>
@@ -29,8 +46,8 @@
             </div>
 
             <div class="col-12 col-xl-5">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
+                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/servicos">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg" type="submit">Pesquisar</button>
                 </form>
 
@@ -38,40 +55,73 @@
                     <h2 class="fs-4 fw-bold ">Lista de Serviços</h2>
 
                     <div class="rounded">
-                        <div
-                            class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                            <div class="d-flex flex-column text-light gap-1">
-                                <small>Banho</small>
-                                <small>R$60,00</small>
-                                <small>60 minutos</small>
+                        <?php
+                        if (count($servicos) > 0) {
+                            foreach ($servicos as $servico) { ?>
+                                <div
+                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column text-light gap-1">
+                                        <small><?= $servico['nome_servico'] ?></small>
+                                        <small>R$<?= $servico['preco_servico'] ?></small>
+                                        <small><?= $servico['duracao_minutos'] ?> minutos</small>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-center text-light gap-2">
+                                        <form action="">
+                                            <button class="btn btn-warning">Editar</button>
+                                        </form>
+                                        <form action="">
+                                            <button class="btn btn-danger">Excluir</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php    }
+                        } else { ?>
+                            <div
+                                class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                <div class="d-flex flex-column text-light gap-1">
+                                    <span>Nenhum serviço encontrado!</span>
+                                </div>
                             </div>
-                            <div class="d-flex flex-column align-items-center text-light gap-2">
-                                <form action="">
-                                    <button class="btn btn-warning">Editar</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-danger">Excluir</button>
-                                </form>
-                            </div>
-                        </div>
+                        <?php } ?>
+
                     </div>
                 </div>
 
-                <nav class="mt-2 d-flex justify-content-center">
+                <!-- PAGINAÇÃO -->
+                <nav class="mt-2 d-flex justify-content-center align-items-center">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <?php
+                        $query = $_GET;
+                        unset($query['route']);
+                        $range = 2;
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalServicos, $currentPage + $range);
+                        ?>
+
+                        <?php if ($currentPage > 1) {
+                            $query['page'] = $currentPage - 1;
+                        ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?= BASE_URL ?>/servicos?<?= http_build_query($query) ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <?php } ?>
+
+                        <?php for ($i = $start; $i <= $end; $i++) {
+                            $query['page'] = $i; ?>
+                            <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/servicos?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                        <?php } ?>
+
+                        <?php if ($currentPage < $totalServicos) {
+                            $query['page'] = $currentPage + 1;
+                        ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?= BASE_URL ?>/servicos?<?= http_build_query($query) ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </nav>
             </div>
