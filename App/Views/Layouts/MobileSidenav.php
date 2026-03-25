@@ -7,9 +7,16 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-        <div class="sidenav-links d-flex flex-column gap-4">
+    <div class="offcanvas-body d-flex flex-column">
+        <div class="sidenav-links d-flex flex-column gap-4 flex-grow-1">
             <?php require "Sidenav.php" ?>
+        </div>
+
+        <div class="sidenav-item w-100 ps-5 border-5 border-top border-light py-4">
+            <a href="<?= BASE_URL ?>/logout" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa-solid fa-arrow-right-from-bracket text-light fs-2"></i>
+                <span class="text-light fs-6 fw-semibold">Logout</span>
+            </a>
         </div>
     </div>
 </div>

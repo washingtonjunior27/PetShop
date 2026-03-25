@@ -52,14 +52,26 @@ switch ($hojeDiaSemana) {
 
     <div class="container-fluid home-bg">
         <div class="row min-vh-100">
-            <div class="col-md-3 main-bg p-0 d-none d-md-block">
-                <div class="d-flex justify-content-center gap-1 p-4 border-5 border-white border-bottom border-end">
+            <div class="col-md-3 main-bg position-sticky top-0 p-0 d-none d-md-flex flex-column border-light border-5 border-end vh-100">
+                <!-- LOGO -->
+                <a href="<?= BASE_URL ?>/home" class="nav-link d-flex justify-content-center gap-1 p-4 border-5 border-white border-bottom">
                     <i class="fa-solid fa-paw fs-2 text-light"></i>
                     <h4 class="fs-2 text-light">PetShop</h4>
-                </div>
-                <div class="sidenav-links d-flex flex-column align-items-center gap-4 mt-4 pb-3">
+                </a>
+
+                <!-- SIDENAV -->
+                <div class="mt-4 d-flex flex-column gap-3 flex-grow-1">
                     <?php require __DIR__ . "/Sidenav.php" ?>
                 </div>
+
+                <!-- LOGOUT -->
+                <div class="w-100 border-5 border-top border-light mb-4">
+                    <a href="<?= BASE_URL ?>/logout" class="ps-5 sidenav-item w-100 nav-link d-flex align-items-center gap-3 mt-4">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-light fs-2"></i>
+                        <span class="text-light fs-6 fw-semibold">Logout</span>
+                    </a>
+                </div>
+
             </div>
 
             <div class="col-md-9 p-0">
@@ -73,9 +85,10 @@ switch ($hojeDiaSemana) {
                         </button>
 
                         <div class="ms-auto text-white d-flex gap-2">
-                            <a href="#" class="nav-link"><?= $user['usuario']['login'] ?></a>
-                            <span>|</span>
-                            <a href="<?= BASE_URL ?>/logout" class="nav-link">Sair</a>
+                            <a href="#" class="nav-link d-flex gap-2">
+                                <span><?= $user['usuario']['login'] ?></span>
+                                <i class="fa-solid fa-user fs-4"></i>
+                            </a>
                         </div>
                     </div>
                 </nav>

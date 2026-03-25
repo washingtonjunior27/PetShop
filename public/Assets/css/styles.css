@@ -38,3 +38,13 @@
     color: black !important;
 
 }
+.sidenav-item:hover{
+    background-color: white !important;
+    padding: 10px 0;
+    transition: .5s;
+}
+.sidenav-item:hover span, .sidenav-item:hover i{
+    color: black !important;
+    transition: .5s;
+
+}
