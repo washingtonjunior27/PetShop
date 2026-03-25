@@ -91,4 +91,60 @@ class ServicosController
             'currentPage' => $page
         ];
     }
+
+    public function EditarServico()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->servicos->setId_servico($_POST['id_servico']);
+            $this->servicos->setNome_servico(trim($_POST['nome_servico'] ?? ""));
+
+            $preco = str_replace(',', '.', $_POST['preco_servico']);
+            $this->servicos->setPreco_servico(
+                number_format((float)$preco, 2, '.', '')
+            );
+
+            $this->servicos->setDuracao_minutos((int) $_POST['duracao_minutos']);
+            $this->servicos->setDescricao_servico(trim($_POST['descricao_servico'] ?? ""));
+
+            $servico = $this->servicosService->UpdateServicosService($this->servicos);
+
+            if ($servico['erro']) {
+                $_SESSION['erro'] = $servico['erro'];
+            } else {
+                $_SESSION['sucesso'] = $servico['sucesso'];
+            }
+
+            header("location: " . BASE_URL . "/servicos");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/servicos");
+            exit;
+        }
+    }
+
+    public function ExcluirServico()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->servicos->setId_servico($_POST['id_servico']);
+
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/login");
+                exit;
+            }
+
+            $this->servicosRepository->DeleteServicoRepository($this->servicos->getId_servico());
+
+            $_SESSION['sucesso'] = "Serviço Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/servicos");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/servicos");
+            exit;
+        }
+    }
 }

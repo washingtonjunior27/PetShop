@@ -66,12 +66,27 @@
                                         <small><?= $servico['duracao_minutos'] ?> minutos</small>
                                     </div>
                                     <div class="d-flex flex-column align-items-center text-light gap-2">
-                                        <form action="">
-                                            <button class="btn btn-warning">Editar</button>
-                                        </form>
-                                        <form action="">
-                                            <button class="btn btn-danger">Excluir</button>
-                                        </form>
+                                        <button
+                                            data-bs-id_servico="<?= $servico['id_servico'] ?>"
+                                            data-bs-nome_servico="<?= $servico['nome_servico'] ?>"
+                                            data-bs-preco_servico="<?= $servico['preco_servico'] ?>"
+                                            data-bs-duracao_minutos="<?= $servico['duracao_minutos'] ?>"
+                                            data-bs-descricao_servico="<?= $servico['descricao_servico'] ?>"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarServicoModal">
+                                            Editar
+                                        </button>
+                                        <button
+                                            data-bs-id_servico="<?= $servico['id_servico'] ?>"
+                                            data-bs-nome_servico="<?= $servico['nome_servico'] ?>"
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#excluirServicoModal">
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             <?php    }
@@ -86,6 +101,11 @@
 
                     </div>
                 </div>
+
+                <?php
+                require __DIR__ . "/../Modals/EditarServico.php";
+                require __DIR__ . "/../Modals/ExcluirServico.php";
+                ?>
 
                 <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center align-items-center">
