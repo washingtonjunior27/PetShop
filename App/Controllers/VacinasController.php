@@ -90,4 +90,60 @@ class VacinasController
             'currentPage' => $page
         ];
     }
+
+    public function EditarVacina()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->vacinas->setId_vacina($_POST['id_vacina']);
+            $this->vacinas->setNome_vacina(trim($_POST['nome_vacina'] ?? ""));
+
+            $preco = str_replace(',', '.', $_POST['preco_vacina']);
+            $this->vacinas->setPreco_vacina(
+                number_format((float)$preco, 2, '.', '')
+            );
+
+            $this->vacinas->setDuracao_retorno((int) $_POST['duracao_retorno']);
+            $this->vacinas->setDescricao_vacina(trim($_POST['descricao_vacina'] ?? ""));
+
+            $servico = $this->vacinasService->UpdateVacinaService($this->vacinas);
+
+            if ($servico['erro']) {
+                $_SESSION['erro'] = $servico['erro'];
+            } else {
+                $_SESSION['sucesso'] = $servico['sucesso'];
+            }
+
+            header("location: " . BASE_URL . "/vacinas");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/vacinas");
+            exit;
+        }
+    }
+
+    public function ExcluirVacina()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->vacinas->setId_vacina($_POST['id_vacina']);
+
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/login");
+                exit;
+            }
+
+            $this->vacinasRepository->DeleteVacinaRepository($this->vacinas->getId_vacina());
+
+            $_SESSION['sucesso'] = "Serviço Excluido com Sucesso!";
+            header("location: " . BASE_URL . "/vacinas");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/vacinas");
+            exit;
+        }
+    }
 }

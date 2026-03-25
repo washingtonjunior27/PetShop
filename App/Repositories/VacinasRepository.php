@@ -81,6 +81,28 @@ class VacinasRepository
         return $stmt->fetchColumn();
     }
 
+    public function UpdateVacinaRepository(Vacinas $vacina)
+    {
+        $sql = "UPDATE vacinas SET nome_vacina = :nome_vacina, preco_vacina = :preco_vacina,
+                duracao_retorno = :duracao_retorno, descricao_vacina = :descricao_vacina
+                WHERE id_vacina = :id_vacina";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome_vacina" => $vacina->getNome_vacina(),
+            ":preco_vacina" => $vacina->getPreco_vacina(),
+            ":duracao_retorno" => $vacina->getDuracao_retorno(),
+            ":descricao_vacina" => $vacina->getDescricao_vacina(),
+            ":id_vacina" => $vacina->getId_vacina()
+        ]);
+    }
+
+    public function DeleteVacinaRepository($id_vacina)
+    {
+        $sql = "DELETE FROM vacinas WHERE id_vacina = :id_vacina";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_vacina' => $id_vacina]);
+    }
+
     public function TrackVacinaRepository($nome_vacina)
     {
         $sql = "SELECT * FROM vacinas WHERE nome_vacina = :nome_vacina";

@@ -65,12 +65,27 @@
                                         <small><?= $vacina['preco_vacina'] ?></small>
                                     </div>
                                     <div class="d-flex flex-column align-items-center text-light gap-2">
-                                        <form action="">
-                                            <button class="btn btn-warning">Editar</button>
-                                        </form>
-                                        <form action="">
-                                            <button class="btn btn-danger">Excluir</button>
-                                        </form>
+                                        <button
+                                            data-bs-id_vacina="<?= $vacina['id_vacina'] ?>"
+                                            data-bs-nome_vacina="<?= $vacina['nome_vacina'] ?>"
+                                            data-bs-preco_vacina="<?= $vacina['preco_vacina'] ?>"
+                                            data-bs-duracao_retorno="<?= $vacina['duracao_retorno'] ?>"
+                                            data-bs-descricao_vacina="<?= $vacina['descricao_vacina'] ?>"
+                                            type="button"
+                                            class="btn btn-warning"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarVacinaModal">
+                                            Editar
+                                        </button>
+                                        <button
+                                            data-bs-id_vacina="<?= $vacina['id_vacina'] ?>"
+                                            data-bs-nome_vacina="<?= $vacina['nome_vacina'] ?>"
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#excluirVacinaModal">
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             <?php    }
@@ -85,6 +100,11 @@
 
                     </div>
                 </div>
+
+                <?php
+                require __DIR__ . "/../Modals/EditarVacina.php";
+                require __DIR__ . "/../Modals/ExcluirVacina.php";
+                ?>
 
                 <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center align-items-center">

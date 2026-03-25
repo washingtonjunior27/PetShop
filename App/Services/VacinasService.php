@@ -45,4 +45,36 @@ class VacinasService
 
         return ['sucesso' => "Vacina cadastrado com sucesso!"];
     }
+
+    public function UpdateVacinaService(Vacinas $vacina)
+    {
+        if (
+            !$vacina->getNome_vacina() || !$vacina->getPreco_vacina()
+            || !$vacina->getDuracao_retorno()
+        ) {
+            return ['erro' => "Preencha os campos vazios!"];
+        }
+
+        if ($vacina->getDuracao_retorno() <= 0) {
+            return ['erro' => "Duração invalida!"];
+        }
+
+        if (!is_numeric($vacina->getPreco_vacina())) {
+            return ['erro' => 'Preço inválido'];
+        }
+
+        if ($vacina->getPreco_vacina() <= 0) {
+            return ['erro' => "Preço inválido!"];
+        }
+
+        $result = $this->vacinasRepository->TrackVacinaRepository($vacina->getNome_vacina());
+
+        if ($result && $result['id_vacina'] != $vacina->getId_vacina()) {
+            return ['erro' => "Serviço já cadastrado!"];
+        }
+
+        $this->vacinasRepository->UpdateVacinaRepository($vacina);
+
+        return ['sucesso' => "Serviço atualizado com sucesso!"];
+    }
 }

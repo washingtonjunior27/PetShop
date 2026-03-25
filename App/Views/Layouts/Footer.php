@@ -10,6 +10,7 @@
 <script src="/petshop/public/Assets/scripts/especies.js"></script>
 <script src="/petshop/public/Assets/scripts/racas.js"></script>
 <script src="/petshop/public/Assets/scripts/servicos.js"></script>
+<script src="/petshop/public/Assets/scripts/vacinas.js"></script>
 
 </body>
 
