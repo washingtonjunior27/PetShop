@@ -1,5 +1,5 @@
 <div class="container">
-    <h2 class="fs-3 fw-bold my-5">INICIO</h2>
+    <h2 class="fs-3 fw-bold my-5">Inicio</h2>
 
     <div class="row g-3">
         <div class="col-12 col-md-6 col-xl-3">

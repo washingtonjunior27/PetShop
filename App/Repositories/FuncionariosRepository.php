@@ -134,7 +134,9 @@ class FuncionariosRepository
             $params["search"] = $searchItem;
         }
 
-        $sql .= " LIMIT :limit OFFSET :offset";
+        if ($limit !== null && $offset !== null) {
+            $sql .= " LIMIT :limit OFFSET :offset";
+        }
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -142,8 +144,10 @@ class FuncionariosRepository
             $stmt->bindValue(":$key", $value);
         }
 
-        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
-        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+        if ($limit !== null && $offset !== null) {
+            $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+            $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+        }
 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

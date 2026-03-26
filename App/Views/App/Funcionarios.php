@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">FUNCIONARIOS</h1>
+    <h1 class="fs-3 fw-bold my-5">Funcionarios</h1>
 
     <div class="container p-0 my-4">
         <div class="row g-3">
