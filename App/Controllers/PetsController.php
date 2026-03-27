@@ -120,51 +120,59 @@ class PetsController
         ];
     }
 
-    // public function EditarRaca()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    //         if ($_SESSION['user']['role'] != "Admin") {
-    //             header("location: " . BASE_URL . "/logout");
-    //             exit;
-    //         }
+    // EDITAR
+    public function EditarPet()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
 
-    //         $this->racas->setId_raca($_POST['id_raca']);
-    //         $this->racas->setNome_raca(trim($_POST['nome_raca'] ?? ""));
-    //         $this->racas->setId_especie_fk((int) $_POST['id_especie_fk'] ?? 0);
+            $this->pets->setId_pet((int) $_POST['id_pet']);
+            $this->pets->setNome_pet(trim($_POST['nome_pet'] ?? ""));
+            $this->pets->setCliente_id_fk((int) $_POST['cliente_id_fk'] ?? 0);
+            $this->pets->setEspecie_id_fk((int) $_POST['especie_id_fk'] ?? 0);
+            $this->pets->setRaca_id_fk((int) $_POST['raca_id_fk'] ?? 0);
+            $this->pets->setSexo_pet(trim($_POST['modal_sexo_pet'] ?? ""));
+            $this->pets->setCor_pet(trim($_POST['cor_pet'] ?? ""));
+            $this->pets->setPeso_pet((float) $_POST['peso_pet'] ?? "");
 
-    //         $result = $this->racasService->UpdateRacasService($this->racas);
+            $result = $this->petsService->UpdatePetService($this->pets);
 
-    //         if ($result['erro']) {
-    //             $_SESSION['erro'] = $result['erro'];
-    //         } else {
-    //             $_SESSION['sucesso'] = $result['sucesso'];
-    //         }
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
+            }
 
-    //         header("location: " . BASE_URL . "/racas");
-    //         exit;
-    //     } else {
-    //         header("location: " . BASE_URL . "/racas");
-    //         exit;
-    //     }
-    // }
-    // public function ExcluirRaca()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    //         $this->racas->setId_raca(trim($_POST['id_raca']));
+            header("location: " . BASE_URL . "/pets");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/pets");
+            exit;
+        }
+    }
 
-    //         if ($_SESSION['user']['role'] != "Admin") {
-    //             header("location: " . BASE_URL . "/logout");
-    //             exit;
-    //         }
+    // EXCLUIR
+    public function ExcluirPet()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->pets->setId_pet(trim($_POST['id_pet']));
 
-    //         $this->racasRepository->DeleteRacaRepository($this->racas->getId_raca());
+            if ($_SESSION['user']['role'] != "Admin"  && $_SESSION['user']['role'] != "Atendente") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
 
-    //         $_SESSION['sucesso'] = "Raça excluida com sucesso!";
-    //         header("location: " . BASE_URL . "/racas");
-    //         exit;
-    //     } else {
-    //         header("location: " . BASE_URL . "/racas");
-    //         exit;
-    //     }
-    // }
+            $this->petsRepository->DeletePetRepository($this->pets->getId_pet());
+
+            $_SESSION['sucesso'] = "Pet excluido com sucesso!";
+            header("location: " . BASE_URL . "/pets");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/pets");
+            exit;
+        }
+    }
 }

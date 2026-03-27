@@ -28,20 +28,17 @@ class PetsService
         return ['sucesso' => "Pet cadastrado com sucesso!"];
     }
 
-    // public function UpdateRacasService(Racas $raca)
-    // {
-    //     if (!$raca->getNome_raca() || !$raca->getId_especie_fk()) {
-    //         return ['erro' => "Prencha os campos vazios!"];
-    //     }
+    public function UpdatePetService(Pets $pet)
+    {
+        if (
+            !$pet->getNome_pet() || !$pet->getCliente_id_fk() || !$pet->getEspecie_id_fk() ||
+            !$pet->getRaca_id_fk() || !$pet->getSexo_pet() || !$pet->getCor_pet() || !$pet->getPeso_pet()
+        ) {
+            return ['erro' => "Prencha os campos vazios!"];
+        }
 
-    //     $result = $this->racasRepository->TrackRacaRepository($raca->getNome_raca(), $raca->getId_especie_fk());
+        $this->petsRepository->UpdatePetRepository($pet);
 
-    //     if ($result) {
-    //         return ['erro' => "Raça já cadastrada!"];
-    //     }
-
-    //     $this->racasRepository->UpdateRacaRepository($raca);
-
-    //     return ['sucesso' => "Raça atualizada com sucesso!"];
-    // }
+        return ['sucesso' => "Pet atualizado com sucesso!"];
+    }
 }

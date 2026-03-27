@@ -108,6 +108,14 @@
                                     </div>
                                     <div class="d-flex flex-column align-items-center text-light gap-2">
                                         <button
+                                            data-bs-id_pet="<?= $pet['id_pet'] ?>"
+                                            data-bs-nome_pet="<?= $pet['nome_pet'] ?>"
+                                            data-bs-id_cliente="<?= $pet['cliente_id_fk'] ?>"
+                                            data-bs-id_especie="<?= $pet['especie_id_fk'] ?>"
+                                            data-bs-id_raca="<?= $pet['raca_id_fk'] ?>"
+                                            data-bs-sexo_pet="<?= $pet['sexo_pet'] ?>"
+                                            data-bs-cor_pet="<?= $pet['cor_pet'] ?>"
+                                            data-bs-peso_pet="<?= $pet['peso_pet'] ?>"
                                             type="button"
                                             class="btn btn-warning"
                                             data-bs-toggle="modal"
@@ -115,6 +123,8 @@
                                             Editar
                                         </button>
                                         <button
+                                            data-bs-id_pet="<?= $pet['id_pet'] ?>"
+                                            data-bs-nome_pet="<?= $pet['nome_pet'] ?>"
                                             type="button"
                                             class="btn btn-danger"
                                             data-bs-toggle="modal"
@@ -126,7 +136,7 @@
                             <?php        }
                         } else { ?>
                             <div
-                                class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                class="text-light main-bg py-4 d-flex align-items-center justify-content-center rounded mt-4 px-3">
                                 <div class="d-flex flex-column text-light gap-1">
                                     <span>Nenhum pet encontrado!</span>
                                 </div>
@@ -137,8 +147,8 @@
                 </div>
 
                 <?php
-                // require __DIR__ . "/../Modals/EditarPet.php";
-                // require __DIR__ . "/../Modals/ExcluirPet.php";
+                require __DIR__ . "/../Modals/EditarPet.php";
+                require __DIR__ . "/../Modals/ExcluirPet.php";
                 ?>
 
                 <!-- PAGINAÇÃO -->

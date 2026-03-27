@@ -87,6 +87,33 @@ class PetsRepository
         return $stmt->fetchColumn();
     }
 
+    // UPDATE
+    public function UpdatePetRepository(Pets $pets)
+    {
+        $sql = "UPDATE pets SET nome_pet = :nome_pet, sexo_pet = :sexo_pet, cor_pet = :cor_pet, 
+        peso_pet = :peso_pet, cliente_id_fk = :cliente_id_fk, especie_id_fk = :especie_id_fk, 
+        raca_id_fk = :raca_id_fk WHERE id_pet = :id_pet";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":nome_pet" => $pets->getNome_pet(),
+            ":sexo_pet" => $pets->getSexo_pet(),
+            ":cor_pet" => $pets->getCor_pet(),
+            ":peso_pet" => $pets->getPeso_pet(),
+            ":cliente_id_fk" => $pets->getCliente_id_fk(),
+            ":especie_id_fk" => $pets->getEspecie_id_fk(),
+            ":raca_id_fk" => $pets->getRaca_id_fk(),
+            ":id_pet" => $pets->getId_pet()
+        ]);
+    }
+
+    // DELETE
+    public function DeletePetRepository($id_pet)
+    {
+        $sql = "DELETE FROM pets WHERE id_pet = :id_pet";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_pet' => $id_pet]);
+    }
+
     public function getRacasPorEspecie($especie_id)
     {
         $stmt = $this->pdo->prepare("SELECT id_raca, nome_raca FROM racas WHERE id_especie_fk = :id_especie_fk");
