@@ -30,9 +30,12 @@ class RacasController
         $especies = $this->especiesRepository->ReadEspeciesRepository(null, null, null);
         $results = $this->RacasController();
         $user = $this->authController->InicioController();
-        extract($results);
-        extract($especies);
-        extract(['usuario' => $user] ?? "");
+
+        $dados = array_merge($results, [
+            "usuario" => $user,
+            "especies" => $especies
+        ]);
+        extract($dados);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Racas.php";

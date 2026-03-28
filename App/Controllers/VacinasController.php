@@ -27,8 +27,9 @@ class VacinasController
         $user = $this->authController->InicioController();
         $result = $this->VacinasController();
 
+        $result['usuario'] = $user;
+
         extract($result);
-        extract(['usuario' => $user] ?? "");
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Vacinas.php";
@@ -67,7 +68,7 @@ class VacinasController
 
     public function VacinasController()
     {
-        if ($_SESSION['user']['role'] != "Admin") {
+        if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Veterinario") {
             header("location: " . BASE_URL . "/home");
             exit;
         }
@@ -94,7 +95,7 @@ class VacinasController
     public function EditarVacina()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            if ($_SESSION['user']['role'] != "Admin") {
+            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Veterinario") {
                 header("location: " . BASE_URL . "/logout");
                 exit;
             }
@@ -131,7 +132,7 @@ class VacinasController
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $this->vacinas->setId_vacina($_POST['id_vacina']);
 
-            if ($_SESSION['user']['role'] != "Admin") {
+            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Veterinario") {
                 header("location: " . BASE_URL . "/login");
                 exit;
             }

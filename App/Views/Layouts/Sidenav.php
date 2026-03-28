@@ -92,6 +92,16 @@
     </div>
 <?php } ?>
 
+<!-- CADASTRO DE VACINAS DO VETERINARIO -->
+<?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
+    <div class="sidenav-item w-100 ps-5 <?= $page == "vacinas" ? "active-sidenav" : "" ?>">
+        <a href="<?= BASE_URL ?>/vacinas" class="nav-link d-flex align-items-center gap-3 ">
+            <i class="fa-solid fa-syringe text-light fs-2"></i>
+            <span class="text-light fs-6 fw-semibold">Vacinas</span>
+        </a>
+    </div>
+<?php } ?>
+
 <!-- PETS PARA ADMIN E ATENDENTE-->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
     <div class="sidenav-item w-100 ps-5 <?= $page == "pets" ? "active-sidenav" : "" ?>">

@@ -28,8 +28,8 @@ class ServicosController
         $user = $this->authController->InicioController();
         $result = $this->ServicosController();
 
+        $results['usuario'] = $user;
         extract($result);
-        extract(['usuario' => $user] ?? "");
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Servicos.php";

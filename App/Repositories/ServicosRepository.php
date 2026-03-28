@@ -113,4 +113,11 @@ class ServicosRepository
         $stmt->execute([":nome_servico" => $nome_servico]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function TrackServicosCategory($categoria_servico)
+    {
+        $sql = "SELECT * FROM servicos WHERE categoria_servico = :categoria_servico";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":categoria_servico" => $categoria_servico]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

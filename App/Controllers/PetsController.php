@@ -38,11 +38,15 @@ class PetsController
         $clientes = $this->clienteRepository->ReadClienteRepository(null, null, null);
         $results = $this->PetsController();
         $user = $this->authController->InicioController();
-        extract($results);
-        extract($especies);
-        extract($racas);
-        extract($clientes);
-        extract(['usuario' => $user] ?? "");
+
+        $dados = array_merge($results, [
+            'especies' => $especies,
+            'racas' => $racas,
+            'clientes' => $clientes,
+            'usuario' => $user
+        ]);
+
+        extract($dados);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Pets.php";

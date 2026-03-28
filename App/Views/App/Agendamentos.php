@@ -50,7 +50,7 @@ $horarios = [
                         <!-- CLIENTE -->
                         <div class="mb-3">
                             <label for="cliente_id_fk" class="form-label">Cliente</label>
-                            <select name="cliente_id_fk" id="cliente_id_fk" class="form-select" data-url="<?= BASE_URL ?>/pets/buscarPets">
+                            <select name="cliente_id_fk" id="cliente_id_fk_agendamento" class="form-select" data-url="<?= BASE_URL ?>/agendamentos/buscarPets">
                                 <option value="" selected>Selecionar</option>
                                 <?php foreach ($clientes as $cliente) { ?>
                                     <option value="<?= $cliente['id'] ?>"><?= $cliente['nome'] ?></option>
@@ -59,8 +59,8 @@ $horarios = [
                         </div>
                         <!-- PET -->
                         <div class="mb-3">
-                            <label for="cliente_id_fk" class="form-label">Pet</label>
-                            <select name="cliente_id_fk" id="cliente_id_fk" class="form-select" disabled>
+                            <label for="pet_id_fk_agendamento" class="form-label">Pet</label>
+                            <select name="pet_id_fk_agendamento" id="pet_id_fk_agendamento" class="form-select" disabled>
                                 <option value="">Selecione primeiro o cliente</option>
                             </select>
                         </div>
@@ -78,6 +78,54 @@ $horarios = [
                             <label for="data_agendada" class="form-label">Data Agendada</label>
                             <input type="date" name="data_agendada" class="form-control" id="data_agendada">
                         </div>
+
+                        <!-- SERVIÇOS -->
+                        <div class="accordion mb-3" id="accordionFlushExample">
+                            <label for="" class="form-label">Serviços (Categoria)</label>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Estetica
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body row">
+                                        <?php foreach ($servicosEstetica as $estetica) { ?>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $estetica['id_servico'] ?>" id="checkDefault">
+                                                    <label class="form-check-label" for="checkDefault">
+                                                        <?= $estetica['nome_servico'] ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        Consulta
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body row g-2">
+                                        <?php foreach ($servicosConsulta as $consulta) { ?>
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $consulta['id_servico'] ?>" id="checkDefault">
+                                                    <label class="form-check-label" for="checkDefault">
+                                                        <?= $consulta['nome_servico'] ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label for="descricao_agendamento" class="form-label">Descrição</label>
                             <textarea class="form-control" name="descricao_agendamento" placeholder="Descreva o agendamento" id="descricao_agendamento" rows="5"></textarea>

@@ -26,9 +26,9 @@ class EspeciesController
     {
         $results = $this->EspeciesController();
         $user = $this->authController->InicioController();
+        $results['usuario'] = $user;
 
         extract($results);
-        extract(['usuario' => $user] ?? []);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Especies.php";

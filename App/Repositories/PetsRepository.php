@@ -120,4 +120,11 @@ class PetsRepository
         $stmt->execute([":id_especie_fk" => $especie_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getPetsPorCliente($cliente_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT id_pet, nome_pet FROM pets WHERE cliente_id_fk = :cliente_id_fk");
+        $stmt->execute([":cliente_id_fk" => $cliente_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
