@@ -7,6 +7,7 @@ class Servicos
     private int $id_servico;
     private string $nome_servico;
     private string $preco_servico;
+    private string $categoria_servico;
     private int $duracao_minutos;
     private string $descricao_servico;
 
@@ -106,6 +107,26 @@ class Servicos
     public function setDescricao_servico($descricao_servico)
     {
         $this->descricao_servico = $descricao_servico;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of categoria_servico
+     */
+    public function getCategoria_servico()
+    {
+        return $this->categoria_servico;
+    }
+
+    /**
+     * Set the value of categoria_servico
+     *
+     * @return  self
+     */
+    public function setCategoria_servico($categoria_servico)
+    {
+        $this->categoria_servico = $categoria_servico;
 
         return $this;
     }

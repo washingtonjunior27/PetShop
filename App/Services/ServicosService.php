@@ -18,7 +18,7 @@ class ServicosService
     {
         if (
             !$servico->getNome_servico() || !$servico->getPreco_servico()
-            || !$servico->getDuracao_minutos()
+            || !$servico->getCategoria_servico() || !$servico->getDuracao_minutos()
         ) {
             return ['erro' => "Preencha os campos vazios!"];
         }
@@ -50,7 +50,7 @@ class ServicosService
     {
         if (
             !$servico->getNome_servico() || !$servico->getPreco_servico()
-            || !$servico->getDuracao_minutos()
+            || !$servico->getCategoria_servico() || !$servico->getDuracao_minutos()
         ) {
             return ['erro' => "Preencha os campos vazios!"];
         }

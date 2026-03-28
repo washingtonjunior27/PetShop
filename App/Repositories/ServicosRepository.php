@@ -19,12 +19,13 @@ class ServicosRepository
 
     public function CreateServicoRepository(Servicos $servico)
     {
-        $sql = "INSERT INTO servicos (nome_servico, preco_servico, duracao_minutos, descricao_servico)
-                VALUES (:nome_servico, :preco_servico, :duracao_minutos, :descricao_servico)";
+        $sql = "INSERT INTO servicos (nome_servico, preco_servico, categoria_servico, duracao_minutos, descricao_servico)
+                VALUES (:nome_servico, :preco_servico, :categoria_servico, :duracao_minutos, :descricao_servico)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             ":nome_servico" => $servico->getNome_servico(),
             ":preco_servico" => $servico->getPreco_servico(),
+            ":categoria_servico" => $servico->getCategoria_servico(),
             ":duracao_minutos" => $servico->getDuracao_minutos(),
             ":descricao_servico" => $servico->getDescricao_servico()
         ]);
@@ -84,12 +85,13 @@ class ServicosRepository
     public function UpdateServicoRepository(Servicos $servico)
     {
         $sql = "UPDATE servicos SET nome_servico = :nome_servico, preco_servico = :preco_servico,
-                duracao_minutos = :duracao_minutos, descricao_servico = :descricao_servico
+                categoria_servico = :categoria_servico, duracao_minutos = :duracao_minutos, descricao_servico = :descricao_servico
                 WHERE id_servico = :id_servico";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             ":nome_servico" => $servico->getNome_Servico(),
             ":preco_servico" => $servico->getPreco_servico(),
+            ":categoria_servico" => $servico->getCategoria_servico(),
             ":duracao_minutos" => $servico->getDuracao_minutos(),
             ":descricao_servico" => $servico->getDescricao_servico(),
             ":id_servico" => $servico->getId_servico()

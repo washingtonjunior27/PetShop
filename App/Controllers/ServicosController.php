@@ -47,6 +47,7 @@ class ServicosController
                 number_format((float)$preco, 2, '.', '')
             );
 
+            $this->servicos->setCategoria_servico(trim($_POST['categoria_servico']));
             $this->servicos->setDuracao_minutos((int) $_POST['duracao_minutos']);
             $this->servicos->setDescricao_servico(trim($_POST['descricao_servico'] ?? ""));
 
@@ -108,6 +109,7 @@ class ServicosController
                 number_format((float)$preco, 2, '.', '')
             );
 
+            $this->servicos->setCategoria_servico(trim($_POST['categoria_servico']));
             $this->servicos->setDuracao_minutos((int) $_POST['duracao_minutos']);
             $this->servicos->setDescricao_servico(trim($_POST['descricao_servico'] ?? ""));
 

@@ -160,6 +160,10 @@
 
                     <span class="text-light fs-6 fw-semibold">Atendimentos</span>
                 </a>
+                <a href="<?= BASE_URL ?>/vacinacao" class="nav-link sidenav-item ps-3 <?= $page == "vacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+
+                    <span class="text-light fs-6 fw-semibold">Vacinação</span>
+                </a>
             </div>
         </div>
     </div>
@@ -177,12 +181,34 @@
 
 <!-- ATENDIMENTOS VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "atendimentos" ? "active-sidenav" : "" ?>">
-        <a href="<?= BASE_URL ?>/atendimentos" class="nav-link d-flex align-items-center gap-3 ">
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") ? "active-sidenav" : "" ?>"
+        data-bs-toggle="collapse"
+        href="#atendimentoSidebar"
+        role="button"
+        aria-expanded="false">
 
+        <span class="d-flex align-items-center gap-3">
             <i class="fa-solid fa-stethoscope text-light fs-2"></i>
-            <span class="text-light fs-6 fw-semibold">Atendimentos</span>
-        </a>
+            <span class="text-light fs-6 fw-semibold">Atendimento</span>
+        </span>
+
+        <i class="fa-solid fa-angles-down"></i>
+    </a>
+
+
+    <div class="collapse w-100" id="atendimentoSidebar">
+        <div class="ps-5">
+            <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
+                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" ? "active-sidenav py-2 ps-2" : "" ?>">
+
+                    <span class="text-light fs-6 fw-semibold">Atendimentos</span>
+                </a>
+                <a href="<?= BASE_URL ?>/vacinacao" class="nav-link sidenav-item ps-3 <?= $page == "vacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+
+                    <span class="text-light fs-6 fw-semibold">Vacinação</span>
+                </a>
+            </div>
+        </div>
     </div>
 <?php } ?>
 
@@ -213,6 +239,9 @@
                 <a href="<?= BASE_URL ?>/historicoServicos" class="nav-link ps-3 sidenav-item <?= $page == "historicoServicos" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico de Serviços</span>
                 </a>
+                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+                    <span class="text-light fs-6 fw-semibold">Historico de Vacinação</span>
+                </a>
             </div>
         </div>
     </div>
@@ -220,11 +249,32 @@
 
 <!-- HISTORICO MEDICO VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "historico" ? "active-sidenav" : "" ?>">
-        <a href="<?= BASE_URL ?>/historico" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-regular fa-file-lines text-light fs-2"></i>
-            <span class="text-light fs-6 fw-semibold">Historico Medico</span>
-        </a>
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "historico") || ($page == "historicoServicos") ? "active-sidenav" : "" ?>"
+        data-bs-toggle="collapse"
+        href="#historicoSidebar"
+        role="button"
+        aria-expanded="false">
+
+        <span class="d-flex align-items-center gap-3">
+            <i class="fa-regular fa-clock fs-2 text-light"></i>
+            <span class="text-light fs-6 fw-semibold">Histórico</span>
+        </span>
+
+        <i class="fa-solid fa-angles-down"></i>
+    </a>
+
+
+    <div class="collapse w-100" id="historicoSidebar">
+        <div class="ps-5">
+            <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
+                <a href="<?= BASE_URL ?>/historico" class="nav-link ps-3 sidenav-item<?= $page == "historico" ? "active-sidenav py-2 ps-2" : "" ?>">
+                    <span class="text-light fs-6 fw-semibold">Historico Medico</span>
+                </a>
+                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+                    <span class="text-light fs-6 fw-semibold">Historico de Vacinação</span>
+                </a>
+            </div>
+        </div>
     </div>
 <?php } ?>
 

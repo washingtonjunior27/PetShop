@@ -17,9 +17,26 @@
                         <label for="preco_servico" class="form-label">Preço</label>
                         <input min="1" step="0.01" type="number" name="preco_servico" class="form-control" id="modal_preco_servico" placeholder="Informe o preço do serviço">
                     </div>
+                    <div class="d-flex gap-2 flex-column">
+                        <label for="categoria_servico">Categoria</label>
+                        <div class="d-flex gap-4">
+                            <div class="form-check">
+                                <input id="estetica" value="Estetica" class="form-check-input" type="radio" name="categoria_servico">
+                                <label class="form-check-label" for="categoria_servico">
+                                    Estetica
+                                </label>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input id="consulta" value="Consulta" class="form-check-input" type="radio" name="categoria_servico">
+                                <label class="form-check-label" for="categoria_servico">
+                                    Consulta
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-3">
-                        <label for="duracao_minutos" class="form-label">Duração (Minutos)</label>
-                        <input min="1" step="1" type="number" name="duracao_minutos" class="form-control" id="modal_duracao_minutos" placeholder="Informe a duração do serviço em minutos">
+                        <label for="duracao_minutos" class="form-label">Duração (Minutos) (Min - 30)</label>
+                        <input min="30" step="30" type="number" name="duracao_minutos" class="form-control" id="modal_duracao_minutos" placeholder="Informe a duração do serviço em minutos">
                     </div>
                     <div class="mb-3">
                         <label for="descricao_servico" class="form-label">Descrição</label>
