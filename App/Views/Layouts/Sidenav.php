@@ -27,7 +27,7 @@
     </a>
 <?php } ?>
 
-<div class="collapse w-100" id="usuariosSidebar">
+<div class="collapse w-100" id="usuariosSidebar" data-bs-parent="#<?= $sidenavParent ?>">
     <div class="ps-5">
         <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
             <?php if ($_SESSION['user']['role'] === "Admin") { ?>
@@ -72,7 +72,7 @@
     </a>
 
 
-    <div class="collapse w-100" id="cadastrosSidebar">
+    <div class="collapse w-100" id="cadastrosSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
                 <a href="<?= BASE_URL ?>/especies" class="nav-link sidenav-item ps-3 <?= $page == "especies" ? "active-sidenav py-2 ps-2" : "" ?>">
@@ -89,16 +89,6 @@
     </div>
 <?php } ?>
 
-<!-- CADASTRO DE VACINAS DO VETERINARIO -->
-<?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "vacinas" ? "active-sidenav" : "" ?>">
-        <a href="<?= BASE_URL ?>/vacinas" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-syringe text-light fs-2"></i>
-            <span class="text-light fs-6 fw-semibold">Vacinas</span>
-        </a>
-    </div>
-<?php } ?>
-
 <!-- PETS PARA ADMIN E ATENDENTE-->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
     <div class="sidenav-item w-100 ps-5 <?= $page == "pets" ? "active-sidenav" : "" ?>">
@@ -109,7 +99,7 @@
     </div>
 <?php } ?>
 
-<!-- AGENDAMENTOS -->
+<!-- AGENDAMENTOS DROPDOWN -->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
     <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "agendamentos") || ($page == "confirmacoes") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
@@ -126,7 +116,7 @@
     </a>
 
 
-    <div class="collapse w-100" id="agendaSidebar">
+    <div class="collapse w-100" id="agendaSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
                 <a href="<?= BASE_URL ?>/agendamentos" class="nav-link sidenav-item ps-3 <?= $page == "agendamentos" ? "active-sidenav py-2 ps-2" : "" ?>">
@@ -140,7 +130,7 @@
     </div>
 <?php } ?>
 
-<!-- Atendimento - Meus serviços, Atendimentos e Vacinação - ADMIN -->
+<!-- Atendimento - Meus serviços, Atendimentos e Vacinação - ADMIN DROPDOWN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
     <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") || ($page == "vacinacao") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
@@ -157,7 +147,7 @@
     </a>
 
 
-    <div class="collapse w-100" id="atendimentoSidebar">
+    <div class="collapse w-100" id="atendimentoSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
                 <a href="<?= BASE_URL ?>/meusServicos" class="nav-link sidenav-item ps-3 <?= $page == "meusServicos" ? "active-sidenav py-2 ps-2" : "" ?>">
@@ -202,7 +192,7 @@
     </a>
 
 
-    <div class="collapse w-100" id="atendimentoSidebar">
+    <div class="collapse w-100" id="atendimentoSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
                 <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" || $page == "atendimentos/Diagnostico" ? "active-sidenav py-2 ps-2" : "" ?>">
@@ -221,7 +211,12 @@
 
 <!-- HISTORICOS - ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "historico") || ($page == "historicoServicos") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex 
+                justify-content-between align-items-center 
+                <?= ($page == "historicoMedico") || ($page == "historicoMedico/VisualizarHistoricoMedico") ||
+                    ($page == "historicoServicos") || ($page == "historicoServicos/VisualizarHistoricoServicos") ||
+                    ($page == "historicoVacinacao") || ($page == "historicoVacinacao/VisualizarHistoricoVacinacao")
+                    ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#historicoSidebar"
         role="button"
@@ -236,16 +231,16 @@
     </a>
 
 
-    <div class="collapse w-100" id="historicoSidebar">
+    <div class="collapse w-100" id="historicoSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
-                <a href="<?= BASE_URL ?>/historico" class="nav-link ps-3 sidenav-item<?= $page == "historico" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/historicoMedico" class="nav-link ps-3 sidenav-item <?= ($page == "historicoMedico") || ($page == "historicoMedico/VisualizarHistoricoMedico") ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico Medico</span>
                 </a>
-                <a href="<?= BASE_URL ?>/historicoServicos" class="nav-link ps-3 sidenav-item <?= $page == "historicoServicos" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/historicoServicos" class="nav-link ps-3 sidenav-item <?= $page == "historicoServicos" || $page == "historicoServicos/VisualizarHistoricoServicos" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico de Serviços</span>
                 </a>
-                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" || $page == "historicoVacinacao/VisualizarHistoricoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico de Vacinação</span>
                 </a>
             </div>
@@ -255,7 +250,12 @@
 
 <!-- HISTORICO MEDICO VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "historico") || ($page == "historicoServicos") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex 
+            justify-content-between align-items-center 
+            <?=
+            ($page == "historicoMedico") || ($page == "historicoMedico/VisualizarHistoricoMedico") ||
+                ($page == "historicoVacinacao") || ($page == "historicoVacinacao/VisualizarHistoricoVacinacao")
+                ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#historicoSidebar"
         role="button"
@@ -270,13 +270,13 @@
     </a>
 
 
-    <div class="collapse w-100" id="historicoSidebar">
+    <div class="collapse w-100" id="historicoSidebar" data-bs-parent="#<?= $sidenavParent ?>">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
-                <a href="<?= BASE_URL ?>/historico" class="nav-link ps-3 sidenav-item<?= $page == "historico" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/historicoMedico" class="nav-link ps-3 sidenav-item <?= $page == "historicoMedico" || $page == "historicoMedico/VisualizarHistoricoMedico" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico Medico</span>
                 </a>
-                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/historicoVacinacao" class="nav-link ps-3 sidenav-item <?= $page == "historicoVacinacao" || $page == "historicoVacinacao/VisualizarHistoricoVacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Historico de Vacinação</span>
                 </a>
             </div>
@@ -287,7 +287,7 @@
 
 <!-- HISTORICO DE SERVIÇOS ESTETICISTA -->
 <?php if ($_SESSION['user']['role'] === "Esteticista") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "historicoServicos" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-5 <?= $page == "historicoServicos" || $page == "historicoServicos/VisualizarHistoricoServicos" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/historicoServicos" class="nav-link d-flex align-items-center gap-3 ">
             <i class="fa-solid fa-clipboard text-light fs-2"></i>
             <span class="text-light fs-6 fw-semibold">Historico de Serviços</span>
@@ -298,8 +298,8 @@
 
 <!-- LEMBRETES -->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "lembrete" ? "active-sidenav" : "" ?>">
-        <a href="<?= BASE_URL ?>/lembrete" class="nav-link d-flex align-items-center gap-3 ">
+    <div class="sidenav-item w-100 ps-5 <?= $page == "lembretes" ? "active-sidenav" : "" ?>">
+        <a href="<?= BASE_URL ?>/lembretes" class="nav-link d-flex align-items-center gap-3 ">
             <i class="fa-solid fa-bookmark text-light fs-2"></i>
             <span class="text-light fs-6 fw-semibold">Lembretes</span>
         </a>

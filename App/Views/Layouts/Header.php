@@ -60,8 +60,11 @@ switch ($hojeDiaSemana) {
                 </a>
 
                 <!-- SIDENAV -->
-                <div class="mt-4 d-flex flex-column gap-3 flex-grow-1">
-                    <?php require __DIR__ . "/Sidenav.php" ?>
+                <div class="mt-4 d-flex flex-column gap-3 flex-grow-1" id="sidenavAccordion">
+                    <?php
+                    $sidenavParent = "sidenavAccordion";
+                    require __DIR__ . "/Sidenav.php";
+                    ?>
                 </div>
 
                 <!-- LOGOUT -->

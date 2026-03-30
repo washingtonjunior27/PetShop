@@ -8,8 +8,11 @@
             aria-label="Close"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
-        <div class="sidenav-links d-flex flex-column gap-4 flex-grow-1">
-            <?php require "Sidenav.php" ?>
+        <div id="sidenavMobileAccordion" class="sidenav-links d-flex flex-column gap-4 flex-grow-1">
+            <?php
+            $sidenavParent = "sidenavMobileAccordion";
+            require "Sidenav.php";
+            ?>
         </div>
 
         <div class="sidenav-item w-100 ps-5 border-5 border-top border-light py-4">
