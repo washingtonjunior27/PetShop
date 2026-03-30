@@ -47,6 +47,12 @@
                                         Consulta
                                     </label>
                                 </div>
+                                <div class="form-check mb-4">
+                                    <input id="vacina" value="Vacina" class="form-check-input" type="radio" name="categoria_servico">
+                                    <label class="form-check-label" for="categoria_servico">
+                                        Vacina
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -76,10 +82,11 @@
                         if (count($servicos) > 0) {
                             foreach ($servicos as $servico) { ?>
                                 <div
-                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-3 px-3">
                                     <div class="d-flex flex-column text-light gap-1">
                                         <small><?= $servico['nome_servico'] ?></small>
                                         <small>R$<?= $servico['preco_servico'] ?></small>
+                                        <small><?= $servico['categoria_servico'] ?></small>
                                         <small><?= $servico['duracao_minutos'] ?> minutos</small>
                                     </div>
                                     <div class="d-flex flex-column align-items-center text-light gap-2">

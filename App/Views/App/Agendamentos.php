@@ -64,16 +64,8 @@ $horarios = [
                                 <option value="">Selecione primeiro o cliente</option>
                             </select>
                         </div>
-                        <!-- VETERINARIOS -->
-                        <div class="mb-3">
-                            <label for="veterinario_id_fk" class="form-label">Veterinario</label>
-                            <select name="veterinario_id_fk" id="veterinario_id_fk" class="form-select">
-                                <option value="" selected>Selecionar</option>
-                                <?php foreach ($veterinarios as $veterinario) { ?>
-                                    <option value="<?= $veterinario['id'] ?>"><?= $veterinario['nome'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
+
+                        <!-- DATA AGENDADA -->
                         <div class="mb-3">
                             <label for="data_agendada" class="form-label">Data Agendada</label>
                             <input type="date" name="data_agendada" class="form-control" id="data_agendada">
@@ -124,6 +116,38 @@ $horarios = [
                                     </div>
                                 </div>
                             </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-CollapseThree" aria-expanded="false" aria-controls="flush-CollapseThree">
+                                        Vacina
+                                    </button>
+                                </h2>
+                                <div id="flush-CollapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body row g-2">
+                                        <?php foreach ($servicosVacina as $vacina) { ?>
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $vacina['id_servico'] ?>" id="checkDefault">
+                                                    <label class="form-check-label" for="checkDefault">
+                                                        <?= $vacina['nome_servico'] ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VETERINARIOS -->
+                        <div class="mb-3">
+                            <label for="responsavel_id_fk" class="form-label">Responsável</label>
+                            <select name="responsavel_id_fk" id="responsavel_id_fk" class="form-select">
+                                <option value="" selected>Selecionar</option>
+                                <?php foreach ($responsavels as $responsavel) { ?>
+                                    <option value="<?= $responsavel['id'] ?>"><?= $responsavel['login'] . " (" . $responsavel['role'] . ")" ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
 
                         <div class="mb-3">

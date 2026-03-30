@@ -1,5 +1,13 @@
 <div class="container">
-    <h1 class="fs-3 fw-bold my-5">Confirmar Agendamentos</h1>
+    <h1 class="fs-3 fw-bold my-5">Vacinação</h1>
+
+    <button
+        type="button"
+        class="btn main-bg text-light"
+        data-bs-toggle="modal"
+        data-bs-target="#cadastrarVacinacaoModal">
+        Nova
+    </button>
 
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
@@ -21,7 +29,7 @@
                 <?php }
                 unset($_SESSION['sucesso']) ?>
 
-                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/confirmacoes">
+                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/meusServicos">
                     <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
                 </form>
@@ -31,108 +39,69 @@
 
 
         <div class="bg-white shadow-lg px-3 pt-3 rounded mt-3">
-            <h2 class="fs-4 fw-bold ">Lista de Agendamentos</h2>
+            <h2 class="fs-4 fw-bold ">Lista de Vacinações</h2>
 
             <div class="table-responsive mt-4">
                 <table class="table table-striped-columns align-middle text-nowrap">
                     <thead class="main-bg">
                         <tr>
                             <th class="fw-bold text-uppercase" scope="col">Ações</th>
-                            <th class="fw-bold text-uppercase" scope="col">Data e Hora</th>
                             <th class="fw-bold text-uppercase" scope="col">Pet</th>
-                            <th class="fw-bold text-uppercase" scope="col">Cliente</th>
-                            <th class="fw-bold text-uppercase" scope="col">Telefone</th>
-                            <th class="fw-bold text-uppercase" scope="col">Responsável</th>
+                            <th class="fw-bold text-uppercase" scope="col">Dono</th>
+                            <th class="fw-bold text-uppercase" scope="col">Vacina</th>
+                            <th class="fw-bold text-uppercase" scope="col">Data de Aplicação</th>
+                            <th class="fw-bold text-uppercase" scope="col">Prox. Dose</th>
+                            <th class="fw-bold text-uppercase" scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                 <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
                             </td>
-                            <td>29/03/2026 - 15:00</td>
                             <td>Lady</td>
                             <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
+                            <td>V8</td>
+                            <td>29/03/2026</td>
+                            <td>29/03/2027</td>
+                            <td>🟢 Em dia</td>
                         </tr>
                         <tr>
                             <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                 <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
                             </td>
-                            <td>29/03/2026 - 15:00</td>
                             <td>Lady</td>
                             <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
+                            <td>V8</td>
+                            <td>29/03/2026</td>
+                            <td>---</td>
+                            <td>🟢 Finalizada</td>
                         </tr>
                         <tr>
                             <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                 <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
                             </td>
-                            <td>29/03/2026 - 15:00</td>
                             <td>Lady</td>
                             <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
+                            <td>V8</td>
+                            <td>10/04/2025</td>
+                            <td>10/04/2026</td>
+                            <td>🟠 Atenção</td>
                         </tr>
                         <tr>
                             <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                 <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
                             </td>
-                            <td>29/03/2026 - 15:00</td>
                             <td>Lady</td>
                             <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
+                            <td>V8</td>
+                            <td>10/03/2025</td>
+                            <td>10/03/2026</td>
+                            <td>🔴 Atrasada</td>
                         </tr>
                     </tbody>
                 </table>
@@ -159,3 +128,5 @@
         </nav>
     </div>
 </div>
+
+<?php require __DIR__ . "/../Modals/CadastrarVacinacao.php"; ?>

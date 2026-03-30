@@ -84,9 +84,6 @@
                 <a href="<?= BASE_URL ?>/servicos" class="nav-link sidenav-item ps-3 <?= $page == "servicos" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Serviços</span>
                 </a>
-                <a href="<?= BASE_URL ?>/vacinas" class="nav-link sidenav-item ps-3 <?= $page == "vacinas" ? "active-sidenav py-2 ps-2" : "" ?>">
-                    <span class="text-light fs-6 fw-semibold">Vacinas</span>
-                </a>
             </div>
         </div>
     </div>
@@ -143,9 +140,9 @@
     </div>
 <?php } ?>
 
-<!-- Atendimento - Meus serviços e Atendimentos - ADMIN -->
+<!-- Atendimento - Meus serviços, Atendimentos e Vacinação - ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") || ($page == "vacinacao") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#atendimentoSidebar"
         role="button"
@@ -166,8 +163,7 @@
                 <a href="<?= BASE_URL ?>/meusServicos" class="nav-link sidenav-item ps-3 <?= $page == "meusServicos" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Meus Serviços</span>
                 </a>
-                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" ? "active-sidenav py-2 ps-2" : "" ?>">
-
+                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" || $page == "atendimentos/Diagnostico" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Atendimentos</span>
                 </a>
                 <a href="<?= BASE_URL ?>/vacinacao" class="nav-link sidenav-item ps-3 <?= $page == "vacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
@@ -191,7 +187,7 @@
 
 <!-- ATENDIMENTOS VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "vacinacao") || ($page == "atendimentos") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#atendimentoSidebar"
         role="button"
@@ -209,7 +205,7 @@
     <div class="collapse w-100" id="atendimentoSidebar">
         <div class="ps-5">
             <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
-                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" ? "active-sidenav py-2 ps-2" : "" ?>">
+                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" || $page == "atendimentos/Diagnostico" ? "active-sidenav py-2 ps-2" : "" ?>">
 
                     <span class="text-light fs-6 fw-semibold">Atendimentos</span>
                 </a>

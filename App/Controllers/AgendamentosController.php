@@ -4,41 +4,43 @@ namespace App\Controllers;
 
 use App\Controllers\AuthController;
 use App\Repositories\ClientesRepository;
-use App\Repositories\VeterinariosRepository;
 use App\Repositories\PetsRepository;
 use App\Repositories\ServicosRepository;
+use App\Repositories\AgendamentosRepository;
 
 class AgendamentosController
 {
     private $authController;
     private $clientesRepository;
-    private $veterinariosRepository;
     private $petsRepository;
     private $servicosRepository;
+    private $agendamentosRepository;
 
     public function __construct()
     {
         $this->authController = new AuthController();
         $this->clientesRepository = new ClientesRepository();
-        $this->veterinariosRepository = new VeterinariosRepository();
         $this->petsRepository = new PetsRepository();
         $this->servicosRepository = new ServicosRepository();
+        $this->agendamentosRepository = new AgendamentosRepository();
     }
 
     public function index()
     {
         $clientes = $this->clientesRepository->ReadClienteRepository(null, null, null);
-        $veterinarios = $this->veterinariosRepository->ReadVeterinarioRepository(null, null, null);
+        $responsavel = $this->agendamentosRepository->ReadAllFuncAndVetRepository();
         $servicosEstetica = $this->servicosRepository->TrackServicosCategory("Estetica");
         $servicosConsulta = $this->servicosRepository->TrackServicosCategory("Consulta");
+        $servicosVacina = $this->servicosRepository->TrackServicosCategory("Vacina");
         $user = $this->authController->InicioController();
         // $result = $this->AgendamentosController();
 
         $dados = [
             'clientes' => $clientes,
-            'veterinarios' => $veterinarios,
+            'responsavels' => $responsavel,
             'servicosEstetica' => $servicosEstetica,
             'servicosConsulta' => $servicosConsulta,
+            'servicosVacina' => $servicosVacina,
             'usuario' => $user
         ];
         // extract($result);

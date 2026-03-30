@@ -32,6 +32,12 @@
                                     Consulta
                                 </label>
                             </div>
+                            <div class="form-check mb-4">
+                                <input id="vacina" value="Vacina" class="form-check-input" type="radio" name="categoria_servico">
+                                <label class="form-check-label" for="categoria_servico">
+                                    Vacina
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-3">
