@@ -49,8 +49,8 @@ $horarios = [
                     <form class="mt-3" method="POST" action="<?= BASE_URL ?>/agendamentos/CriarAgendamento">
                         <!-- CLIENTE -->
                         <div class="mb-3">
-                            <label for="cliente_id_fk" class="form-label">Cliente</label>
-                            <select name="cliente_id_fk" id="cliente_id_fk_agendamento" class="form-select" data-url="<?= BASE_URL ?>/agendamentos/buscarPets">
+                            <label for="cliente_id_agend" class="form-label">Cliente</label>
+                            <select name="cliente_id_agend" id="cliente_id_agend" class="form-select" data-url="<?= BASE_URL ?>/agendamentos/buscarPets">
                                 <option value="" selected>Selecionar</option>
                                 <?php foreach ($clientes as $cliente) { ?>
                                     <option value="<?= $cliente['id'] ?>"><?= $cliente['nome'] ?></option>
@@ -59,16 +59,16 @@ $horarios = [
                         </div>
                         <!-- PET -->
                         <div class="mb-3">
-                            <label for="pet_id_fk_agendamento" class="form-label">Pet</label>
-                            <select name="pet_id_fk_agendamento" id="pet_id_fk_agendamento" class="form-select" disabled>
+                            <label for="pet_id_agend" class="form-label">Pet</label>
+                            <select name="pet_id_agend" id="pet_id_agend" class="form-select" disabled>
                                 <option value="">Selecione primeiro o cliente</option>
                             </select>
                         </div>
 
                         <!-- DATA AGENDADA -->
                         <div class="mb-3">
-                            <label for="data_agendada" class="form-label">Data Agendada</label>
-                            <input type="date" name="data_agendada" class="form-control" id="data_agendada">
+                            <label for="data_agend" class="form-label">Data Agendada</label>
+                            <input type="date" name="data_agend" class="form-control" id="data_agend">
                         </div>
 
                         <!-- SERVIÇOS -->
@@ -85,7 +85,7 @@ $horarios = [
                                         <?php foreach ($servicosEstetica as $estetica) { ?>
                                             <div class="col-md-3">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $estetica['id_servico'] ?>" id="checkDefault">
+                                                    <input class="form-check-input check-estet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $estetica['id_servico'] ?>" id="checkDefault">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $estetica['nome_servico'] ?>
                                                     </label>
@@ -106,7 +106,7 @@ $horarios = [
                                         <?php foreach ($servicosConsulta as $consulta) { ?>
                                             <div class="col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $consulta['id_servico'] ?>" id="checkDefault">
+                                                    <input class="form-check-input check-vet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $consulta['id_servico'] ?>" id="checkDefault">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $consulta['nome_servico'] ?>
                                                     </label>
@@ -127,7 +127,7 @@ $horarios = [
                                         <?php foreach ($servicosVacina as $vacina) { ?>
                                             <div class="col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="servico_agendamento[]" type="checkbox" value="<?= $vacina['id_servico'] ?>" id="checkDefault">
+                                                    <input class="form-check-input check-vet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $vacina['id_servico'] ?>" id="checkDefault">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $vacina['nome_servico'] ?>
                                                     </label>
@@ -139,20 +139,20 @@ $horarios = [
                             </div>
                         </div>
 
-                        <!-- VETERINARIOS -->
+                        <!-- RESPONSAVEIS -->
                         <div class="mb-3">
-                            <label for="responsavel_id_fk" class="form-label">Responsável</label>
-                            <select name="responsavel_id_fk" id="responsavel_id_fk" class="form-select">
-                                <option value="" selected>Selecionar</option>
+                            <label for="responsavel_id_agend" class="form-label">Responsável</label>
+                            <select name="responsavel_id_agend" id="responsavel_id_agend" class="form-select">
+                                <option value="" selected>Selecione primeiro o(s) serviço(s)</option>
                                 <?php foreach ($responsavels as $responsavel) { ?>
-                                    <option value="<?= $responsavel['id'] ?>"><?= $responsavel['login'] . " (" . $responsavel['role'] . ")" ?></option>
+                                    <option value="<?= $responsavel['id'] ?>" data-role="<?= $responsavel['role'] ?>"><?= $responsavel['login'] . " (" . $responsavel['role'] . ")" ?></option>
                                 <?php } ?>
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="descricao_agendamento" class="form-label">Descrição</label>
-                            <textarea class="form-control" name="descricao_agendamento" placeholder="Descreva o agendamento" id="descricao_agendamento" rows="5"></textarea>
+                            <label for="descricao_agend" class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao_agend" placeholder="Descreva o agendamento (opcional)" id="descricao_agend" rows="5"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary main-bg w-25">Cadastrar</button>
                     </form>
@@ -169,7 +169,7 @@ $horarios = [
                                 <div
                                     class="text-light main-bg py-3 rounded mt-3">
                                     <div class="d-flex text-light gap-1 justify-content-center">
-                                        <input type="radio" value="<?= $horario ?>" name="horario">
+                                        <input type="radio" value="<?= $horario ?>" name="hora_agend_inicio" id="hora_agend_inicio">
                                         <label for="horario"><?= $horario ?></label>
                                     </div>
                                 </div>

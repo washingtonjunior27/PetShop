@@ -106,6 +106,13 @@ class ServicosRepository
         $stmt->execute([':id_servico' => $id_servico]);
     }
 
+    public function TrackServicoId($id_servico)
+    {
+        $sql = "SELECT * FROM servicos WHERE id_servico = :id_servico";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":id_servico" => $id_servico]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     public function TrackServicoRepository($nome_servico)
     {
         $sql = "SELECT * FROM servicos WHERE nome_servico = :nome_servico";

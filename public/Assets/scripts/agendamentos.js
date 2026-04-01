@@ -1,7 +1,7 @@
-document.getElementById('cliente_id_fk_agendamento').addEventListener('change', function(){
+document.getElementById('cliente_id_agend').addEventListener('change', function(){
 
     const clienteId = this.value;
-    const petSelect = document.getElementById('pet_id_fk_agendamento');
+    const petSelect = document.getElementById('pet_id_agend');
 
     const baseUrl = this.getAttribute('data-url');
 
@@ -43,4 +43,59 @@ document.getElementById('cliente_id_fk_agendamento').addEventListener('change', 
         petSelect.innerHTML = '<option value="">Selecione primeiro o cliente</option>';
         petSelect.disabled = true;
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const checksEstetica = document.querySelectorAll('.check-estet-agend');
+    const checksClinico = document.querySelectorAll('.check-vet-agend'); // Vacinas e Consultas
+    const selectResponsavel = document.getElementById('responsavel_id_agend');
+    const optionsResponsavel = selectResponsavel.querySelectorAll('option');
+
+    selectResponsavel.disabled = true;
+
+    function atualizarInterface() {
+        const esteticaAtivo = Array.from(checksEstetica).some(c => c.checked);
+        const clinicoAtivo = Array.from(checksClinico).some(c => c.checked);
+
+        // O select só fica habilitado se (esteticaAtivo OU clinicoAtivo) for verdadeiro
+        selectResponsavel.disabled = !(esteticaAtivo || clinicoAtivo);
+
+        // Se o select for desabilitado agora, aproveite para resetar o valor dele
+        if (selectResponsavel.disabled) {
+            selectResponsavel.value = "";
+        }
+
+        // 1. Bloqueio de Accordions
+        document.getElementById('flush-collapseOne').parentElement.style.opacity = clinicoAtivo ? '0.5' : '1';
+        checksEstetica.forEach(c => c.disabled = clinicoAtivo);
+
+        document.getElementById('flush-collapseTwo').parentElement.style.opacity = esteticaAtivo ? '0.5' : '1';
+        document.getElementById('flush-CollapseThree').parentElement.style.opacity = esteticaAtivo ? '0.5' : '1';
+        checksClinico.forEach(c => c.disabled = esteticaAtivo);
+
+        // 2. Filtro de Responsáveis
+        optionsResponsavel.forEach(opt => {
+            if (opt.value === "") return; // Pula o "Selecionar"
+
+            const role = opt.getAttribute('data-role').toLowerCase();
+            
+            if (esteticaAtivo) {
+                opt.hidden = (role !== 'esteticista' && role !== 'admin');
+            } else if (clinicoAtivo) {
+                opt.hidden = (role !== 'veterinario' && role !== 'admin');
+            } else {
+                opt.hidden = false; // Se nada estiver marcado, mostra todos
+            }
+        });
+        
+        // Reseta o select se o responsável atual ficar escondido
+        if (selectResponsavel.selectedOptions[0]?.hidden) {
+            selectResponsavel.value = "";
+        }
+    }
+
+    // Adiciona o evento em todos os checkboxes
+    [...checksEstetica, ...checksClinico].forEach(input => {
+        input.addEventListener('change', atualizarInterface);
+    });
 });
