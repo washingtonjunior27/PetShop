@@ -50,6 +50,27 @@ class AgendamentosController
         $user = $this->authController->InicioController();
         // $result = $this->AgendamentosController();
 
+        $horarios = [
+            "08:00",
+            "08:30",
+            "09:00",
+            "09:30",
+            "10:00",
+            "10:30",
+            "11:00",
+            "11:30",
+            "13:00",
+            "13:30",
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+        ];
+
         $dados = [
             'clientes' => $clientes,
             'responsavels' => $responsavel,
@@ -86,46 +107,27 @@ class AgendamentosController
     public function CriarAgendamento()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
-                $this->agendamentos->setCliente_id_agend($_POST['cliente_id_agend']);
-                $this->agendamentos->setPet_id_agend($_POST['pet_id_agend']);
-                $this->agendamentos->setData_agend($_POST['data_agend']);
+            $this->agendamentos->setCliente_id_agend((int) ($_POST['cliente_id_agend'] ?? 0));
+            $this->agendamentos->setPet_id_agend((int) ($_POST['pet_id_agend'] ?? 0));
+            $this->agendamentos->setData_agend($_POST['data_agend']);
+            $this->agendamentos->setResponsavel_id_agend((int) ($_POST['responsavel_id_agend'] ?? 0));
+            $this->agendamentos->setHora_agend_inicio($_POST['hora_agend_inicio'] ?? "");
+            $this->agendamentos->setStatus_agend("Agendado");
+            $this->agendamentos->setDescricao_agend(trim($_POST['descricao_agend'] ?? ""));
+            $this->agendamentos->setData_criacao_agend(date("Y-m-d H:i:s"));
 
-                $servicos = [];
-                $duracao_servico = 0;
-                $servicos = $_POST['servico_agendamento'];
-                foreach ($servicos as $servico) {
-                    $servicoReturn = $this->servicosRepository->TrackServicoId($servico);
-                    $this->agendamentosServicos->setId_serv_fk(trim($servico));
-                    $this->agendamentosServicos->setPreco($servicoReturn['preco_servico']);
-                    $this->agendamentosServicos->setExecutado("nao");
+            $servicosSelecionados = $_POST['servico_agendamento'] ?? "";
 
-                    $duracao_servico += $servicoReturn['duracao_minutos'];
-                }
+            $result = $this->agendamentosService->CreateAgendamentosService($this->agendamentos, $servicosSelecionados);
 
-                $this->agendamentos->setResponsavel_id_agend($_POST['responsavel_id_agend']);
-
-                $hora_inicio = $_POST['hora_inicio_agend'];
-                $this->agendamentos->setHora_agend_inicio($hora_inicio);
-
-                $hora_fim = $hora_inicio + $duracao_servico;
-                $this->agendamentos->setHora_agend_fim($hora_fim);
-
-                $this->agendamentos->setStatus_agend("Agendado");
-                $this->agendamentos->setDescricao_agend(trim($_POST['descricao_agend'] ?? ""));
-                $this->agendamentos->setData_criacao_agend(date("Y-m-d H:i:s"));
-
-                $result = $this->agendamentosService->CreateAgendamentosService($this->agendamentos, $this->agendamentosServicos);
-
-                if ($result['erro']) {
-                    $_SESSION['erro'] = $result['erro'];
-                } else {
-                    $result['sucesso'] = $result['sucesso'];
-                }
-
-                header('location: ' . BASE_URL . '/agendamentos');
-                exit;
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
             }
+
+            header('location: ' . BASE_URL . '/agendamentos');
+            exit;
         } else {
             header('location: ' . BASE_URL . '/agendamentos');
             exit;
