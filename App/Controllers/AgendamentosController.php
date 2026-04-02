@@ -45,7 +45,6 @@ class AgendamentosController
         $servicosConsulta = $this->servicosRepository->TrackServicosCategory("Consulta");
         $servicosVacina = $this->servicosRepository->TrackServicosCategory("Vacina");
         $user = $this->authController->InicioController();
-        // $result = $this->AgendamentosController();
 
         $horarios = [
             "08:00",

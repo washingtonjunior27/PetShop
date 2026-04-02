@@ -46,9 +46,9 @@ class ConfirmacoesController
 
         $search = $_GET['search'] ?? "";
 
-        $results = $this->agendamentosRepository->ReadAgendamentosRepository($search, $limit, $offset);
-
-        $total = $this->agendamentosRepository->CountAgendamentosRepository($search);
+        $role = $_SESSION['user']['role'];
+        $results = $this->agendamentosRepository->ReadAgendsRepository($search, $limit, $offset, null, $role, "");
+        $total = $this->agendamentosRepository->CountAgendsRepository($search, null, $role, "");
 
         $totalCeil = ceil($total / $limit);
 

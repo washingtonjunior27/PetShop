@@ -43,6 +43,7 @@
                             <th class="fw-bold text-uppercase" scope="col">Cliente</th>
                             <th class="fw-bold text-uppercase" scope="col">Telefone</th>
                             <th class="fw-bold text-uppercase" scope="col">Responsável</th>
+                            <th class="fw-bold text-uppercase" scope="col">Categoria</th>
                             <th class="fw-bold text-uppercase" scope="col">Status</th>
                         </tr>
                     </thead>
@@ -74,6 +75,7 @@
                                     <td><?= $agend['cliente_nome'] ?></td>
                                     <td><?= $agend['cliente_telefone'] ?></td>
                                     <td><?= $agend['responsavel_login'] ?></td>
+                                    <td><?= $agend['responsavel_role'] ?></td>
                                     <td><?= $agend['status_real'] == "Atrasado" ? "🔴 " . $agend['status_real'] : "🟢" . $agend['status_real'] ?></td>
                                 </tr>
                             <?php  }

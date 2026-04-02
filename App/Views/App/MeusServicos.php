@@ -41,27 +41,47 @@
                             <th class="fw-bold text-uppercase" scope="col">Data e Hora</th>
                             <th class="fw-bold text-uppercase" scope="col">Pet</th>
                             <th class="fw-bold text-uppercase" scope="col">Cliente</th>
+                            <?php
+                            if ($_SESSION['user']['role'] === "Admin") { ?>
+                                <th class="fw-bold text-uppercase" scope="col">Responsavel</th>
+                            <?php  } ?>
                             <th class="fw-bold text-uppercase" scope="col">Serviços</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <button
-                                    type="button"
-                                    class="border-0 bg-white"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#finalizarServicoEsteticoModal">
-                                    <i class="fa-solid fa-check-double fs-3 text-success"></i>
-                                </button>
+                        <?php
+                        if (count($agendamentos) > 0) {
+                            foreach ($agendamentos as $agend) { ?>
+                                <tr>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            class="border-0 bg-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#finalizarServicoEsteticoModal">
+                                            <i class="fa-solid fa-check-double fs-3 text-success"></i>
+                                        </button>
 
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>Banho</td>
-                        </tr>
+                                        <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                    </td>
+                                    <td><?= date('d/m/Y', strtotime($agend['data_agend'])) . ' | ' . date("H:i", strtotime($agend['hora_agend_inicio'])) ?></td>
+                                    <td><?= $agend['nome_pet'] ?></td>
+                                    <td><?= $agend['cliente_nome'] ?></td>
+                                    <?php
+                                    if ($_SESSION['user']['role'] === "Admin") { ?>
+                                        <td><?= $agend['responsavel_login'] ?></td>
+                                    <?php  } ?>
+                                    <td>
+                                        <?= $agend['nomes_servicos'] ?>
+                                    </td>
+                                </tr>
+                            <?php    }
+                        } else { ?>
+                            <tr>
+                                <td colspan="7" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
+                            </tr>
+                        <?php } ?>
+
                     </tbody>
                 </table>
             </div>
@@ -71,19 +91,38 @@
 
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <?php
+                $query = $_GET;
+                unset($query['route']);
+                $range = 2;
+                $start = max(1, $currentPage - $range);
+                $end = min($totalAgendamentos, $currentPage + $range);
+                ?>
+
+                <?php if ($currentPage > 1) {
+                    $query['page'] = $currentPage - 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/meusServicos?<?= http_build_query($query) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php for ($i = $start; $i <= $end; $i++) {
+                    $query['page'] = $i; ?>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/meusServicos?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                <?php } ?>
+
+                <?php if ($currentPage < $totalAgendamentos) {
+                    $query['page'] = $currentPage + 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/meusServicos?<?= http_build_query($query) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
     </div>
