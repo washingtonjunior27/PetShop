@@ -43,118 +43,71 @@
                             <th class="fw-bold text-uppercase" scope="col">Cliente</th>
                             <th class="fw-bold text-uppercase" scope="col">Telefone</th>
                             <th class="fw-bold text-uppercase" scope="col">Responsável</th>
+                            <th class="fw-bold text-uppercase" scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>29/03/2026 - 15:00</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>92992685340</td>
-                            <td>Washington Junior</td>
-                        </tr>
+                        <?php
+                        if (count($agendamentos) > 0) {
+                            foreach ($agendamentos as $agend) { ?>
+                                <tr>
+                                    <td>
+                                        <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                        <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                    </td>
+                                    <td><?= date('d/m/Y', strtotime($agend['data_agend'])) . ' | ' . date("H:i", strtotime($agend['hora_agend_inicio'])) ?></td>
+                                    <td><?= $agend['nome_pet'] ?></td>
+                                    <td><?= $agend['cliente_nome'] ?></td>
+                                    <td><?= $agend['cliente_telefone'] ?></td>
+                                    <td><?= $agend['responsavel_login'] ?></td>
+                                    <td><?= $agend['status_real'] == "Atrasado" ? "🔴 " . $agend['status_real'] : "🟢" . $agend['status_real'] ?></td>
+                                </tr>
+                            <?php  }
+                        } else { ?>
+                            <tr>
+                                <td colspan="7" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
         </div>
 
-
+        <!-- PAGINAÇÃO -->
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <?php
+                $query = $_GET;
+                unset($query['route']);
+                $range = 2;
+                $start = max(1, $currentPage - $range);
+                $end = min($totalAgendamentos, $currentPage + $range);
+                ?>
+
+                <?php if ($currentPage > 1) {
+                    $query['page'] = $currentPage - 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php for ($i = $start; $i <= $end; $i++) {
+                    $query['page'] = $i; ?>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                <?php } ?>
+
+                <?php if ($currentPage < $totalAgendamentos) {
+                    $query['page'] = $currentPage + 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
     </div>
