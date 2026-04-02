@@ -137,4 +137,14 @@ class AgendamentosRepository
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function UpdateStatusAgend($status_agend, $id_agend)
+    {
+        $sql = "UPDATE agendamentos SET status_agend = :status_agend WHERE id_agend = :id_agend";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':status_agend' => $status_agend,
+            ':id_agend' => $id_agend
+        ]);
+    }
 }

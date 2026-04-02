@@ -52,8 +52,22 @@
                             foreach ($agendamentos as $agend) { ?>
                                 <tr>
                                     <td>
-                                        <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                        <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        <button
+                                            data-bs-id_agend="<?= $agend['id_agend'] ?>"
+                                            type="button"
+                                            class="btn p-0"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmarAgendModal">
+                                            <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                        </button>
+                                        <button
+                                            data-bs-id_agend="<?= $agend['id_agend'] ?>"
+                                            type="button"
+                                            class="btn p-0"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cancelarAgendModal">
+                                            <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        </button>
                                     </td>
                                     <td><?= date('d/m/Y', strtotime($agend['data_agend'])) . ' | ' . date("H:i", strtotime($agend['hora_agend_inicio'])) ?></td>
                                     <td><?= $agend['nome_pet'] ?></td>
@@ -73,6 +87,11 @@
             </div>
         </div>
 
+        <?php
+        require __DIR__ . "/../Modals/ConfirmarAgendModal.php";
+        require __DIR__ . "/../Modals/CancelarAgendModal.php";
+        ?>
+
         <!-- PAGINAÇÃO -->
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
@@ -88,7 +107,7 @@
                     $query['page'] = $currentPage - 1;
                 ?>
                     <li class="page-item">
-                        <a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>" aria-label="Previous">
+                        <a class="page-link" href="<?= BASE_URL ?>/confirmacoes?<?= http_build_query($query) ?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -96,14 +115,14 @@
 
                 <?php for ($i = $start; $i <= $end; $i++) {
                     $query['page'] = $i; ?>
-                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/confirmacoes?<?= http_build_query($query) ?>"><?= $i ?></a></li>
                 <?php } ?>
 
                 <?php if ($currentPage < $totalAgendamentos) {
                     $query['page'] = $currentPage + 1;
                 ?>
                     <li class="page-item">
-                        <a class="page-link" href="<?= BASE_URL ?>/agendamentos?<?= http_build_query($query) ?>" aria-label="Next">
+                        <a class="page-link" href="<?= BASE_URL ?>/confirmacoes?<?= http_build_query($query) ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

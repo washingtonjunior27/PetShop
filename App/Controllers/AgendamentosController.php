@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Agendamentos;
-use App\Models\Agendamentos_Servicos;
 use App\Services\AgendamentosService;
 use App\Controllers\AuthController;
 use App\Repositories\ClientesRepository;
@@ -16,7 +15,6 @@ class AgendamentosController
 {
     private $authController;
     private $agendamentos;
-    private $agendamentosServicos;
     private $agendamentosService;
     private $clientesRepository;
     private $petsRepository;
@@ -27,7 +25,6 @@ class AgendamentosController
     {
         $this->authController = new AuthController();
         $this->agendamentos = new Agendamentos();
-        $this->agendamentosServicos = new Agendamentos_Servicos();
         $this->agendamentosService = new AgendamentosService();
         $this->clientesRepository = new ClientesRepository();
         $this->petsRepository = new PetsRepository();
