@@ -55,14 +55,21 @@
                                 <tr>
                                     <td>
                                         <button
+                                            data-bs-id_agend=<?= $agend['id_agend'] ?>
                                             type="button"
                                             class="border-0 bg-white"
                                             data-bs-toggle="modal"
                                             data-bs-target="#finalizarServicoEsteticoModal">
                                             <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                         </button>
-
-                                        <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        <button
+                                            data-bs-id_agend=<?= $agend['id_agend'] ?>
+                                            type="button"
+                                            class="border-0 bg-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cancelarServicoEsteticoModal">
+                                            <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        </button>
                                     </td>
                                     <td><?= date('d/m/Y', strtotime($agend['data_agend'])) . ' | ' . date("H:i", strtotime($agend['hora_agend_inicio'])) ?></td>
                                     <td><?= $agend['nome_pet'] ?></td>
@@ -87,7 +94,10 @@
             </div>
         </div>
 
-        <?php require __DIR__ . "/../Modals/FinalizarServicoEstetico.php" ?>
+        <?php
+        require __DIR__ . "/../Modals/FinalizarServicoEstetico.php";
+        require __DIR__ . "/../Modals/CancelarServicoEstetico.php";
+        ?>
 
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">

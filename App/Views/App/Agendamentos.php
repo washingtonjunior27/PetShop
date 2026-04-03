@@ -122,7 +122,11 @@
                             <select name="responsavel_id_agend" id="responsavel_id_agend" class="form-select">
                                 <option value="" selected>Selecione primeiro o(s) serviço(s)</option>
                                 <?php foreach ($responsavels as $responsavel) { ?>
-                                    <option value="<?= $responsavel['id'] ?>" data-role="<?= $responsavel['role'] ?>"><?= $responsavel['login'] . " (" . $responsavel['role'] . ")" ?></option>
+                                    <option value="<?= $responsavel['id'] ?>" data-role="<?= $responsavel['role'] ?>">
+                                        <?= $responsavel['role'] === "Veterinario"
+                                            ? $responsavel['login'] . " (Veterinario | " . $responsavel['especialidade'] . ")"
+                                            : $responsavel['login'] . " (" . $responsavel['role'] . ")" ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>

@@ -13,6 +13,7 @@
 <script src="/petshop/public/Assets/scripts/vacinas.js"></script>
 <script src="/petshop/public/Assets/scripts/pets.js"></script>
 <script src="/petshop/public/Assets/scripts/agendamentos.js"></script>
+<script src="/petshop/public/Assets/scripts/meusServicos.js"></script>
 
 </body>
 

@@ -6,6 +6,7 @@ use PDO;
 use PDOException;
 use App\Config\Connection;
 use App\Models\Agendamentos;
+use App\Models\Estetica;
 
 class AgendamentosRepository
 {
@@ -41,7 +42,10 @@ class AgendamentosRepository
 
     public function ReadAllFuncAndVetRepository()
     {
-        $sql = "SELECT * FROM usuarios WHERE 1 = 1 AND (role = 'Esteticista' OR role = 'Veterinario')";
+        $sql = "SELECT u.*, v.especialidade 
+                FROM usuarios AS u
+                LEFT JOIN veterinarios AS v ON u.id = v.id_usuario
+                WHERE 1 = 1 AND (role = 'Esteticista' OR role = 'Veterinario')";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -160,5 +164,15 @@ class AgendamentosRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchColumn();
+    }
+
+    public function CreateEsteticaHistory(Estetica $estet)
+    {
+        $sql = "INSERT INTO estetica (observacao, id_agend_fk) VALUES (:observacao, :id_agend_fk)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':observacao' => $estet->getObservacao(),
+            ':id_agend_fk' => $estet->getId_agend_fk()
+        ]);
     }
 }
