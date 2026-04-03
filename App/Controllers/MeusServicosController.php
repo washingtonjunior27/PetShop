@@ -75,7 +75,7 @@ class MeusServicosController
 
             $this->agendamentos->setId_agend((int) ($_POST['id_servico_estetico'] ?? 0));
 
-            $this->estetica->setObservacao(trim($_POST['observacao'] ?? ""));
+            $this->estetica->setObservacao(trim($_POST['observacao'] ?? "Sem observações!"));
             $this->estetica->setId_agend_fk((int) ($_POST['id_servico_estetico'] ?? 0));
 
             $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->agendamentos->getId_agend());

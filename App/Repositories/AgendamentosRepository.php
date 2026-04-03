@@ -63,7 +63,6 @@ class AgendamentosRepository
 
     public function ReadAgendsRepository($search, $limit, $offset, $id_user, $role, $categoriaDesejada)
     {
-        // O segredo está nestes JOINs aqui embaixo:
         $sql = "SELECT 
                 ag.*, 
                 p.nome_pet, 
@@ -71,25 +70,31 @@ class AgendamentosRepository
                 cli.telefone AS cliente_telefone, 
                 resp.login AS responsavel_login,
                 resp.role AS responsavel_role,
+                vet.especialidade AS veterinario_especialidade,
                 CASE 
-                    WHEN ag.status_agend = 'Agendado' AND 
-                        (ag.data_agend < CURDATE() OR (ag.data_agend = CURDATE() AND ag.hora_agend_inicio < CURTIME())) 
+                    WHEN (ag.status_agend IN ('Agendado', 'Confirmado')) AND 
+                            (TIMESTAMP(ag.data_agend, ag.hora_agend_inicio) < NOW())
                     THEN 'Atrasado'
                     ELSE ag.status_agend 
                 END AS status_real,
-                GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos
+                GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos,
+                GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos
             FROM agendamentos AS ag
             INNER JOIN agendamentos_servicos AS agse ON ag.id_agend = agse.id_agend_fk
             INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk
             LEFT JOIN pets AS p ON p.id_pet = ag.pet_id_agend
             LEFT JOIN usuarios AS cli ON cli.id = ag.cliente_id_agend
             LEFT JOIN usuarios AS resp ON resp.id = ag.responsavel_id_agend
+            LEFT JOIN veterinarios AS vet ON vet.id_usuario = ag.responsavel_id_agend
             WHERE 1 = 1";
 
         $params = [];
 
         if ($categoriaDesejada) {
-            $sql .= " AND (ag.status_agend = 'Confirmado') AND (s.categoria_servico = :categoria_servico)";
+            $sql .= " AND (ag.status_agend = 'Confirmado') AND ag.id_agend IN (
+                SELECT id_agend_fk FROM agendamentos_servicos AS agse2
+                INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
+                WHERE s2.categoria_servico = :categoria_servico)";
             $params[':categoria_servico'] = $categoriaDesejada;
         } else {
             $sql .= " AND ag.status_agend = 'Agendado'";
@@ -103,7 +108,8 @@ class AgendamentosRepository
         if (!empty($search)) {
             $sql .= " AND (ag.data_agend LIKE :search OR p.nome_pet LIKE :search OR cli.nome LIKE :search 
                             OR ag.hora_agend_inicio LIKE :search OR cli.telefone LIKE :search 
-                            OR resp.role LIKE :search OR resp.login LIKE :search OR s.nome_servico LIKE :search)";
+                            OR resp.role LIKE :search OR resp.login LIKE :search 
+                            OR s.nome_servico LIKE :search OR vet.especialidade LIKE :search)";
             $params[":search"] = "%" . $search . "%";
         }
 
@@ -138,6 +144,7 @@ class AgendamentosRepository
             LEFT JOIN pets AS p ON p.id_pet = ag.pet_id_agend
             LEFT JOIN usuarios AS cli ON cli.id = ag.cliente_id_agend
             LEFT JOIN usuarios AS resp ON resp.id = ag.responsavel_id_agend
+            LEFT JOIN veterinarios AS vet ON vet.id_usuario = ag.responsavel_id_agend
             WHERE 1 = 1";
 
         $params = [];
@@ -157,7 +164,8 @@ class AgendamentosRepository
         if (!empty($search)) {
             $sql .= " AND (ag.data_agend LIKE :search OR p.nome_pet LIKE :search OR cli.nome LIKE :search 
                             OR ag.hora_agend_inicio LIKE :search OR cli.telefone LIKE :search 
-                            OR resp.role LIKE :search OR resp.login LIKE :search OR s.nome_servico LIKE :search)";
+                            OR resp.role LIKE :search OR resp.login LIKE :search 
+                            OR s.nome_servico LIKE :search OR vet.especialidade LIKE :search)";
             $params[":search"] = "%" . $search . "%";
         }
 

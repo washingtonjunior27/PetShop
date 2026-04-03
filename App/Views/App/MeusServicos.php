@@ -46,6 +46,7 @@
                                 <th class="fw-bold text-uppercase" scope="col">Responsavel</th>
                             <?php  } ?>
                             <th class="fw-bold text-uppercase" scope="col">Serviços</th>
+                            <th class="fw-bold text-uppercase" scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +81,9 @@
                                     <?php  } ?>
                                     <td>
                                         <?= $agend['nomes_servicos'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $agend['status_real'] == "Atrasado" ? "🔴 Atrasado" : "🟢 Confirmado" ?>
                                     </td>
                                 </tr>
                             <?php    }

@@ -100,7 +100,7 @@
                 <?php
                 $query = $_GET;
                 unset($query['route']);
-                $range = 2;
+                $range = 8;
                 $start = max(1, $currentPage - $range);
                 $end = min($totalAgendamentos, $currentPage + $range);
                 ?>
