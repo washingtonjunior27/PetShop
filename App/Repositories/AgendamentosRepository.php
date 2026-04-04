@@ -6,6 +6,7 @@ use PDO;
 use PDOException;
 use App\Config\Connection;
 use App\Models\Agendamentos;
+use App\Models\Atendimentos;
 use App\Models\Estetica;
 
 class AgendamentosRepository
@@ -184,9 +185,32 @@ class AgendamentosRepository
         ]);
     }
 
+    public function CreateAtendimento(Atendimentos $atend)
+    {
+        $sql = "INSERT INTO atendimentos (anamnese, diagnostico, tratamento, created_at, 
+                                        id_agend, pet_id, cliente_id, veterinario_id) 
+                VALUES (:anamnese, :diagnostico, :tratamento, :created_at, 
+                        :id_agend, :pet_id, :cliente_id, :veterinario_id)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':anamnese' => $atend->getAnamnese(),
+            ':diagnostico' => $atend->getDiagnostico(),
+            ':tratamento' => $atend->getTratamento(),
+            ':created_at' => $atend->getCreated_at(),
+            ':id_agend' => $atend->getId_agend(),
+            ':pet_id' => $atend->getPet_id(),
+            ':cliente_id' => $atend->getCliente_id(),
+            ':veterinario_id' => $atend->getVeterinario_id()
+        ]);
+    }
+
     public function buscarPorId($id_agend)
     {
-        $sql = "SELECT * FROM agendamentos WHERE id_agend = :id_agend";
+        $sql = "SELECT *, id_pet ,nome_pet, cli.id AS cliente_id, cli.nome AS cliente_nome, vet.id AS vet_id, vet.nome AS vet_nome FROM agendamentos
+                INNER JOIN pets ON id_pet = pet_id_agend
+                LEFT JOIN usuarios AS cli ON cli.id = cliente_id_agend
+                LEFT JOIN usuarios AS vet ON vet.id = responsavel_id_agend
+                WHERE id_agend = :id_agend";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id_agend' => $id_agend]);
         return $stmt->fetch(PDO::FETCH_ASSOC);

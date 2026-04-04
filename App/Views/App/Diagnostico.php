@@ -28,18 +28,22 @@
                 <?php }
                 unset($_SESSION['sucesso']) ?>
 
-                <form class="mt-3" method="POST" action="<?= BASE_URL ?>/especies/CriarEspecie">
+                <form class="mt-3" method="POST" action="<?= BASE_URL ?>/atendimentos/DiagnosticoController">
+                    <input type="hidden" name="id_agend" value="<?= $agend['id_agend'] ?>">
                     <div class="mb-3">
-                        <label for="nome_especie" class="form-label">Nome do Pet</label>
-                        <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                        <label class="form-label">Nome do Pet</label>
+                        <input type="hidden" name="id_pet_diag" value="<?= $agend['id_pet'] ?>">
+                        <input value="<?= $agend['nome_pet'] ?>" disabled type="text" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="nome_especie" class="form-label">Nome do Dono</label>
-                        <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                        <label class="form-label">Nome do Dono</label>
+                        <input type="hidden" name="id_cliente_diag" value="<?= $agend['cliente_id'] ?>">
+                        <input value="<?= $agend['cliente_nome'] ?>" disabled type="text" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="nome_especie" class="form-label">Nome do Veterinario</label>
-                        <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                        <label class="form-label">Nome do Veterinario</label>
+                        <input type="hidden" name="id_vet_diag" value="<?= $agend['vet_id'] ?>">
+                        <input value="<?= $agend['vet_nome'] ?>" disabled type=" text" class="form-control">
                     </div>
                     <!-- ANAMNESE -->
                     <div class="mb-3">

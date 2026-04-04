@@ -2,17 +2,23 @@
 
 namespace App\Controllers;
 
+use App\Models\Atendimentos;
 use App\Controllers\AuthController;
+use App\Services\AtendimentosService;
 use App\Repositories\AgendamentosRepository;
 
 class AtendimentosController
 {
+    private $atendimentos;
     private $authController;
+    private $atendimentosService;
     private $agendsRepository;
 
     public function __construct()
     {
+        $this->atendimentos = new Atendimentos();
         $this->authController = new AuthController();
+        $this->atendimentosService = new AtendimentosService();
         $this->agendsRepository = new AgendamentosRepository();
     }
 
@@ -54,7 +60,6 @@ class AtendimentosController
                 $user = $this->authController->InicioController();
 
                 extract($user);
-
                 require __DIR__ . "/../Views/Layouts/Header.php";
                 require __DIR__ . "/../Views/App/Diagnostico.php";
                 require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
@@ -69,6 +74,29 @@ class AtendimentosController
     public function DiagnosticoController()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $this->atendimentos->setId_agend((int) ($_POST['id_agend'] ?? 0));
+            $this->atendimentos->setAnamnese(trim($_POST['anamnese'] ?? ""));
+            $this->atendimentos->setDiagnostico(trim($_POST['diagnostico'] ?? ""));
+            $this->atendimentos->setTratamento(trim($_POST['tratamento'] ?? ""));
+            $this->atendimentos->setCliente_id((int) $_POST['id_cliente_diag']);
+            $this->atendimentos->setPet_id((int) $_POST['id_pet_diag']);
+            $this->atendimentos->setVeterinario_id((int) $_POST['id_vet_diag']);
+            $this->atendimentos->setCreated_at(date("Y-m-d H:i:s"));
+
+            $result = $this->atendimentosService->CreateAtendimentoService($this->atendimentos);
+
+            if ($result['erro']) {
+                $_SESSION['erro'] = $result['erro'];
+                header('location: ' . BASE_URL . '/atendimentos/Diagnostico?id_agend=' . $this->atendimentos->getId_agend());
+                exit;
+            } else {
+                $_SESSION['sucesso'] = $result['sucesso'];
+                header('location: ' . BASE_URL . '/atendimentos');
+                exit;
+            }
+        } else {
+            header('location: ' . BASE_URL . '/atendimentos');
+            exit;
         }
     }
 
