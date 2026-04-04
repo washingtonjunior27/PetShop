@@ -183,4 +183,12 @@ class AgendamentosRepository
             ':id_agend_fk' => $estet->getId_agend_fk()
         ]);
     }
+
+    public function buscarPorId($id_agend)
+    {
+        $sql = "SELECT * FROM agendamentos WHERE id_agend = :id_agend";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_agend' => $id_agend]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

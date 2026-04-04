@@ -56,7 +56,7 @@
                                         <button
                                             data-bs-id_agend="<?= $agend['id_agend'] ?>"
                                             type="button"
-                                            class="btn p-0"
+                                            class="border-0 bg-white"
                                             data-bs-toggle="modal"
                                             data-bs-target="#confirmarAgendModal">
                                             <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
@@ -64,7 +64,7 @@
                                         <button
                                             data-bs-id_agend="<?= $agend['id_agend'] ?>"
                                             type="button"
-                                            class="btn p-0"
+                                            class="border-0 bg-white"
                                             data-bs-toggle="modal"
                                             data-bs-target="#cancelarAgendModal">
                                             <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
@@ -81,7 +81,7 @@
                             <?php  }
                         } else { ?>
                             <tr>
-                                <td colspan="7" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
+                                <td colspan="8" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -90,6 +90,7 @@
         </div>
 
         <?php
+        $caminho = "confirmacoes";
         require __DIR__ . "/../Modals/ConfirmarAgendModal.php";
         require __DIR__ . "/../Modals/CancelarAgendModal.php";
         ?>

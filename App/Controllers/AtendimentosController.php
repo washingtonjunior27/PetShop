@@ -31,14 +31,45 @@ class AtendimentosController
     }
     public function Diagnostico()
     {
-        $user = $this->authController->InicioController();
+        if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Veterinario") {
+            header("location: " . BASE_URL . "/home");
+            exit;
+        }
 
-        extract($user);
+        $idUser = $_SESSION['user']['id'];
+        $agend = $this->agendsRepository->buscarPorId($_GET['id_agend']);
+        $podeVisualizar = false;
 
-        require __DIR__ . "/../Views/Layouts/Header.php";
-        require __DIR__ . "/../Views/App/Diagnostico.php";
-        require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
-        require __DIR__ . "/../Views/Layouts/Footer.php";
+        if ($agend) {
+            if ($_SESSION['user']['role'] === "Admin") {
+                $podeVisualizar = true;
+            } elseif ($idUser === $agend['responsavel_id_agend']) {
+                $podeVisualizar = true;
+            } else {
+                header("location: " . BASE_URL . "/atendimentos");
+                exit;
+            }
+
+            if ($podeVisualizar) {
+                $user = $this->authController->InicioController();
+
+                extract($user);
+
+                require __DIR__ . "/../Views/Layouts/Header.php";
+                require __DIR__ . "/../Views/App/Diagnostico.php";
+                require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
+                require __DIR__ . "/../Views/Layouts/Footer.php";
+            }
+        } else {
+            header("location: " . BASE_URL . "/atendimentos");
+            exit;
+        }
+    }
+
+    public function DiagnosticoController()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        }
     }
 
     public function AtendimentosController()

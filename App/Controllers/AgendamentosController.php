@@ -34,7 +34,7 @@ class AgendamentosController
 
     public function index()
     {
-        if ($_SESSION['user']['role'] != "Admin") {
+        if ($_SESSION['user']['role'] != "Admin" && $_SESSION['user']['role'] != "Atendente") {
             header("location: " . BASE_URL . "/home");
             exit;
         }
@@ -126,6 +126,63 @@ class AgendamentosController
             exit;
         } else {
             header('location: ' . BASE_URL . '/agendamentos');
+            exit;
+        }
+    }
+    public function CancelarAgend()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            $this->agendamentos->setId_agend((int) ($_POST['id_agend'] ?? 0));
+
+            $userId = $_SESSION['user']['id'];
+            $userRole = $_SESSION['user']['role'];
+
+            $agend = $this->agendamentosRepository->buscarPorId($this->agendamentos->getId_agend());
+
+            $podeCancelar = false;
+            if ($agend) {
+                if ($userRole === "Admin") {
+                    $podeCancelar = true;
+                } elseif ($userRole === "Atendente") {
+                    if ($agend['status_agend'] === "Agendado") {
+                        $podeCancelar = true;
+                    } else {
+                        $_SESSION['erro'] = "Atendentes só podem cancelar agendamentos com status Agendado!";
+                    }
+                } else {
+                    if ((int)$agend['responsavel_id_agend'] === (int)$userId) {
+                        $podeCancelar = true;
+                    } else {
+                        $_SESSION['erro'] = "Voce não pode cancelar esse agendamento!";
+                    }
+                }
+                if ($podeCancelar) {
+                    $this->agendamentosRepository->UpdateStatusAgend("Cancelado", $this->agendamentos->getId_agend());
+                    $_SESSION['sucesso'] = "Agendamento cancelado com sucesso!";
+                }
+            } else {
+                $_SESSION['erro'] = "Agendamento não encontrado!";
+            }
+
+            $caminho = trim($_POST['caminho'] ?? "");
+
+            switch ($caminho) {
+                case "confirmacoes":
+                    header("location: " . BASE_URL . "/confirmacoes");
+                    exit;
+                case "meusServicos":
+                    header("location: " . BASE_URL . "/meusServicos");
+                    exit;
+                case "atendimentos":
+                    header("location: " . BASE_URL . "/atendimentos");
+                    exit;
+                default:
+                    header("location: " . BASE_URL . "/home");
+                    exit;
+            }
+        } else {
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }

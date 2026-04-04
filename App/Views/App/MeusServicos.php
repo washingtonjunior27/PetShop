@@ -64,11 +64,11 @@
                                             <i class="fa-solid fa-check-double fs-3 text-success"></i>
                                         </button>
                                         <button
-                                            data-bs-id_agend=<?= $agend['id_agend'] ?>
+                                            data-bs-id_agend="<?= $agend['id_agend'] ?>"
                                             type="button"
                                             class="border-0 bg-white"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#cancelarServicoEsteticoModal">
+                                            data-bs-target="#cancelarAgendModal">
                                             <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
                                         </button>
                                     </td>
@@ -99,8 +99,9 @@
         </div>
 
         <?php
+        $caminho = "meusServicos";
         require __DIR__ . "/../Modals/FinalizarServicoEstetico.php";
-        require __DIR__ . "/../Modals/CancelarServicoEstetico.php";
+        require __DIR__ . "/../Modals/CancelarAgendModal.php";
         ?>
 
         <nav class="mt-2 d-flex justify-content-center align-items-center">

@@ -55,7 +55,7 @@
                             foreach ($atendimentos as $atend) { ?>
                                 <tr>
                                     <td>
-                                        <a class="text-decoration-none" href="<?= BASE_URL ?>/atendimentos/Diagnostico">
+                                        <a class="text-decoration-none" href="<?= BASE_URL ?>/atendimentos/Diagnostico?id_agend=<?= $atend['id_agend'] ?>">
                                             <i class="fa-solid fa-comment-medical fs-3 text-primary"></i>
                                         </a>
                                         <?php if (str_contains($atend['categorias_servicos'], "Vacina")) { ?>
@@ -67,7 +67,14 @@
                                                 <i class="fa-solid fa-syringe fs-3 text-primary"></i>
                                             </button>
                                         <?php } ?>
-                                        <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        <button
+                                            data-bs-id_agend="<?= $atend['id_agend'] ?>"
+                                            type="button"
+                                            class="border-0 bg-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cancelarAgendModal">
+                                            <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
+                                        </button>
                                     </td>
                                     <td><?= date('d/m/Y', strtotime($atend['data_agend'])) . ' | ' . date("H:i", strtotime($atend['hora_agend_inicio'])) ?></td>
                                     <td><?= $atend['nome_pet'] ?></td>
@@ -92,7 +99,11 @@
             </div>
         </div>
 
-        <?php require __DIR__ . "/../Modals/CadastrarVacinacaoAtendimentos.php" ?>
+        <?php
+        $caminho = "atendimentos";
+        require __DIR__ . "/../Modals/CadastrarVacinacaoAtendimentos.php";
+        require __DIR__ . "/../Modals/CancelarAgendModal.php";
+        ?>
 
 
         <!-- PAGINAÇÃO -->

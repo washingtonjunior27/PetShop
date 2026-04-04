@@ -11,7 +11,8 @@
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                 <form action="<?= BASE_URL ?>/confirmacoes/CancelarAgend" method="POST">
+                 <form action="<?= BASE_URL ?>/agendamentos/CancelarAgend" method="POST">
+                     <input type="hidden" name="caminho" value="<?= $caminho ?>">
                      <input type="hidden" name="id_agend" id="id_agend_cancel">
                      <button type="submit" class="btn btn-danger">Confirmar</button>
                  </form>
