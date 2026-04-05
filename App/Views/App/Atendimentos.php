@@ -60,6 +60,13 @@
                                         </a>
                                         <?php if (str_contains($atend['categorias_servicos'], "Vacina")) { ?>
                                             <button
+                                                data-bs-id_agend=<?= $atend['id_agend'] ?>
+                                                data-bs-id_cliente=<?= $atend['cliente_id'] ?>
+                                                data-bs-nome_cliente=<?= $atend['cliente_nome'] ?>
+                                                data-bs-id_pet=<?= $atend['id_pet'] ?>
+                                                data-bs-nome_pet=<?= $atend['nome_pet'] ?>
+                                                data-bs-responsavel_id=<?= $atend['responsavel_id'] ?>
+                                                data-bs-responsavel_login=<?= $atend['responsavel_login'] ?>
                                                 class="border-0 bg-white"
                                                 type="button"
                                                 data-bs-toggle="modal"

@@ -66,9 +66,11 @@ class AgendamentosRepository
     {
         $sql = "SELECT 
                 ag.*, 
-                p.nome_pet, 
+                p.id_pet, p.nome_pet, 
+                cli.id AS cliente_id,
                 cli.nome AS cliente_nome,
-                cli.telefone AS cliente_telefone, 
+                cli.telefone AS cliente_telefone,
+                resp.id AS responsavel_id, 
                 resp.login AS responsavel_login,
                 resp.role AS responsavel_role,
                 vet.especialidade AS veterinario_especialidade,
