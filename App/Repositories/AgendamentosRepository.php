@@ -94,11 +94,17 @@ class AgendamentosRepository
         $params = [];
 
         if ($categoriaDesejada) {
+            if ($categoriaDesejada === "Atendimentos") {
+                $categorias = "'Consulta', 'Vacina'";
+            } else {
+                $categorias = "'$categoriaDesejada'";
+            }
+
             $sql .= " AND (ag.status_agend = 'Confirmado') AND ag.id_agend IN (
                 SELECT id_agend_fk FROM agendamentos_servicos AS agse2
                 INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
-                WHERE s2.categoria_servico = :categoria_servico)";
-            $params[':categoria_servico'] = $categoriaDesejada;
+                WHERE s2.categoria_servico IN ($categorias)
+                )";
         } else {
             $sql .= " AND ag.status_agend = 'Agendado'";
         }
@@ -152,9 +158,19 @@ class AgendamentosRepository
 
         $params = [];
 
+        // IGUALDADE DE LÓGICA COM O READ
         if ($categoriaDesejada) {
-            $sql .= " AND (ag.status_agend = 'Confirmado')  AND (s.categoria_servico = :categoria_servico)";
-            $params[':categoria_servico'] = $categoriaDesejada;
+            if ($categoriaDesejada === "Atendimentos") {
+                $categorias = "'Consulta', 'Vacina'";
+            } else {
+                $categorias = "'$categoriaDesejada'";
+            }
+
+            $sql .= " AND (ag.status_agend = 'Confirmado') AND ag.id_agend IN (
+                SELECT id_agend_fk FROM agendamentos_servicos AS agse2
+                INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
+                WHERE s2.categoria_servico IN ($categorias)
+                )";
         } else {
             $sql .= " AND ag.status_agend = 'Agendado'";
         }
@@ -206,10 +222,27 @@ class AgendamentosRepository
         ]);
     }
 
+    public function FindAgendDiag($id_agend)
+    {
+        $sql = "SELECT id_atendimento FROM atendimentos
+                WHERE id_agend = :id_agend";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_agend' => $id_agend]);
+        return $stmt->fetchColumn();
+    }
+
     public function buscarPorId($id_agend)
     {
-        $sql = "SELECT *, id_pet ,nome_pet, cli.id AS cliente_id, cli.nome AS cliente_nome, vet.id AS vet_id, vet.nome AS vet_nome FROM agendamentos
-                INNER JOIN pets ON id_pet = pet_id_agend
+        $sql = "SELECT *, id_pet ,nome_pet, 
+                        cli.id AS cliente_id, 
+                        cli.nome AS cliente_nome, 
+                        vet.id AS vet_id, 
+                        vet.nome AS vet_nome,
+                        GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos
+                FROM agendamentos
+                INNER JOIN agendamentos_servicos AS agse ON id_agend = agse.id_agend_fk
+                INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk
+                LEFT JOIN pets ON id_pet = pet_id_agend
                 LEFT JOIN usuarios AS cli ON cli.id = cliente_id_agend
                 LEFT JOIN usuarios AS vet ON vet.id = responsavel_id_agend
                 WHERE id_agend = :id_agend";

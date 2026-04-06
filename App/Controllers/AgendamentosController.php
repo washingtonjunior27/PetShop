@@ -129,6 +129,45 @@ class AgendamentosController
             exit;
         }
     }
+
+    public function FinalizarAgend()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            $this->agendamentos->setId_agend((int) ($_POST['id_finalizar_atendimento_modal'] ?? 0));
+
+            $userId = $_SESSION['user']['id'];
+            $userRole = $_SESSION['user']['role'];
+
+            $agend = $this->agendamentosRepository->buscarPorId($this->agendamentos->getId_agend());
+
+            $podeFinalizar = false;
+            if ($agend) {
+                if ($userRole === "Admin") {
+                    $podeFinalizar = true;
+                } else {
+                    if ((int)$agend['responsavel_id_agend'] === (int)$userId) {
+                        $podeFinalizar = true;
+                    } else {
+                        $_SESSION['erro'] = "Voce não pode cancelar esse agendamento!";
+                    }
+                }
+                if ($podeFinalizar) {
+                    $this->agendamentosRepository->UpdateStatusAgend("Finalizado", $this->agendamentos->getId_agend());
+                    $_SESSION['sucesso'] = "Agendamento finalizado com sucesso!";
+                }
+            } else {
+                $_SESSION['erro'] = "Agendamento não encontrado!";
+            }
+
+            header("location: " . BASE_URL . "/atendimentos");
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/atendimentos");
+            exit;
+        }
+    }
+
     public function CancelarAgend()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {

@@ -83,7 +83,9 @@ class AtendimentosController
             $this->atendimentos->setVeterinario_id((int) $_POST['id_vet_diag']);
             $this->atendimentos->setCreated_at(date("Y-m-d H:i:s"));
 
-            $result = $this->atendimentosService->CreateAtendimentoService($this->atendimentos);
+            $finalizarChamado = trim($_POST['finalizarAgendDiag'] ?? "Finalizado");
+
+            $result = $this->atendimentosService->CreateAtendimentoService($this->atendimentos, $finalizarChamado);
 
             if ($result['erro']) {
                 $_SESSION['erro'] = $result['erro'];
@@ -116,9 +118,9 @@ class AtendimentosController
 
         $search = $_GET['search'] ?? "";
 
-        $results = $this->agendsRepository->ReadAgendsRepository($search, $limit, $offset, $id_user, $role, 'Consulta');
+        $results = $this->agendsRepository->ReadAgendsRepository($search, $limit, $offset, $id_user, $role, 'Atendimentos');
 
-        $total = $this->agendsRepository->CountAgendsRepository($search, $id_user, $role, "Consulta");
+        $total = $this->agendsRepository->CountAgendsRepository($search, $id_user, $role, "Atendimentos");
 
         $totalCeil = ceil($total / $limit);
 

@@ -13,7 +13,7 @@ class AtendimentosService
     {
         $this->agendsRepository = new AgendamentosRepository();
     }
-    public function CreateAtendimentoService(Atendimentos $atend)
+    public function CreateAtendimentoService(Atendimentos $atend, $finalizarChamado)
     {
         if (
             !$atend->getAnamnese() || !$atend->getDiagnostico() || !$atend->getTratamento() ||
@@ -34,10 +34,19 @@ class AtendimentosService
         if ($agend['vet_id'] != $atend->getVeterinario_id()) {
             return ['erro' => "Veterinario não condiz com o cadastrado no agendamento!"];
         }
+        $resultAgendDiag = $this->agendsRepository->FindAgendDiag($atend->getId_agend());
 
-        $this->agendsRepository->CreateAtendimento($atend);
-        $this->agendsRepository->UpdateStatusAgend("Finalizado", $atend->getId_agend());
+        if (!$resultAgendDiag) {
+            $this->agendsRepository->CreateAtendimento($atend);
 
-        return ['sucesso' => "Diagnóstico cadastrado com sucesso!"];
+            if ($finalizarChamado == "Confirmado") {
+                return ['sucesso' => "Diagnostico cadastrado! Preencha a vacinação para finalizar o agendamento!"];
+            } else {
+                $this->agendsRepository->UpdateStatusAgend("Finalizado", $atend->getId_agend());
+                return ['sucesso' => "Diagnóstico cadastrado com sucesso!"];
+            }
+        } else {
+            return ['erro' => 'Diagnostico já está cadastrado! Cadastre a vacinação para finalizar agendamento!'];
+        }
     }
 }

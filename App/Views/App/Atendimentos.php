@@ -28,6 +28,9 @@
             </div>
         </div>
 
+        <span class="d-block my-4 p-2  shadow-lg text-bg-light rounded text-center">
+            <strong>Atenção!!!</strong> Cadastrar vacinação irá finalizar o agendamento. Se necessário realize diagnóstico primeiro.
+        </span>
 
 
         <div class="bg-white shadow-lg px-3 pt-3 rounded mt-3">
@@ -55,9 +58,19 @@
                             foreach ($atendimentos as $atend) { ?>
                                 <tr>
                                     <td>
-                                        <a class="text-decoration-none" href="<?= BASE_URL ?>/atendimentos/Diagnostico?id_agend=<?= $atend['id_agend'] ?>">
-                                            <i class="fa-solid fa-comment-medical fs-3 text-primary"></i>
-                                        </a>
+                                        <button
+                                            data-bs-id_agend="<?= $atend['id_agend'] ?>"
+                                            type="button"
+                                            class="border-0 bg-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#finalizarAtendimentoModal">
+                                            <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                        </button>
+                                        <?php if (str_contains($atend['categorias_servicos'], "Consulta")) { ?>
+                                            <a class="text-decoration-none" href="<?= BASE_URL ?>/atendimentos/Diagnostico?id_agend=<?= $atend['id_agend'] ?>">
+                                                <i class="fa-solid fa-comment-medical fs-3 text-primary"></i>
+                                            </a>
+                                        <?php } ?>
                                         <?php if (str_contains($atend['categorias_servicos'], "Vacina")) { ?>
                                             <button
                                                 data-bs-id_agend=<?= $atend['id_agend'] ?>
@@ -110,6 +123,7 @@
         $caminho = "atendimentos";
         require __DIR__ . "/../Modals/CadastrarVacinacaoAtendimentos.php";
         require __DIR__ . "/../Modals/CancelarAgendModal.php";
+        require __DIR__ . "/../Modals/FinalizarAtendimento.php";
         ?>
 
 

@@ -79,10 +79,31 @@ class MeusServicosController
             $this->estetica->setObservacao($observacao ?: "Sem observações!");
             $this->estetica->setId_agend_fk((int) ($_POST['id_servico_estetico'] ?? 0));
 
-            $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->agendamentos->getId_agend());
-            $this->agendsRepository->CreateEsteticaHistory($this->estetica);
+            $userId = $_SESSION['user']['id'];
+            $userRole = $_SESSION['user']['role'];
 
-            $_SESSION['sucesso'] = "Agendamento finalizado com sucesso!";
+            $agend = $this->agendsRepository->buscarPorId($this->agendamentos->getId_agend());
+
+            $podeFinalizar = false;
+            if ($agend) {
+                if ($userRole === "Admin") {
+                    $podeFinalizar = true;
+                } else {
+                    if ((int)$agend['responsavel_id_agend'] === (int)$userId) {
+                        $podeFinalizar = true;
+                    } else {
+                        $_SESSION['erro'] = "Voce não pode finalizar esse agendamento!";
+                    }
+                }
+                if ($podeFinalizar) {
+                    $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->agendamentos->getId_agend());
+                    $this->agendsRepository->CreateEsteticaHistory($this->estetica);
+                    $_SESSION['sucesso'] = "Agendamento finalizado com sucesso!";
+                }
+            } else {
+                $_SESSION['erro'] = "Agendamento não encontrado!";
+            }
+
             header("location: " . BASE_URL . "/meusServicos");
             exit;
         } else {

@@ -60,6 +60,10 @@
                         <label for="tratamento" class="form-label">Tratamento</label>
                         <textarea name="tratamento" class="form-control" rows="3" placeholder="Tratamento para o problema apresentado"></textarea>
                     </div>
+                    <?php if (str_contains($agend['categorias_servicos'], "Vacina")) { ?>
+                        <input type="hidden" value="Confirmado" name="finalizarAgendDiag">
+                    <?php } ?>
+
                     <button type="submit" class="btn btn-primary main-bg w-25">Cadastrar</button>
                 </form>
             </div>
