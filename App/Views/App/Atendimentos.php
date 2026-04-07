@@ -50,6 +50,7 @@
                             <?php } ?>
                             <th class="fw-bold text-uppercase" scope="col">Serviços</th>
                             <th class="fw-bold text-uppercase" scope="col">Status</th>
+                            <th class="fw-bold text-uppercase" scope="col">Situação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@
                             foreach ($atendimentos as $atend) { ?>
                                 <tr>
                                     <td>
+
                                         <button
                                             data-bs-id_agend="<?= $atend['id_agend'] ?>"
                                             type="button"
@@ -104,6 +106,9 @@
                                         <td><?= $atend['veterinario_especialidade'] ?></td>
                                     <?php } ?>
                                     <td><?= $atend['nomes_servicos'] ?></td>
+                                    <td>
+                                        <?= '🔵' . $atend['status_agend'] ?>
+                                    </td>
                                     <td>
                                         <?= $atend['status_real'] == "Atrasado" ? "🔴 Atrasado" : "🟢 Confirmado" ?>
                                     </td>

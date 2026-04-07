@@ -62,7 +62,13 @@
                                         <?php foreach ($servicosEstetica as $estetica) { ?>
                                             <div class="col-md-3">
                                                 <div class="form-check">
-                                                    <input class="form-check-input check-estet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $estetica['id_servico'] ?>" id="checkDefault">
+                                                    <input
+                                                        class="form-check-input check-estet-agend service-checkbox"
+                                                        name="servico_agendamento[]"
+                                                        type="checkbox"
+                                                        value="<?= $estetica['id_servico'] ?>"
+                                                        data-valor="<?= $estetica['preco_servico'] ?>"
+                                                        id="servico_<?= $estetica['id_servico'] ?>">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $estetica['nome_servico'] ?>
                                                     </label>
@@ -83,7 +89,13 @@
                                         <?php foreach ($servicosConsulta as $consulta) { ?>
                                             <div class="col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input check-vet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $consulta['id_servico'] ?>" id="checkDefault">
+                                                    <input
+                                                        class="form-check-input check-vet-agend service-checkbox"
+                                                        name="servico_agendamento[]"
+                                                        type="checkbox"
+                                                        value="<?= $consulta['id_servico'] ?>"
+                                                        data-valor="<?= $consulta['preco_servico'] ?>"
+                                                        id="servico_<?= $consulta['id_servico'] ?>">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $consulta['nome_servico'] ?>
                                                     </label>
@@ -104,7 +116,13 @@
                                         <?php foreach ($servicosVacina as $vacina) { ?>
                                             <div class="col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input check-vet-agend" name="servico_agendamento[]" type="checkbox" value="<?= $vacina['id_servico'] ?>" id="checkDefault">
+                                                    <input
+                                                        class="form-check-input check-vet-agend service-checkbox"
+                                                        name="servico_agendamento[]"
+                                                        type="checkbox"
+                                                        value="<?= $vacina['id_servico'] ?>"
+                                                        data-valor="<?= $vacina['preco_servico'] ?>"
+                                                        id="servico_<?= $vacina['id_servico'] ?>">
                                                     <label class="form-check-label" for="checkDefault">
                                                         <?= $vacina['nome_servico'] ?>
                                                     </label>
@@ -114,6 +132,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="alert alert-light mt-3 d-flex justify-content-between align-items-center">
+                            <strong>Total do Agendamento:</strong>
+                            <span class="h4 mb-0">R$ <span id="total-exibido">0,00</span></span>
                         </div>
 
                         <!-- RESPONSAVEIS -->
@@ -146,7 +169,7 @@
 
                         <div class="rounded row g-2">
                             <?php foreach ($horarios as $horario) { ?>
-                                <div class="col-md-3">
+                                <div class="col-3">
                                     <div
                                         class="text-light main-bg py-3 rounded mt-3">
                                         <div class="d-flex text-light gap-1 justify-content-center">

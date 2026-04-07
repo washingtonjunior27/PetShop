@@ -1,26 +1,25 @@
 <div class="container">
     <h1 class="fs-3 fw-bold my-5">Confirmar Agendamentos</h1>
 
+    <?php if (isset($_SESSION['erro'])) { ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= $_SESSION['erro'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php }
+    unset($_SESSION['erro']) ?>
+
+    <?php if (isset($_SESSION['sucesso'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['sucesso'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php }
+    unset($_SESSION['sucesso']) ?>
+
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
-
-                <?php if (isset($_SESSION['erro'])) { ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?= $_SESSION['erro'] ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php }
-                unset($_SESSION['erro']) ?>
-
-                <?php if (isset($_SESSION['sucesso'])) { ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= $_SESSION['sucesso'] ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php }
-                unset($_SESSION['sucesso']) ?>
-
                 <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/confirmacoes">
                     <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
@@ -28,6 +27,10 @@
             </div>
         </div>
 
+
+        <span class="d-block my-4 p-2  shadow-lg text-bg-light rounded text-center">
+            <strong>Atenção!!!</strong> Após confirmar o agendamento é necessário marca-lo como pago para disponibilizar ao responsável!
+        </span>
 
 
         <div class="bg-white shadow-lg px-3 pt-3 rounded mt-3">
@@ -45,6 +48,7 @@
                             <th class="fw-bold text-uppercase" scope="col">Responsável</th>
                             <th class="fw-bold text-uppercase" scope="col">Categoria</th>
                             <th class="fw-bold text-uppercase" scope="col">Status</th>
+                            <th class="fw-bold text-uppercase" scope="col">Situação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,14 +57,25 @@
                             foreach ($agendamentos as $agend) { ?>
                                 <tr>
                                     <td>
-                                        <button
-                                            data-bs-id_agend="<?= $agend['id_agend'] ?>"
-                                            type="button"
-                                            class="border-0 bg-white"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#confirmarAgendModal">
-                                            <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
-                                        </button>
+                                        <?php if ($agend['status_agend'] == 'Confirmado') {  ?>
+                                            <button
+                                                data-bs-id_agend="<?= $agend['id_agend'] ?>"
+                                                type="button"
+                                                class="border-0 bg-white"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#pagoAgendModal">
+                                                <i class="fa-solid fa-money-check-dollar fs-3 text-success"></i>
+                                            </button>
+                                        <?php } else { ?>
+                                            <button
+                                                data-bs-id_agend="<?= $agend['id_agend'] ?>"
+                                                type="button"
+                                                class="border-0 bg-white"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmarAgendModal">
+                                                <i class="fa-solid fa-calendar-check fs-3 text-success"></i>
+                                            </button>
+                                        <?php } ?>
                                         <button
                                             data-bs-id_agend="<?= $agend['id_agend'] ?>"
                                             type="button"
@@ -76,6 +91,7 @@
                                     <td><?= $agend['cliente_telefone'] ?></td>
                                     <td><?= $agend['responsavel_login'] ?></td>
                                     <td><?= $agend['responsavel_role'] ?></td>
+                                    <td><?= $agend['status_agend'] == "Confirmado" ? "🟢 " . $agend['status_agend'] : "🟠" . $agend['status_agend'] ?></td>
                                     <td><?= $agend['status_real'] == "Atrasado" ? "🔴 " . $agend['status_real'] : "🟢" . $agend['status_real'] ?></td>
                                 </tr>
                             <?php  }
@@ -92,6 +108,7 @@
         <?php
         $caminho = "confirmacoes";
         require __DIR__ . "/../Modals/ConfirmarAgendModal.php";
+        require __DIR__ . "/../Modals/PagoAgendModal.php";
         require __DIR__ . "/../Modals/CancelarAgendModal.php";
         ?>
 

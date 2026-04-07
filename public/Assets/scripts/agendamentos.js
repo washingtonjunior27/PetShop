@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     let confirm_modal_agend = document.getElementById('confirmarAgendModal');
+    let pago_modal_agend = document.getElementById('pagoAgendModal');
     let cancel_modal_agend = document.getElementById('cancelarAgendModal');
 
     if(confirm_modal_agend){
@@ -12,6 +13,16 @@ document.addEventListener('DOMContentLoaded', function(){
         })
     }
 
+    if(pago_modal_agend){
+        pago_modal_agend.addEventListener('show.bs.modal', (e) => {
+            const button = e.relatedTarget;
+
+            const id_agend = button.getAttribute('data-bs-id_agend');
+
+            pago_modal_agend.querySelector('#id_agend_pago').value = id_agend;
+        })
+    }
+
     if(cancel_modal_agend){
         cancel_modal_agend.addEventListener('show.bs.modal', (e) => {
             const button = e.relatedTarget;
@@ -21,6 +32,31 @@ document.addEventListener('DOMContentLoaded', function(){
             cancel_modal_agend.querySelector('#id_agend_cancel').value = id_agend;
         })
     }
+
+    const checkboxes = document.querySelectorAll('.service-checkbox');
+    const displayTotal = document.getElementById('total-exibido');
+
+    function calcularTotal() {
+        let total = 0;
+        
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                // Pegamos o valor do data-attribute e convertemos para número
+                total += parseFloat(checkbox.getAttribute('data-valor'));
+            }
+        });
+
+        // Formata para moeda brasileira (Real)
+        displayTotal.innerText = total.toLocaleString('pt-br', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    // Adiciona o evento de mudança em cada checkbox
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', calcularTotal);
+    });
 
     const clienteSelect = document.getElementById('cliente_id_agend');
 

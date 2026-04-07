@@ -8,6 +8,7 @@ class Vacinacao
     private int $pet_id_vacinacao;
     private int $cliente_id_vacinacao;
     private int $veterinario_id_vacinacao;
+    private int $id_vacina_servico;
     private string $data_de_aplicação;
     private string $data_prox_dose; //Pode ser null
     private int $resolvido;
@@ -148,6 +149,26 @@ class Vacinacao
     public function setResolvido($resolvido)
     {
         $this->resolvido = $resolvido;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_vacina_servico
+     */
+    public function getId_vacina_servico()
+    {
+        return $this->id_vacina_servico;
+    }
+
+    /**
+     * Set the value of id_vacina_servico
+     *
+     * @return  self
+     */
+    public function setId_vacina_servico($id_vacina_servico)
+    {
+        $this->id_vacina_servico = $id_vacina_servico;
 
         return $this;
     }

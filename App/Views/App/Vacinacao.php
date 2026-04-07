@@ -1,131 +1,89 @@
 <div class="container">
     <h1 class="fs-3 fw-bold my-5">Vacinação</h1>
 
-    <button
-        type="button"
-        class="btn main-bg text-light"
-        data-bs-toggle="modal"
-        data-bs-target="#cadastrarVacinacaoModal">
-        Nova
-    </button>
-
-    <?php if (isset($_SESSION['erro'])) { ?>
-        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
-            <?= $_SESSION['erro'] ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php }
-    unset($_SESSION['erro']) ?>
-
-    <?php if (isset($_SESSION['sucesso'])) { ?>
-        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-            <?= $_SESSION['sucesso'] ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php }
-    unset($_SESSION['sucesso']) ?>
-
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
-                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/meusServicos">
-                    <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
-                    <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
+                <h2 class="fs-4 fw-bold ">Dados do Paciente</h2>
+
+                <?php if (isset($_SESSION['erro'])) { ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['erro'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php }
+                unset($_SESSION['erro']) ?>
+
+                <?php if (isset($_SESSION['sucesso'])) { ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['sucesso'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php }
+                unset($_SESSION['sucesso']) ?>
+
+                <form class="mt-3" method="POST" action="<?= BASE_URL ?>/vacinacao/CriarVacinacao">
+                    <!-- CLIENTE -->
+                    <div class="mb-3">
+                        <label for="id_cliente_vacinacao" class="form-label">Cliente (Dono)</label>
+                        <select name="id_cliente_vacinacao" id="cliente_id_fk_vacinacao" class="form-select" data-url="<?= BASE_URL ?>/agendamentos/buscarPets">
+                            <option value="" selected>Selecionar</option>
+                            <?php foreach ($clientes as $cliente) { ?>
+                                <option value=" <?= $cliente['id'] ?>"><?= $cliente['nome'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <!-- PET -->
+                    <div class="mb-3">
+                        <label for="id_pet_vacinacao" class="form-label">Pet</label>
+                        <select name="id_pet_vacinacao" id="pet_id_fk_vacinacao" class="form-select" disabled>
+                            <option value="">Selecione primeiro o cliente</option>
+                        </select>
+                    </div>
+                    <?php
+                    if ($_SESSION['user']['role'] == "Admin") { ?>
+                        <!-- VETERINARIO SELECT PRO ADMIN -->
+                        <div class="mb-3">
+                            <label for="id_vet_vacinacao" class="form-label">Veterinario</label>
+                            <select name="id_vet_vacinacao" id="id_vet_vacinacao" class="form-select">
+                                <option value="" selected>Selecionar</option>
+                                <?php foreach ($veterinarios as $veterinario) { ?>
+                                    <option value="<?= $veterinario['id'] ?>"><?= $veterinario['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php    } else { ?>
+                        <!-- VETERINARIO DISABLED -->
+                        <div class="mb-3">
+                            <label for="proxima_dose" class="form-label">Veterinario</label>
+                            <input disabled type="text" class="form-control" value="<?= $usuario['login'] ?>">
+                            <input type="hidden" value="<?= $usuario['id'] ?>" name="id_vet_vacinacao" class="form-control" id="proxima_dose">
+                        </div>
+                    <?php } ?>
+                    <!-- SERVIÇO (VACINA) -->
+                    <div class="mb-3">
+                        <label for="id_vacina_servico" class="form-label">Vacina</label>
+                        <select name="id_vacina_servico" id="modal_cliente_id_fk_vacinacao" class="form-select">
+                            <option value="" selected>Selecionar</option>
+                            <?php foreach ($vacinas as $vac) { ?>
+                                <option value="<?= $vac['id_servico'] ?>"><?= $vac['nome_servico'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <!-- DATA APLICAÇÃO -->
+                    <div class="mb-3">
+                        <label for="data_aplicacao" class="form-label">Data de Aplicação</label>
+                        <input type="date" name="data_aplicacao" class="form-control" id="data_aplicacao">
+                    </div>
+                    <!-- DATA PROX DOSE -->
+                    <div class="mb-3">
+                        <label for="data_prox_dose" class="form-label">Data de Prox. Dose</label>
+                        <input type="date" name="data_prox_dose" class="form-control" id="proxima_dose">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Criar Vacinação</button>
+                    </div>
                 </form>
             </div>
         </div>
-
-
-
-        <div class="bg-white shadow-lg px-3 pt-3 rounded mt-3">
-            <h2 class="fs-4 fw-bold ">Lista de Vacinações</h2>
-
-            <div class="table-responsive mt-4">
-                <table class="table table-striped-columns align-middle text-nowrap">
-                    <thead class="main-bg">
-                        <tr>
-                            <th class="fw-bold text-uppercase" scope="col">Ações</th>
-                            <th class="fw-bold text-uppercase" scope="col">Pet</th>
-                            <th class="fw-bold text-uppercase" scope="col">Dono</th>
-                            <th class="fw-bold text-uppercase" scope="col">Vacina</th>
-                            <th class="fw-bold text-uppercase" scope="col">Data de Aplicação</th>
-                            <th class="fw-bold text-uppercase" scope="col">Prox. Dose</th>
-                            <th class="fw-bold text-uppercase" scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>V8</td>
-                            <td>29/03/2026</td>
-                            <td>29/03/2027</td>
-                            <td>🟢 Em dia</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>V8</td>
-                            <td>29/03/2026</td>
-                            <td>---</td>
-                            <td>🟢 Finalizada</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>V8</td>
-                            <td>10/04/2025</td>
-                            <td>10/04/2026</td>
-                            <td>🟠 Atenção</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-check-double fs-3 text-success"></i>
-                                <i class="fa-solid fa-calendar-xmark fs-3 text-danger"></i>
-                            </td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>V8</td>
-                            <td>10/03/2025</td>
-                            <td>10/03/2026</td>
-                            <td>🔴 Atrasada</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-        <nav class="mt-2 d-flex justify-content-center align-items-center">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
-</div>
-
-<?php require __DIR__ . "/../Modals/CadastrarVacinacao.php"; ?>

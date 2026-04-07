@@ -52,7 +52,7 @@ switch ($hojeDiaSemana) {
 
     <div class="container-fluid home-bg">
         <div class="row min-vh-100">
-            <div class="col-md-3 main-bg position-sticky top-0 p-0 d-none d-md-flex flex-column border-light border-5 border-end vh-100">
+            <div class="col-md-2 main-bg position-sticky top-0 p-0 d-none d-md-flex flex-column border-light border-5 border-end vh-100">
                 <!-- LOGO -->
                 <a href="<?= BASE_URL ?>/home" class="nav-link d-flex justify-content-center gap-1 p-4 border-5 border-white border-bottom">
                     <i class="fa-solid fa-paw fs-2 text-light"></i>
@@ -77,7 +77,7 @@ switch ($hojeDiaSemana) {
 
             </div>
 
-            <div class="col-md-9 p-0">
+            <div class="col-md-10 p-0">
                 <nav class="navbar navbar-expand-md navbar-dark main-bg p-3" style="height: 80px;">
                     <div class="container">
                         <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, <?= $user['usuario']['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana . " | " . $user['usuario']['role'] ?>

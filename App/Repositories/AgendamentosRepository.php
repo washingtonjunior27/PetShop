@@ -75,10 +75,10 @@ class AgendamentosRepository
                 resp.role AS responsavel_role,
                 vet.especialidade AS veterinario_especialidade,
                 CASE 
-                    WHEN (ag.status_agend IN ('Agendado', 'Confirmado')) AND 
+                    WHEN (ag.status_agend IN ('Agendado', 'Confirmado', 'Em atendimento')) AND 
                             (TIMESTAMP(ag.data_agend, ag.hora_agend_inicio) < NOW())
                     THEN 'Atrasado'
-                    ELSE ag.status_agend 
+                    ELSE 'Em dia'
                 END AS status_real,
                 GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos,
                 GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos
@@ -100,13 +100,13 @@ class AgendamentosRepository
                 $categorias = "'$categoriaDesejada'";
             }
 
-            $sql .= " AND (ag.status_agend = 'Confirmado') AND ag.id_agend IN (
+            $sql .= " AND (ag.status_agend = 'Em atendimento') AND ag.id_agend IN (
                 SELECT id_agend_fk FROM agendamentos_servicos AS agse2
                 INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
                 WHERE s2.categoria_servico IN ($categorias)
                 )";
         } else {
-            $sql .= " AND ag.status_agend = 'Agendado'";
+            $sql .= " AND ag.status_agend = 'Agendado' OR ag.status_agend = 'Confirmado'";
         }
 
         if ($role !== 'Admin' && $role !== 'Atendente') {

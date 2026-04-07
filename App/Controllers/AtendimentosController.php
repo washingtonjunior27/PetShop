@@ -6,6 +6,7 @@ use App\Models\Atendimentos;
 use App\Controllers\AuthController;
 use App\Services\AtendimentosService;
 use App\Repositories\AgendamentosRepository;
+use App\Repositories\ServicosRepository;
 
 class AtendimentosController
 {
@@ -13,6 +14,7 @@ class AtendimentosController
     private $authController;
     private $atendimentosService;
     private $agendsRepository;
+    private $servicosRepository;
 
     public function __construct()
     {
@@ -20,13 +22,16 @@ class AtendimentosController
         $this->authController = new AuthController();
         $this->atendimentosService = new AtendimentosService();
         $this->agendsRepository = new AgendamentosRepository();
+        $this->servicosRepository = new ServicosRepository();
     }
 
     public function index()
     {
         $user = $this->authController->InicioController();
         $result = $this->AtendimentosController();
+        $servicos = $this->servicosRepository->ReadServicosVacinaRepository();
         $result['usuario'] = $user;
+        $result['vacina'] = $servicos;
 
         extract($result);
 

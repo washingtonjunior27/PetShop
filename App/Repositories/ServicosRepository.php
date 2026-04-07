@@ -31,6 +31,14 @@ class ServicosRepository
         ]);
     }
 
+    public function ReadServicosVacinaRepository()
+    {
+        $sql = "SELECT * FROM servicos WHERE categoria_servico = 'Vacina'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // READ
     public function ReadServicosRepository($search, $limit, $offset)
     {

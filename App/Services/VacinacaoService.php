@@ -21,7 +21,8 @@ class VacinacaoService
     {
         if (
             !$vacinacao->getData_de_aplicação() || !$vacinacao->getCliente_id_vacinacao() ||
-            !$vacinacao->getPet_id_vacinacao() || !$vacinacao->getVeterinario_id_vacinacao()
+            !$vacinacao->getPet_id_vacinacao() || !$vacinacao->getVeterinario_id_vacinacao() ||
+            !$vacinacao->getId_vacina_servico()
         ) {
             return ['erro' => 'Preencha os campos vazios!'];
         }

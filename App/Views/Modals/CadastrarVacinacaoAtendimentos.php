@@ -23,11 +23,21 @@
                         <input class="form-control" disabled type="text" name="pet_nome_vac_atend_modal" id="pet_nome_vac_atend_modal">
                         <input type="hidden" name="id_pet_vacinacao" id="pet_id_vac_atend_modal">
                     </div>
-                    <!-- VACINA -->
+                    <!-- VETERINARIO -->
                     <div class="mb-3">
                         <label for="vacina_id_fk_vacinacao" class="form-label">Veterinario Responsável</label>
                         <input class="form-control" disabled type="text" name="vet_login_vac_atend_modal" id="vet_login_vac_atend_modal">
                         <input type="hidden" name="id_vet_vacinacao" id="vet_id_vac_atend_modal">
+                    </div>
+                    <!-- SERVIÇO (VACINA) -->
+                    <div class="mb-3">
+                        <label for="id_vacina_servico" class="form-label">Vacina</label>
+                        <select name="id_vacina_servico" id="modal_cliente_id_fk_vacinacao" class="form-select">
+                            <option value="" selected>Selecionar</option>
+                            <?php foreach ($vacina as $vac) { ?>
+                                <option value="<?= $vac['id_servico'] ?>"><?= $vac['nome_servico'] ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <!-- DATA APLICAÇÃO -->
                     <div class="mb-3">
