@@ -9,26 +9,25 @@
         Nova
     </button>
 
+    <?php if (isset($_SESSION['erro'])) { ?>
+        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+            <?= $_SESSION['erro'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php }
+    unset($_SESSION['erro']) ?>
+
+    <?php if (isset($_SESSION['sucesso'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+            <?= $_SESSION['sucesso'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php }
+    unset($_SESSION['sucesso']) ?>
+
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
-
-                <?php if (isset($_SESSION['erro'])) { ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?= $_SESSION['erro'] ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php }
-                unset($_SESSION['erro']) ?>
-
-                <?php if (isset($_SESSION['sucesso'])) { ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= $_SESSION['sucesso'] ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php }
-                unset($_SESSION['sucesso']) ?>
-
                 <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/meusServicos">
                     <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
