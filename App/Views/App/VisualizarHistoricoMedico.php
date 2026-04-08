@@ -10,33 +10,36 @@
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
-                <h2 class="fs-4 fw-bold mb-4">Dados do Atendimento</h2>
-                <div class="mb-3">
-                    <label for="nome_especie" class="form-label">Nome do Pet</label>
-                    <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                <div class="mb-3 d-flex justify-content-between">
+                    <h2 class="fs-4 fw-bold mb-4">Dados do Atendimento</h2>
+                    <span><?= date('d/m/Y - H:i:s', strtotime($atend['created_at'])) ?></span>
                 </div>
                 <div class="mb-3">
-                    <label for="nome_especie" class="form-label">Nome do Dono</label>
-                    <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                    <label class="form-label">Nome do Pet</label>
+                    <input readonly type="text" class="form-control" value="<?= $atend['nome_pet'] ?>">
                 </div>
                 <div class="mb-3">
-                    <label for="nome_especie" class="form-label">Nome do Veterinario</label>
-                    <input disabled type="text" name="nome_especie" class="form-control" id="nome_especie" placeholder="Informe a espécie">
+                    <label class="form-label">Nome do Dono</label>
+                    <input readonly type="text" class="form-control" value="<?= $atend['cliente_nome'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nome do Veterinario</label>
+                    <input readonly type="text" class="form-control" value="<?= $atend['responsavel_login'] ?>">
                 </div>
                 <!-- ANAMNESE -->
                 <div class="mb-3">
                     <label for="anamnese" class="form-label">Anamnese</label>
-                    <textarea name="anamnese" class="form-control" rows="3" placeholder="Descrição do paciente sobre os problemas"></textarea>
+                    <textarea readonly name="anamnese" class="form-control" rows="3"><?= $atend['anamnese'] ?></textarea>
                 </div>
                 <!-- DIAGNOSTICO -->
                 <div class="mb-3">
                     <label for="diagnostico" class="form-label">Diagnostico</label>
-                    <textarea name="diagnostico" class="form-control" rows="3" placeholder="Diagnostico com base em analise técnica e anamnese"></textarea>
+                    <textarea readonly name="diagnostico" class="form-control" rows="3"><?= $atend['diagnostico'] ?></textarea>
                 </div>
                 <!-- TRATAMENTO -->
                 <div>
                     <label for="tratamento" class="form-label">Tratamento</label>
-                    <textarea name="tratamento" class="form-control" rows="3" placeholder="Tratamento para o problema apresentado"></textarea>
+                    <textarea readonly name="tratamento" class="form-control" rows="3"><?= $atend['tratamento'] ?></textarea>
                 </div>
             </div>
         </div>
