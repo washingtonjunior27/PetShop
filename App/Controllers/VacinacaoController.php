@@ -91,7 +91,14 @@ class VacinacaoController
                     $_SESSION['erro'] = $result['erro'];
                 }
             } else {
-                $_SESSION['sucesso'] = $result['sucesso'];
+                $vacinaModalAtend = $_POST['vacinaModalAtend'] ?? "";
+                if ($vacinaModalAtend) {
+                    $_SESSION['sucesso'] = $result['sucesso'];
+                    header('location:' . BASE_URL . '/atendimentos');
+                    exit;
+                } else {
+                    $_SESSION['sucesso'] = $result['sucesso'];
+                }
             }
             header('location:' . BASE_URL . '/vacinacao');
             exit;

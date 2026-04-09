@@ -81,7 +81,9 @@ class AgendamentosRepository
                     ELSE 'Em dia'
                 END AS status_real,
                 GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos,
-                GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos
+                GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos,
+                GROUP_CONCAT(CASE WHEN s.categoria_servico = 'Vacina' THEN s.id_servico END) AS vacina_id,
+                GROUP_CONCAT(CASE WHEN s.categoria_servico = 'Vacina' THEN s.nome_servico END) AS vacina_nome
             FROM agendamentos AS ag
             INNER JOIN agendamentos_servicos AS agse ON ag.id_agend = agse.id_agend_fk
             INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk
@@ -106,7 +108,7 @@ class AgendamentosRepository
                 WHERE s2.categoria_servico IN ($categorias)
                 )";
         } else {
-            $sql .= " AND ag.status_agend = 'Agendado' OR ag.status_agend = 'Confirmado'";
+            $sql .= " AND (ag.status_agend = 'Agendado' OR ag.status_agend = 'Confirmado')";
         }
 
         if ($role !== 'Admin' && $role !== 'Atendente') {
@@ -166,13 +168,13 @@ class AgendamentosRepository
                 $categorias = "'$categoriaDesejada'";
             }
 
-            $sql .= " AND (ag.status_agend = 'Confirmado') AND ag.id_agend IN (
+            $sql .= " AND (ag.status_agend = 'Em atendimento') AND ag.id_agend IN (
                 SELECT id_agend_fk FROM agendamentos_servicos AS agse2
                 INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
                 WHERE s2.categoria_servico IN ($categorias)
                 )";
         } else {
-            $sql .= " AND ag.status_agend = 'Agendado'";
+            $sql .= " AND (ag.status_agend = 'Agendado' OR ag.status_agend = 'Confirmado')";
         }
 
         if ($role !== 'Admin' && $role !== 'Atendente') {

@@ -5,16 +5,19 @@ namespace App\Services;
 use App\Models\Vacinacao;
 use App\Repositories\VacinacaoRepository;
 use App\Repositories\AgendamentosRepository;
+use App\Repositories\AgendamentosServicosRepository;
 
 class VacinacaoService
 {
     private $vacinacaoRepository;
     private $agendamentosRepository;
+    private $agendsServsRepository;
 
     public function __construct()
     {
         $this->vacinacaoRepository = new VacinacaoRepository();
         $this->agendamentosRepository = new AgendamentosRepository();
+        $this->agendsServsRepository = new AgendamentosServicosRepository();
     }
 
     public function CreateVacinacaoService($agendAtendModal, Vacinacao $vacinacao)

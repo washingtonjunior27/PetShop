@@ -11,6 +11,8 @@ create_vacina_atendimentos.addEventListener("show.bs.modal", (e) => {
     const nome_pet = button.getAttribute('data-bs-nome_pet');
     const responsavel_id = button.getAttribute('data-bs-responsavel_id');
     const responsavel_login = button.getAttribute('data-bs-responsavel_login');
+    const vacina_id = button.getAttribute('data-bs-vacina_id');
+    const vacina_nome = button.getAttribute('data-bs-vacina_nome');
 
     create_vacina_atendimentos.querySelector('#id_agend_vac_atend_modal').value = id_agend;
     create_vacina_atendimentos.querySelector('#cliente_id_vac_atend_modal').value = id_cliente;
@@ -19,6 +21,8 @@ create_vacina_atendimentos.addEventListener("show.bs.modal", (e) => {
     create_vacina_atendimentos.querySelector('#pet_nome_vac_atend_modal').value = nome_pet;
     create_vacina_atendimentos.querySelector('#vet_id_vac_atend_modal').value = responsavel_id;
     create_vacina_atendimentos.querySelector('#vet_login_vac_atend_modal').value = responsavel_login;
+    create_vacina_atendimentos.querySelector('#nome_vac_atend_modal').value = vacina_nome;
+    create_vacina_atendimentos.querySelector('#id_vac_atend_modal').value = vacina_id;
 })
 
 finalizar_atendimentos_modal.addEventListener("show.bs.modal", (e) => {

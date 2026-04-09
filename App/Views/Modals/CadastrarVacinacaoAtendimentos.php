@@ -32,12 +32,8 @@
                     <!-- SERVIÇO (VACINA) -->
                     <div class="mb-3">
                         <label for="id_vacina_servico" class="form-label">Vacina</label>
-                        <select name="id_vacina_servico" id="modal_cliente_id_fk_vacinacao" class="form-select">
-                            <option value="" selected>Selecionar</option>
-                            <?php foreach ($vacina as $vac) { ?>
-                                <option value="<?= $vac['id_servico'] ?>"><?= $vac['nome_servico'] ?></option>
-                            <?php } ?>
-                        </select>
+                        <input disabled class="form-control" type="text" id="nome_vac_atend_modal">
+                        <input type="hidden" name="id_vacina_servico" id="id_vac_atend_modal">
                     </div>
                     <!-- DATA APLICAÇÃO -->
                     <div class="mb-3">

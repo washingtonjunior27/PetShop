@@ -4,14 +4,18 @@ namespace App\Services;
 
 use App\Models\Atendimentos;
 use App\Repositories\AgendamentosRepository;
+use App\Repositories\AgendamentosServicosRepository;
 
 class AtendimentosService
 {
     private $agendsRepository;
+    private $agendsServsRepository;
+
 
     public function __construct()
     {
         $this->agendsRepository = new AgendamentosRepository();
+        $this->agendsServsRepository = new AgendamentosServicosRepository();
     }
     public function CreateAtendimentoService(Atendimentos $atend, $finalizarChamado)
     {
@@ -38,6 +42,11 @@ class AtendimentosService
 
         if (!$resultAgendDiag) {
             $this->agendsRepository->CreateAtendimento($atend);
+
+            $agendsServs = $this->agendsServsRepository->buscarPorIdAgendServs($atend->getId_agend());
+            foreach ($agendsServs as $agSe) {
+                $this->agendsServsRepository->UpdateStatusExecutado($agSe['id_agend_serv'], 'Consulta');
+            }
 
             if ($finalizarChamado == "Confirmado") {
                 return ['sucesso' => "Diagnostico cadastrado! Preencha a vacinação para finalizar o agendamento!"];

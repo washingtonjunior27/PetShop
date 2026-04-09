@@ -3,23 +3,23 @@
 namespace App\Controllers;
 
 use App\Controllers\AuthController;
-use App\Models\Agendamentos;
 use App\Models\Estetica;
 use App\Repositories\AgendamentosRepository;
+use App\Repositories\AgendamentosServicosRepository;
 
 class MeusServicosController
 {
     private $authController;
-    private $agendamentos;
     private $estetica;
     private $agendsRepository;
+    private $agendsServsRepository;
 
     public function __construct()
     {
         $this->authController = new AuthController();
-        $this->agendamentos = new Agendamentos();
         $this->agendsRepository = new AgendamentosRepository();
         $this->estetica = new Estetica();
+        $this->agendsServsRepository = new AgendamentosServicosRepository();
     }
 
     public function index()
@@ -73,8 +73,6 @@ class MeusServicosController
                 exit;
             }
 
-            $this->agendamentos->setId_agend((int) ($_POST['id_servico_estetico'] ?? 0));
-
             $observacao = trim($_POST['observacao'] ?? "");
             $this->estetica->setObservacao($observacao ?: "Sem observações!");
             $this->estetica->setCreated_at(date("Y-m-d H:i:s"));
@@ -83,7 +81,7 @@ class MeusServicosController
             $userId = $_SESSION['user']['id'];
             $userRole = $_SESSION['user']['role'];
 
-            $agend = $this->agendsRepository->buscarPorId($this->agendamentos->getId_agend());
+            $agend = $this->agendsRepository->buscarPorId($this->estetica->getId_agend_fk());
 
             $podeFinalizar = false;
             if ($agend) {
@@ -97,7 +95,13 @@ class MeusServicosController
                     }
                 }
                 if ($podeFinalizar) {
-                    $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->agendamentos->getId_agend());
+                    $servsAgends = $this->agendsServsRepository->buscarPorIdAgendServs($this->estetica->getId_agend_fk());
+
+                    foreach ($servsAgends as $servAgen) {
+                        $this->agendsServsRepository->UpdateStatusExecutado($servAgen['id_agend_serv'], 'Estetica');
+                    }
+
+                    $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->estetica->getId_agend_fk());
                     $this->agendsRepository->CreateEsteticaHistory($this->estetica);
                     $_SESSION['sucesso'] = "Agendamento finalizado com sucesso!";
                 }
