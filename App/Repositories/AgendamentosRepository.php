@@ -195,10 +195,11 @@ class AgendamentosRepository
 
     public function CreateEsteticaHistory(Estetica $estet)
     {
-        $sql = "INSERT INTO estetica (observacao, id_agend_fk) VALUES (:observacao, :id_agend_fk)";
+        $sql = "INSERT INTO estetica (observacao, created_at, id_agend_fk) VALUES (:observacao, :created_at, :id_agend_fk)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             ':observacao' => $estet->getObservacao(),
+            ':created_at' => $estet->getCreated_at(),
             ':id_agend_fk' => $estet->getId_agend_fk()
         ]);
     }

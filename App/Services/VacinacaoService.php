@@ -33,6 +33,6 @@ class VacinacaoService
             $this->agendamentosRepository->UpdateStatusAgend("Finalizado", $agendAtendModal);
         }
 
-        return ['sucesso' => "Vacinacao criada com sucesso!"];
+        return ['sucesso' => "Vacinação criada com sucesso!"];
     }
 }

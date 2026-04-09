@@ -9,6 +9,7 @@ class Vacinacao
     private int $cliente_id_vacinacao;
     private int $veterinario_id_vacinacao;
     private int $id_vacina_servico;
+    private string $created_at;
     private string $data_de_aplicação;
     private string $data_prox_dose; //Pode ser null
     private int $resolvido;
@@ -169,6 +170,26 @@ class Vacinacao
     public function setId_vacina_servico($id_vacina_servico)
     {
         $this->id_vacina_servico = $id_vacina_servico;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     */
+    public function getCreated_at()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     *
+     * @return  self
+     */
+    public function setCreated_at($created_at)
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

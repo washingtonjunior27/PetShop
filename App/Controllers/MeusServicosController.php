@@ -77,6 +77,7 @@ class MeusServicosController
 
             $observacao = trim($_POST['observacao'] ?? "");
             $this->estetica->setObservacao($observacao ?: "Sem observações!");
+            $this->estetica->setCreated_at(date("Y-m-d H:i:s"));
             $this->estetica->setId_agend_fk((int) ($_POST['id_servico_estetico'] ?? 0));
 
             $userId = $_SESSION['user']['id'];

@@ -93,7 +93,7 @@
                             <?php    }
                         } else { ?>
                             <tr>
-                                <td colspan="7" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
+                                <td colspan="8" class="text-center py-3 fs-5">Nenhum agendamento encontrado!!</td>
                             </tr>
                         <?php } ?>
 

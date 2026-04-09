@@ -7,6 +7,7 @@ class Estetica
     private int $id_estetica;
     private string $observacao;
     private int $id_agend_fk;
+    private string $created_at;
 
     /**
      * Get the value of id_estetica
@@ -64,6 +65,26 @@ class Estetica
     public function setId_agend_fk($id_agend_fk)
     {
         $this->id_agend_fk = $id_agend_fk;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     */
+    public function getCreated_at()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     *
+     * @return  self
+     */
+    public function setCreated_at($created_at)
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

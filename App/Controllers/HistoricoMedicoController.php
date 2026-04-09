@@ -38,7 +38,7 @@ class HistoricoMedicoController
         }
 
         $idUser = $_SESSION['user']['id'];
-        $atend = $this->histMed->buscarPorId($_GET['id_histAtend']);
+        $atend = $this->histMed->buscarPorIdAtend($_GET['id_histAtend']);
         $podeVisualizar = false;
 
         if ($atend) {

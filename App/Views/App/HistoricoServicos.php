@@ -4,7 +4,7 @@
     <div class="container p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
-                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/meusServicos">
+                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/historicoServicos">
                     <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
                 </form>
@@ -25,22 +25,36 @@
                             <th class="fw-bold text-uppercase" scope="col">Esteticista</th>
                             <th class="fw-bold text-uppercase" scope="col">Pet</th>
                             <th class="fw-bold text-uppercase" scope="col">Dono do Pet</th>
+                            <th class="fw-bold text-uppercase" scope="col">Serviços</th>
                             <th class="fw-bold text-uppercase" scope="col">Observação</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <a class="text-decoration-none" href="<?= BASE_URL ?>/historicoServicos/VisualizarHistoricoServicos">
-                                    <i class="fa-solid fa-eye fs-3 text-primary"></i>
-                                </a>
-                            </td>
-                            <td>30/03/2026</td>
-                            <td>washington.junior</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td class="text-truncate" style="max-width: 250px;">Paciente alega que cachorro está liberando secreção pela vagina, fraco, chorando de dor e com dificuldade para necessidades essencias como respirar e fazer xixi.</td>
-                        </tr>
+                        <?php
+                        if (count($histServs) > 0) {
+                            foreach ($histServs as $histServ) { ?>
+                                <tr>
+                                    <td>
+                                        <a class="text-decoration-none" href="<?= BASE_URL ?>/historicoServicos/VisualizarHistoricoServicos?id_histServ=<?= $histServ['id_estetica'] ?>">
+                                            <i class="fa-solid fa-eye fs-3 text-primary"></i>
+                                        </a>
+                                    </td>
+                                    <td><?= date('d/m/Y - H:i', strtotime($histServ['created_at'])) ?></td>
+                                    <td><?= $histServ['responsavel_login'] ?></td>
+                                    <td><?= $histServ['nome_pet'] ?></td>
+                                    <td><?= $histServ['cliente_nome'] ?></td>
+                                    <td>
+                                        <?= $histServ['nomes_servicos'] ?>
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 250px;"><?= $histServ['observacao'] ?></td>
+                                </tr>
+                            <?php }
+                        } else { ?>
+                            <tr>
+                                <td colspan="8" class="text-center py-3 fs-5">Nenhum historico de atendimento encontrado!!</td>
+                            </tr>
+                        <?php } ?>
+
                     </tbody>
                 </table>
             </div>
@@ -49,21 +63,41 @@
         <?php require __DIR__ . "/../Modals/CadastrarVacinacaoAtendimentos.php" ?>
 
 
+        <!-- PAGINAÇÃO -->
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <?php
+                $query = $_GET;
+                unset($query['route']);
+                $range = 2;
+                $start = max(1, $currentPage - $range);
+                $end = min($totalHistServs, $currentPage + $range);
+                ?>
+
+                <?php if ($currentPage > 1) {
+                    $query['page'] = $currentPage - 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/historicoServicos?<?= http_build_query($query) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php for ($i = $start; $i <= $end; $i++) {
+                    $query['page'] = $i; ?>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/historicoServicos?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                <?php } ?>
+
+                <?php if ($currentPage < $totalHistServs) {
+                    $query['page'] = $currentPage + 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/historicoServicos?<?= http_build_query($query) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
     </div>

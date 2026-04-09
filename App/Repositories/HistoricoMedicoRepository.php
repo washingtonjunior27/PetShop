@@ -99,7 +99,7 @@ class HistoricoMedicoRepository
         return $stmt->fetchColumn();
     }
 
-    public function buscarPorId($id_atendimento)
+    public function buscarPorIdAtend($id_atendimento)
     {
         $sql = "SELECT at.*, 
                 p.id_pet, p.nome_pet, 
