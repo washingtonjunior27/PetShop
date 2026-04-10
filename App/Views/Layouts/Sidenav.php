@@ -156,10 +156,6 @@
                 <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" || $page == "atendimentos/Diagnostico" ? "active-sidenav py-2 ps-2" : "" ?>">
                     <span class="text-light fs-6 fw-semibold">Atendimentos</span>
                 </a>
-                <a href="<?= BASE_URL ?>/vacinacao" class="nav-link sidenav-item ps-3 <?= $page == "vacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
-
-                    <span class="text-light fs-6 fw-semibold">Vacinação</span>
-                </a>
             </div>
         </div>
     </div>
@@ -177,34 +173,11 @@
 
 <!-- ATENDIMENTOS VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "vacinacao") || ($page == "atendimentos") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
-        data-bs-toggle="collapse"
-        href="#atendimentoSidebar"
-        role="button"
-        aria-expanded="false">
-
-        <span class="d-flex align-items-center gap-3">
+    <div class="sidenav-item w-100 ps-5 <?= $page == "atendimentos" ? "active-sidenav" : "" ?>">
+        <a href="<?= BASE_URL ?>/atendimentos" class="nav-link d-flex align-items-center gap-3">
             <i class="fa-solid fa-stethoscope text-light fs-2"></i>
             <span class="text-light fs-6 fw-semibold">Atendimento</span>
-        </span>
-
-        <i class="fa-solid fa-angles-down"></i>
-    </a>
-
-
-    <div class="collapse w-100" id="atendimentoSidebar" data-bs-parent="#<?= $sidenavParent ?>">
-        <div class="ps-5">
-            <div class="main-bg border-2 border-light border-start d-flex flex-column gap-3">
-                <a href="<?= BASE_URL ?>/atendimentos" class="nav-link sidenav-item ps-3 <?= $page == "atendimentos" || $page == "atendimentos/Diagnostico" ? "active-sidenav py-2 ps-2" : "" ?>">
-
-                    <span class="text-light fs-6 fw-semibold">Atendimentos</span>
-                </a>
-                <a href="<?= BASE_URL ?>/vacinacao" class="nav-link sidenav-item ps-3 <?= $page == "vacinacao" ? "active-sidenav py-2 ps-2" : "" ?>">
-
-                    <span class="text-light fs-6 fw-semibold">Vacinação</span>
-                </a>
-            </div>
-        </div>
+        </a>
     </div>
 <?php } ?>
 

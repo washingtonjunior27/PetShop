@@ -8,7 +8,6 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action="<?= BASE_URL ?>/vacinacao/CriarVacinacao">
-                    <input type="hidden" name="vacinaModalAtend" value="vacinaModalAtend">
                     <!-- ID DO AGENDAMENTO -->
                     <input type="hidden" name="id_agend_vac_atend_modal" id="id_agend_vac_atend_modal">
                     <!-- CLIENTE -->
@@ -23,18 +22,30 @@
                         <input class="form-control" disabled type="text" name="pet_nome_vac_atend_modal" id="pet_nome_vac_atend_modal">
                         <input type="hidden" name="id_pet_vacinacao" id="pet_id_vac_atend_modal">
                     </div>
-                    <!-- VETERINARIO -->
+
+                    <!-- VETERINARIO (VACINA) -->
                     <div class="mb-3">
-                        <label for="vacina_id_fk_vacinacao" class="form-label">Veterinario Responsável</label>
-                        <input class="form-control" disabled type="text" name="vet_login_vac_atend_modal" id="vet_login_vac_atend_modal">
-                        <input type="hidden" name="id_vet_vacinacao" id="vet_id_vac_atend_modal">
+                        <label for="proxima_dose" class="form-label">Veterinario</label>
+                        <input disabled type="text" class="form-control" id="vet_login_vac_atend_modal">
+                        <input type="hidden" name="id_vet_vacinacao" class="form-control" id="vet_id_vac_atend_modal">
                     </div>
-                    <!-- SERVIÇO (VACINA) -->
-                    <div class="mb-3">
+
+                    <!-- VACINAS -->
+                    <div class="mb-3" id="container_select_vacina">
+                        <label for="vet_login_vac_atend_modal" class="form-label">Vacinas</label>
+                        <select name="id_vacina_servico" id="select_vac_atend_modal" class="form-select">
+                            <option value="" selected>Selecionar</option>
+                            <?php foreach ($vacinas as $vac) { ?>
+                                <option value="<?= $vac['id_servico'] ?>"><?= $vac['nome_servico'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="container_input_vacina">
                         <label for="id_vacina_servico" class="form-label">Vacina</label>
                         <input disabled class="form-control" type="text" id="nome_vac_atend_modal">
                         <input type="hidden" name="id_vacina_servico" id="id_vac_atend_modal">
                     </div>
+
                     <!-- DATA APLICAÇÃO -->
                     <div class="mb-3">
                         <label for="data_aplicacao" class="form-label">Data de Aplicação</label>

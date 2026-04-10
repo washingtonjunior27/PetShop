@@ -5,6 +5,7 @@ namespace App\Models;
 class Vacinacao
 {
     private int $id_vacinacao;
+    private int $id_agend_vacinacao;
     private int $pet_id_vacinacao;
     private int $cliente_id_vacinacao;
     private int $veterinario_id_vacinacao;
@@ -190,6 +191,26 @@ class Vacinacao
     public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_agend_vacinacao
+     */
+    public function getId_agend_vacinacao()
+    {
+        return $this->id_agend_vacinacao;
+    }
+
+    /**
+     * Set the value of id_agend_vacinacao
+     *
+     * @return  self
+     */
+    public function setId_agend_vacinacao($id_agend_vacinacao)
+    {
+        $this->id_agend_vacinacao = $id_agend_vacinacao;
 
         return $this;
     }

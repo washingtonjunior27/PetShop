@@ -17,7 +17,7 @@ class AtendimentosService
         $this->agendsRepository = new AgendamentosRepository();
         $this->agendsServsRepository = new AgendamentosServicosRepository();
     }
-    public function CreateAtendimentoService(Atendimentos $atend, $finalizarChamado)
+    public function CreateAtendimentoService(Atendimentos $atend)
     {
         if (
             !$atend->getAnamnese() || !$atend->getDiagnostico() || !$atend->getTratamento() ||
@@ -45,15 +45,10 @@ class AtendimentosService
 
             $agendsServs = $this->agendsServsRepository->buscarPorIdAgendServs($atend->getId_agend());
             foreach ($agendsServs as $agSe) {
-                $this->agendsServsRepository->UpdateStatusExecutado($agSe['id_agend_serv'], 'Consulta');
+                $this->agendsServsRepository->UpdateStatusExecutado($agSe['id_agend_fk'], 'Consulta');
             }
 
-            if ($finalizarChamado == "Confirmado") {
-                return ['sucesso' => "Diagnostico cadastrado! Preencha a vacinação para finalizar o agendamento!"];
-            } else {
-                $this->agendsRepository->UpdateStatusAgend("Finalizado", $atend->getId_agend());
-                return ['sucesso' => "Diagnóstico cadastrado com sucesso!"];
-            }
+            return ['sucesso' => "Diagnóstico cadastrado com sucesso!"];
         } else {
             return ['erro' => 'Diagnostico já está cadastrado! Cadastre a vacinação para finalizar agendamento!'];
         }

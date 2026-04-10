@@ -4,61 +4,19 @@ namespace App\Controllers;
 
 use App\Models\Vacinacao;
 use App\Services\VacinacaoService;
-use App\Controllers\AuthController;
-use App\Repositories\ServicosRepository;
 use App\Repositories\VacinacaoRepository;
-use App\Repositories\ClientesRepository;
-use App\Repositories\PetsRepository;
-use App\Repositories\VeterinariosRepository;
 
 class VacinacaoController
 {
-    private $authController;
     private $vacinacao;
     private $vacinacaoService;
-    private $servicosRepository;
     private $vacinacaoRepository;
-    private $clientesRepository;
-    private $petsRepository;
-    private $veterinariosRepository;
 
     public function __construct()
     {
-        $this->authController = new AuthController();
         $this->vacinacao = new Vacinacao();
         $this->vacinacaoService = new VacinacaoService();
-        $this->servicosRepository = new ServicosRepository();
         $this->vacinacaoRepository = new VacinacaoRepository();
-        $this->clientesRepository = new ClientesRepository();
-        $this->petsRepository = new PetsRepository();
-        $this->veterinariosRepository = new VeterinariosRepository();
-    }
-
-    public function index()
-    {
-        $user = $this->authController->InicioController();
-        $vacina = $this->servicosRepository->ReadServicosVacinaRepository();
-        $cliente = $this->clientesRepository->ReadClienteRepository(null, null, null);
-        $pets = $this->petsRepository->ReadPetsRepository(null, null, null);
-        $veterinarios = $this->veterinariosRepository->ReadVeterinarioRepository(null, null, null);
-        $result = $this->vacinacaoController();
-        $dados = [
-            'usuario' => $user['usuario'],
-            'vacinas' => $vacina,
-            'clientes' => $cliente,
-            'pets' => $pets,
-            'veterinarios' => $veterinarios,
-            'vacinacao' => $result['vacinacao'],
-            'totalVacinacao' => $result['totalVacinacao'],
-            'currentPage' => $result['currentPage']
-        ];
-
-        extract($dados);
-
-        require __DIR__ . "/../Views/Layouts/Header.php";
-        require __DIR__ . "/../Views/App/Vacinacao.php";
-        require __DIR__ . "/../Views/Layouts/MobileSidenav.php";
-        require __DIR__ . "/../Views/Layouts/Footer.php";
     }
 
     public function CriarVacinacao()
@@ -69,7 +27,7 @@ class VacinacaoController
                 exit;
             }
 
-            $agendAtendModal = (int) ($_POST['id_agend_vac_atend_modal'] ?? 0);
+            $this->vacinacao->setId_agend_vacinacao((int) ($_POST['id_agend_vac_atend_modal'] ?? 0));
             $this->vacinacao->setData_de_aplicação(trim($_POST['data_aplicacao'] ?? ""));
             $this->vacinacao->setData_prox_dose(trim($_POST['data_prox_dose'] ?? ""));
             $this->vacinacao->setCliente_id_vacinacao((int) $_POST['id_cliente_vacinacao']);
@@ -79,28 +37,14 @@ class VacinacaoController
             $this->vacinacao->setCreated_at(date("Y-m-d H:i:s"));
             $this->vacinacao->setResolvido(0);
 
-            $result = $this->vacinacaoService->CreateVacinacaoService($agendAtendModal, $this->vacinacao);
+            $result = $this->vacinacaoService->CreateVacinacaoService($this->vacinacao);
 
             if ($result['erro']) {
-                $vacinaModalAtend = $_POST['vacinaModalAtend'] ?? "";
-                if ($vacinaModalAtend) {
-                    $_SESSION['erro'] = $result['erro'];
-                    header('location:' . BASE_URL . '/atendimentos');
-                    exit;
-                } else {
-                    $_SESSION['erro'] = $result['erro'];
-                }
+                $_SESSION['erro'] = $result['erro'];
             } else {
-                $vacinaModalAtend = $_POST['vacinaModalAtend'] ?? "";
-                if ($vacinaModalAtend) {
-                    $_SESSION['sucesso'] = $result['sucesso'];
-                    header('location:' . BASE_URL . '/atendimentos');
-                    exit;
-                } else {
-                    $_SESSION['sucesso'] = $result['sucesso'];
-                }
+                $_SESSION['sucesso'] = $result['sucesso'];
             }
-            header('location:' . BASE_URL . '/vacinacao');
+            header('location:' . BASE_URL . '/atendimentos');
             exit;
         } else {
             header("location: " . BASE_URL . "/home");

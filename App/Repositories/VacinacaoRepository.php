@@ -19,15 +19,16 @@ class VacinacaoRepository
 
     public function CreateVacinacaoRepository(Vacinacao $vacinacao)
     {
-        $sql = "INSERT INTO vacinacao (data_aplicacao, data_prox_dose, created_at, id_cliente_vacinacao, 
+        $sql = "INSERT INTO vacinacao (data_aplicacao, data_prox_dose, created_at, id_agend_vacinacao, id_cliente_vacinacao, 
                                         id_pet_vacinacao, id_vet_vacinacao, id_vacina_servico, resolvido)
-                VALUES (:data_aplicacao, :data_prox_dose, :created_at, :id_cliente_vacinacao, 
+                VALUES (:data_aplicacao, :data_prox_dose, :created_at, :id_agend_vacinacao, :id_cliente_vacinacao, 
                          :id_pet_vacinacao, :id_vet_vacinacao, :id_vacina_servico, :resolvido)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             ':data_aplicacao' => $vacinacao->getData_de_aplicação(),
             ':data_prox_dose' => $vacinacao->getData_prox_dose(),
             ':created_at' => $vacinacao->getCreated_at(),
+            ':id_agend_vacinacao' => $vacinacao->getId_agend_vacinacao(),
             ':id_cliente_vacinacao' => $vacinacao->getCliente_id_vacinacao(),
             ':id_pet_vacinacao' => $vacinacao->getPet_id_vacinacao(),
             ':id_vet_vacinacao' => $vacinacao->getVeterinario_id_vacinacao(),

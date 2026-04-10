@@ -7,6 +7,7 @@ use App\Controllers\AuthController;
 use App\Services\AtendimentosService;
 use App\Repositories\AgendamentosRepository;
 use App\Repositories\ServicosRepository;
+use App\Repositories\VeterinariosRepository;
 
 class AtendimentosController
 {
@@ -15,6 +16,7 @@ class AtendimentosController
     private $atendimentosService;
     private $agendsRepository;
     private $servicosRepository;
+    private $veterinariosRepository;
 
     public function __construct()
     {
@@ -23,17 +25,25 @@ class AtendimentosController
         $this->atendimentosService = new AtendimentosService();
         $this->agendsRepository = new AgendamentosRepository();
         $this->servicosRepository = new ServicosRepository();
+        $this->veterinariosRepository = new VeterinariosRepository();
     }
 
     public function index()
     {
         $user = $this->authController->InicioController();
         $result = $this->AtendimentosController();
+        $veterinarios = $this->veterinariosRepository->ReadVeterinarioRepository(null, null, null);
         $servicos = $this->servicosRepository->ReadServicosVacinaRepository();
-        $result['usuario'] = $user;
-        $result['vacina'] = $servicos;
+        $dados = [
+            'usuario' => $user['usuario'],
+            'vacinas' => $servicos,
+            'veterinarios' => $veterinarios,
+            'atendimentos' => $result['atendimentos'],
+            'totalAtendimentos' => $result['totalAtendimentos'],
+            'currentPage' => $result['currentPage']
+        ];
 
-        extract($result);
+        extract($dados);
 
         require __DIR__ . "/../Views/Layouts/Header.php";
         require __DIR__ . "/../Views/App/Atendimentos.php";
@@ -88,9 +98,7 @@ class AtendimentosController
             $this->atendimentos->setVeterinario_id((int) $_POST['id_vet_diag']);
             $this->atendimentos->setCreated_at(date("Y-m-d H:i:s"));
 
-            $finalizarChamado = trim($_POST['finalizarAgendDiag'] ?? "Finalizado");
-
-            $result = $this->atendimentosService->CreateAtendimentoService($this->atendimentos, $finalizarChamado);
+            $result = $this->atendimentosService->CreateAtendimentoService($this->atendimentos);
 
             if ($result['erro']) {
                 $_SESSION['erro'] = $result['erro'];

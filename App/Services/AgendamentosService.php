@@ -59,7 +59,7 @@ class AgendamentosService
 
                 $this->agendamentosServicos->setId_agend_fk((int) $id_agend);
                 $this->agendamentosServicos->setId_serv_fk($servico);
-                $this->agendamentosServicos->setPreco($servicoReturn['preco_servico']);
+                $this->agendamentosServicos->setOrcamento($servicoReturn['preco_servico']);
                 $this->agendamentosServicos->setExecutado("Nao");
                 $this->agendServRepository->CreateAgendServRepository($this->agendamentosServicos);
             }

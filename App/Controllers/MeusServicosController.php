@@ -98,7 +98,7 @@ class MeusServicosController
                     $servsAgends = $this->agendsServsRepository->buscarPorIdAgendServs($this->estetica->getId_agend_fk());
 
                     foreach ($servsAgends as $servAgen) {
-                        $this->agendsServsRepository->UpdateStatusExecutado($servAgen['id_agend_serv'], 'Estetica');
+                        $this->agendsServsRepository->UpdateStatusExecutado($servAgen['id_agend_fk'], 'Estetica');
                     }
 
                     $this->agendsRepository->UpdateStatusAgend("Finalizado", $this->estetica->getId_agend_fk());

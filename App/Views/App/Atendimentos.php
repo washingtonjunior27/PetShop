@@ -59,7 +59,6 @@
                             foreach ($atendimentos as $atend) { ?>
                                 <tr>
                                     <td>
-
                                         <button
                                             data-bs-id_agend="<?= $atend['id_agend'] ?>"
                                             type="button"
@@ -73,24 +72,22 @@
                                                 <i class="fa-solid fa-comment-medical fs-3 text-primary"></i>
                                             </a>
                                         <?php } ?>
-                                        <?php if (str_contains($atend['categorias_servicos'], "Vacina")) { ?>
-                                            <button
-                                                data-bs-id_agend=<?= $atend['id_agend'] ?>
-                                                data-bs-id_cliente=<?= $atend['cliente_id'] ?>
-                                                data-bs-nome_cliente=<?= $atend['cliente_nome'] ?>
-                                                data-bs-id_pet=<?= $atend['id_pet'] ?>
-                                                data-bs-nome_pet=<?= $atend['nome_pet'] ?>
-                                                data-bs-responsavel_id=<?= $atend['responsavel_id'] ?>
-                                                data-bs-responsavel_login=<?= $atend['responsavel_login'] ?>
-                                                data-bs-vacina_id=<?= $atend['vacina_id'] ?>
-                                                data-bs-vacina_nome=<?= $atend['vacina_nome'] ?>
-                                                class="border-0 bg-white"
-                                                type="button"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#cadastrarVacinacaoAtendimentosModal">
-                                                <i class="fa-solid fa-syringe fs-3 text-primary"></i>
-                                            </button>
-                                        <?php } ?>
+                                        <button
+                                            data-bs-id_agend=<?= $atend['id_agend'] ?>
+                                            data-bs-id_cliente=<?= $atend['cliente_id'] ?>
+                                            data-bs-nome_cliente=<?= $atend['cliente_nome'] ?>
+                                            data-bs-id_pet=<?= $atend['id_pet'] ?>
+                                            data-bs-nome_pet=<?= $atend['nome_pet'] ?>
+                                            data-bs-responsavel_id=<?= $atend['responsavel_id'] ?>
+                                            data-bs-responsavel_login=<?= $atend['responsavel_login'] ?>
+                                            data-bs-vacina_id=<?= $atend['vacina_id'] ?? 0 ?>
+                                            data-bs-vacina_nome=<?= $atend['vacina_nome'] ?? 0 ?>
+                                            class="border-0 bg-white"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cadastrarVacinacaoAtendimentosModal">
+                                            <i class="fa-solid fa-syringe fs-3 text-primary"></i>
+                                        </button>
                                         <button
                                             data-bs-id_agend="<?= $atend['id_agend'] ?>"
                                             type="button"

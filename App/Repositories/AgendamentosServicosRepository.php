@@ -19,11 +19,11 @@ class AgendamentosServicosRepository
 
     public function CreateAgendServRepository(Agendamentos_Servicos $agendamentosServicos)
     {
-        $sql = "INSERT INTO agendamentos_servicos (preco, executado, id_agend_fk, id_serv_fk)
-                VALUES (:preco, :executado, :id_agend_fk, :id_serv_fk)";
+        $sql = "INSERT INTO agendamentos_servicos (orcamento, executado, id_agend_fk, id_serv_fk)
+                VALUES (:orcamento, :executado, :id_agend_fk, :id_serv_fk)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            "preco" => $agendamentosServicos->getPreco(),
+            "orcamento" => $agendamentosServicos->getOrcamento(),
             "executado" => $agendamentosServicos->getExecutado(),
             "id_agend_fk" => $agendamentosServicos->getId_agend_fk(),
             "id_serv_fk" => $agendamentosServicos->getId_serv_fk()
@@ -41,13 +41,43 @@ class AgendamentosServicosRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function UpdateStatusExecutado($id_agend_serv, $categoria)
+    public function UpdateStatusExecutado($id_agend_fk, $categoria)
     {
         $sql = "UPDATE agendamentos_servicos AS agse  
                 INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk 
                 SET executado = 'Sim'
-                WHERE id_agend_serv = :id_agend_serv AND s.categoria_servico = :categoria";
+                WHERE id_agend_fk = :id_agend_fk AND s.categoria_servico = :categoria";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':id_agend_serv' => $id_agend_serv, ':categoria' => $categoria]);
+        $stmt->execute([':id_agend_fk' => $id_agend_fk, ':categoria' => $categoria]);
+    }
+
+    public function buscarServicoNoAgendamento($id_agend, $id_serv)
+    {
+        $sql = "SELECT COUNT(*)
+                FROM agendamentos_servicos AS agse
+                WHERE agse.id_agend_fk = :id_agend AND agse.id_serv_fk = :id_serv";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_agend' => $id_agend, ':id_serv' => $id_serv]);
+        return $stmt->fetchColumn();
+    }
+
+    public function buscarPrecoServico($id_servico)
+    {
+        $sql = "SELECT preco_servico FROM servicos WHERE id_servico = :id_servico";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_servico' => $id_servico]);
+        return $stmt->fetchColumn(); // Retorna apenas o valor (ex: 85.50)
+    }
+
+    public function adicionarServicoAoAgendamento($id_agend, $id_servico, $orcamento)
+    {
+        $sql = "INSERT INTO agendamentos_servicos (id_agend_fk, id_serv_fk, orcamento, executado) 
+            VALUES (:id_agend_fk, :id_serv_fk, :orcamento, 'Sim')";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':id_agend_fk' => $id_agend,
+            ':id_serv_fk'  => $id_servico,
+            ':orcamento' => $orcamento
+        ]);
     }
 }

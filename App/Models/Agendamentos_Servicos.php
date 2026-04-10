@@ -5,7 +5,7 @@ namespace App\Models;
 class Agendamentos_Servicos
 {
     private int $id_agend_serv;
-    private string $preco;
+    private string $orcamento;
     private string $executado;
     private int $id_agend_fk;
     private int $id_serv_fk;
@@ -29,27 +29,6 @@ class Agendamentos_Servicos
 
         return $this;
     }
-
-    /**
-     * Get the value of preco
-     */
-    public function getPreco()
-    {
-        return $this->preco;
-    }
-
-    /**
-     * Set the value of preco
-     *
-     * @return  self
-     */
-    public function setPreco($preco)
-    {
-        $this->preco = $preco;
-
-        return $this;
-    }
-
     /**
      * Get the value of executado
      */
@@ -106,6 +85,26 @@ class Agendamentos_Servicos
     public function setId_serv_fk($id_serv_fk)
     {
         $this->id_serv_fk = $id_serv_fk;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of orcamento
+     */
+    public function getOrcamento()
+    {
+        return $this->orcamento;
+    }
+
+    /**
+     * Set the value of orcamento
+     *
+     * @return  self
+     */
+    public function setOrcamento($orcamento)
+    {
+        $this->orcamento = $orcamento;
 
         return $this;
     }

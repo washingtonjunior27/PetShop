@@ -20,7 +20,7 @@ class VacinacaoService
         $this->agendsServsRepository = new AgendamentosServicosRepository();
     }
 
-    public function CreateVacinacaoService($agendAtendModal, Vacinacao $vacinacao)
+    public function CreateVacinacaoService(Vacinacao $vacinacao)
     {
         if (
             !$vacinacao->getData_de_aplicação() || !$vacinacao->getCliente_id_vacinacao() ||
@@ -30,12 +30,27 @@ class VacinacaoService
             return ['erro' => 'Preencha os campos vazios!'];
         }
 
+        // 1. Salva a vacinação no histórico
         $this->vacinacaoRepository->CreateVacinacaoRepository($vacinacao);
 
-        if ($agendAtendModal) {
-            $this->agendamentosRepository->UpdateStatusAgend("Finalizado", $agendAtendModal);
+        $idAgend = $vacinacao->getId_agend_vacinacao();
+        $idVacina = $vacinacao->getId_vacina_servico();
+
+        // 2. Verifica se a vacina já estava no orçamento desse agendamento
+        $jaExiste = $this->agendsServsRepository->buscarServicoNoAgendamento($idAgend, $idVacina);
+
+        if (!$jaExiste) {
+            // BUSCA O VALOR: Se não existia, precisamos saber quanto custa hoje
+            $precoAtual = $this->agendsServsRepository->buscarPrecoServico($idVacina);
+
+            // SALVA NO ORÇAMENTO: Adiciona o serviço com o preço correto
+            $this->agendsServsRepository->adicionarServicoAoAgendamento($idAgend, $idVacina, $precoAtual);
         }
 
-        return ['sucesso' => "Vacinação criada com sucesso!"];
+        // 3. Finaliza o agendamento
+        $this->agendamentosRepository->UpdateStatusAgend("Finalizado", $idAgend);
+        $this->agendsServsRepository->UpdateStatusExecutado($idAgend, 'Vacina');
+
+        return ['sucesso' => "Vacinação registrada e valor adicionado ao orçamento!"];
     }
 }
