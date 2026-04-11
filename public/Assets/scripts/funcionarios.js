@@ -1,5 +1,16 @@
+let reset_senha = document.getElementById('resetSenhaModal');
 let edit_modal = document.getElementById('editarFuncionarioModal');
-let delete_modal = document.getElementById('excluirFuncionarioModal')
+let delete_modal = document.getElementById('excluirFuncionarioModal');
+
+reset_senha.addEventListener("show.bs.modal", (e) => {
+    const button = e.relatedTarget;
+
+    const id_usuario = button.getAttribute('data-bs-id_usuario');
+    const pagina = button.getAttribute('data-bs-pagina');
+
+    reset_senha.querySelector('#modal_reset_senha_id_usuario').value = id_usuario;
+    reset_senha.querySelector('#modal_reset_senha_pag').value = pagina;
+})
 
 edit_modal.addEventListener("show.bs.modal", (e) => {
     edit_modal.querySelectorAll('input[name="status"]').forEach(radio => radio.checked = false);

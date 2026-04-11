@@ -61,7 +61,7 @@ class FuncionariosController
             header("location: " . BASE_URL . "/funcionarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/funcionarios");
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }
@@ -121,7 +121,7 @@ class FuncionariosController
             header("location: " . BASE_URL . "/funcionarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/funcionarios");
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }
@@ -129,12 +129,13 @@ class FuncionariosController
     public function ExcluirFuncionario()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            $this->usuario->setId($_POST['id_usuario']);
-
             if ($_SESSION['user']['role'] != "Admin") {
                 header("location: " . BASE_URL . "/logout");
                 exit;
             }
+
+            $this->usuario->setId($_POST['id_usuario']);
+
 
             $this->usuarioRepository->DeleteUsuarioRepository($this->usuario->getId());
 
@@ -142,7 +143,36 @@ class FuncionariosController
             header("location: " . BASE_URL . "/funcionarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/funcionarios");
+            header("location: " . BASE_URL . "/home");
+            exit;
+        }
+    }
+
+    public function ResetSenha()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/logout");
+                exit;
+            }
+
+            $this->usuario->setId($_POST['id_usuario']);
+            $this->usuario->setSenha(password_hash('123456', PASSWORD_ARGON2ID));
+
+            $this->usuarioRepository->NovaSenhaActive($this->usuario->getSenha(), $this->usuario->getId());
+
+            $pagina = $_POST['pagina'] ?? "";
+
+            $_SESSION['sucesso'] = "Senha resetada com Sucesso! Acesse com 123456 para alterar!";
+
+            if ($pagina === "veterinarios") {
+                header("location: " . BASE_URL . "/veterinarios");
+            } else {
+                header("location: " . BASE_URL . "/funcionarios");
+            }
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }

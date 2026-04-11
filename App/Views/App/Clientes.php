@@ -65,7 +65,7 @@
                                         <small><?= $cliente['telefone'] ?></small>
                                         <small><?= $cliente['email'] ?></small>
                                     </div>
-                                    <div class="d-flex align-items-center text-light gap-2">
+                                    <div class="d-flex flex-column align-items-center text-light gap-2">
                                         <button
                                             data-bs-id="<?= $cliente['id'] ?>"
                                             data-bs-nome="<?= $cliente['nome'] ?>"

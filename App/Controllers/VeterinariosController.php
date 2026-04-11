@@ -43,6 +43,11 @@ class VeterinariosController
     public function CriarVeterinario()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] != "Admin") {
+                header("location: " . BASE_URL . "/home");
+                exit;
+            }
+
             $this->usuario->setNome(trim($_POST['nome'] ?? ""));
             $this->usuario->setLogin(trim($_POST['login'] ?? ""));
             $this->usuario->setEmail(trim($_POST['email'] ?? ""));
@@ -65,7 +70,7 @@ class VeterinariosController
             header("location: " . BASE_URL . "/veterinarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/veterinarios");
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }
@@ -125,7 +130,7 @@ class VeterinariosController
             header("location: " . BASE_URL . "/veterinarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/veterinarios");
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }
@@ -150,7 +155,7 @@ class VeterinariosController
             header("location: " . BASE_URL . "/veterinarios");
             exit;
         } else {
-            header("location: " . BASE_URL . "/veterinarios");
+            header("location: " . BASE_URL . "/home");
             exit;
         }
     }

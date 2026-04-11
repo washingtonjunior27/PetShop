@@ -81,7 +81,16 @@
                                         <small><?= $veterinario['especialidade'] ?></small>
                                         <small><?= $veterinario['status'] ?></small>
                                     </div>
-                                    <div class="d-flex flex-column align-items-center text-light gap-2">
+                                    <div class="d-flex align-items-center text-light gap-2">
+                                        <button
+                                            data-bs-id_usuario="<?= $veterinario['id'] ?>"
+                                            data-bs-pagina="veterinarios"
+                                            type="button"
+                                            class="btn btn-light"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#resetSenhaModal">
+                                            <i class="fa-solid fa-key"></i>
+                                        </button>
                                         <button
                                             data-bs-id_veterinario="<?= $veterinario['id'] ?>"
                                             data-bs-nome_veterinario="<?= $veterinario['nome'] ?>"
@@ -120,11 +129,6 @@
 
                     </div>
                 </div>
-
-                <?php
-                require __DIR__ . "/../Modals/EditarVeterinario.php";
-                require __DIR__ . "/../Modals/ExcluirVeterinario.php";
-                ?>
 
                 <!-- PAGINAÇÃO -->
                 <nav class="mt-2 d-flex justify-content-center align-items-center">
@@ -168,3 +172,9 @@
         </div>
     </div>
 </div>
+
+<?php
+require __DIR__ . "/../Modals/ResetSenha.php";
+require __DIR__ . "/../Modals/EditarVeterinario.php";
+require __DIR__ . "/../Modals/ExcluirVeterinario.php";
+?>

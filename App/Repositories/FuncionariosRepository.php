@@ -55,8 +55,6 @@ class FuncionariosRepository
         return $this->CountHelperRepository($sql, $search);
     }
 
-
-
     // EDITAR FUNCIONARIO
     public function UpdateUsuarioRepository(Usuarios $usuario)
     {
@@ -151,5 +149,15 @@ class FuncionariosRepository
 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function NovaSenhaActive($senha, $id_usuario)
+    {
+        $sql = "UPDATE usuarios SET senha = :senha, primeiro_acesso = 1 WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "senha" => $senha,
+            ":id" => $id_usuario
+        ]);
     }
 }

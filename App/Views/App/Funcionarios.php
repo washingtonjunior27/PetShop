@@ -3,7 +3,7 @@
 
     <div class="container p-0 my-4">
         <div class="row g-3">
-            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
+            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">
                 <div class="rounded">
                     <h2 class="fs-4 fw-bold ">Cadastrar Funcionarios</h2>
 
@@ -78,6 +78,15 @@
                                         <small><?= $result['status'] ?></small>
                                     </div>
                                     <div class="d-flex align-items-center text-light gap-2">
+                                        <button
+                                            data-bs-id_usuario="<?= $result['id'] ?>"
+                                            data-bs-pagina="funcionarios"
+                                            type="button"
+                                            class="btn btn-light"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#resetSenhaModal">
+                                            <i class="fa-solid fa-key"></i>
+                                        </button>
                                         <button
                                             data-bs-id="<?= $result['id'] ?>"
                                             data-bs-nome="<?= $result['nome'] ?>"
@@ -161,6 +170,7 @@
 
 <!-- MODALS -->
 <?php
+require __DIR__ . "/../Modals/ResetSenha.php";
 require __DIR__ . "/../Modals/ExcluirFuncionario.php";
 require __DIR__ . "/../Modals/EditarFuncionario.php";
 ?>
