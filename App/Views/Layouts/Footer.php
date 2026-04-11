@@ -15,6 +15,7 @@
 <script src="/petshop/public/Assets/scripts/meusServicos.js"></script>
 <script src="/petshop/public/Assets/scripts/atendimentos.js"></script>
 <script src="/petshop/public/Assets/scripts/vacinacao.js"></script>
+<script src="/petshop/public/Assets/scripts/lembretes.js"></script>
 
 </body>
 

@@ -39,6 +39,10 @@ class AgendamentosService
                 return ['erro' => 'Preencha os campos vazios!'];
             }
 
+            if ($agend->getData_agend() < date('Y-m-d')) {
+                return ['erro' => 'Data de agendamento inválida!'];
+            }
+
             $this->pdo->beginTransaction();
 
             $duracao_servico = 0;

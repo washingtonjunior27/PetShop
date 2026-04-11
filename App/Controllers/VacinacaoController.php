@@ -35,7 +35,7 @@ class VacinacaoController
             $this->vacinacao->setVeterinario_id_vacinacao((int) $_POST['id_vet_vacinacao']);
             $this->vacinacao->setId_vacina_servico((int) $_POST['id_vacina_servico']);
             $this->vacinacao->setCreated_at(date("Y-m-d H:i:s"));
-            $this->vacinacao->setResolvido(0);
+            $this->vacinacao->setResolvido(2);
 
             $result = $this->vacinacaoService->CreateVacinacaoService($this->vacinacao);
 

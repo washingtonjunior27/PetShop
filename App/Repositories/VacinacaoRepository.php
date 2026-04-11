@@ -35,6 +35,8 @@ class VacinacaoRepository
             ':id_vacina_servico' => $vacinacao->getId_vacina_servico(),
             ':resolvido' => $vacinacao->getResolvido()
         ]);
+
+        return $this->pdo->lastInsertId();
     }
 
     public function ReadVacinacaoRepository($search, $limit, $offset, $id_user, $role)
@@ -117,5 +119,12 @@ class VacinacaoRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchColumn();
+    }
+
+    public function UpdateResolvidoVac($id_vacinacao)
+    {
+        $sql = "UPDATE vacinacao SET resolvido = 1 WHERE id_vacinacao = :id_vacinacao";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_vacinacao' => $id_vacinacao]);
     }
 }

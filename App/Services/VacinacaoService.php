@@ -30,8 +30,26 @@ class VacinacaoService
             return ['erro' => 'Preencha os campos vazios!'];
         }
 
+        if ($vacinacao->getData_de_aplicação() < date("Y-m-d")) {
+            return ['erro' => 'Data de aplicação inválida!'];
+        }
+
+        if ($vacinacao->getData_prox_dose() != '0000-00-00' && !empty($vacinacao->getData_prox_dose())) {
+            if ($vacinacao->getData_prox_dose() <= $vacinacao->getData_de_aplicação()) {
+                return ['erro' => 'Data de próxima dose inválida'];
+            }
+        }
+
         // 1. Salva a vacinação no histórico
-        $this->vacinacaoRepository->CreateVacinacaoRepository($vacinacao);
+        $vacinacaoId = $this->vacinacaoRepository->CreateVacinacaoRepository($vacinacao);
+
+        if (
+            $vacinacao->getData_de_aplicação() === date('Y-m-d')
+            &&
+            ($vacinacao->getData_prox_dose() === '0000-00-00' || empty($vacinacao->getData_prox_dose()))
+        ) {
+            $this->vacinacaoRepository->UpdateResolvidoVac($vacinacaoId);
+        }
 
         $idAgend = $vacinacao->getId_agend_vacinacao();
         $idVacina = $vacinacao->getId_vacina_servico();
@@ -47,9 +65,15 @@ class VacinacaoService
             $this->agendsServsRepository->adicionarServicoAoAgendamento($idAgend, $idVacina, $precoAtual);
         }
 
+
+
         // 3. Finaliza o agendamento
         $this->agendamentosRepository->UpdateStatusAgend("Finalizado", $idAgend);
-        $this->agendsServsRepository->UpdateStatusExecutado($idAgend, 'Vacina');
+
+
+        if ($vacinacao->getData_de_aplicação() == date('Y-m-d')) {
+            $this->agendsServsRepository->UpdateStatusExecutado($idAgend, 'Vacina');
+        }
 
         return ['sucesso' => "Vacinação registrada e valor adicionado ao orçamento!"];
     }

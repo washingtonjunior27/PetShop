@@ -21,7 +21,7 @@
                 <?php }
                 unset($_SESSION['sucesso']) ?>
 
-                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/meusServicos">
+                <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/lembretes">
                     <input name="search" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
                     <button class="btn text-light main-bg w-25" type="submit">Pesquisar</button>
                 </form>
@@ -40,49 +40,88 @@
                             <th class="fw-bold text-uppercase" scope="col">Ações</th>
                             <th class="fw-bold text-uppercase" scope="col">Data de Aplicação</th>
                             <th class="fw-bold text-uppercase" scope="col">Segunda Dose</th>
+                            <th class="fw-bold text-uppercase" scope="col">Responsavel</th>
                             <th class="fw-bold text-uppercase" scope="col">Pet</th>
                             <th class="fw-bold text-uppercase" scope="col">Cliente</th>
+                            <th class="fw-bold text-uppercase" scope="col">Telefone</th>
                             <th class="fw-bold text-uppercase" scope="col">Vacina</th>
                             <th class="fw-bold text-uppercase" scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <a class="text-decoration-none">
-                                    <i class="fa-solid fa-check fs-3 text-success"></i>
-                                </a>
-                            </td>
-                            <td>29/03/2026</td>
-                            <td>---</td>
-                            <td>Lady</td>
-                            <td>Erica Penafort</td>
-                            <td>V8</td>
-                            <td>🟢 Em dia</td>
-                        </tr>
+                        <?php
+                        if (count($lembretes) > 0) {
+                            foreach ($lembretes as $lemb) { ?>
+                                <tr>
+                                    <td>
+                                        <button
+                                            data-bs-id_vacinacao="<?= $lemb['id_vacinacao'] ?>"
+                                            type="button"
+                                            class="border-0 bg-white"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#resolvidoLembreteModal">
+                                            <i class="fa-solid fa-check fs-3 text-success"></i>
+                                        </button>
+                                    </td>
+                                    <td><?= date('d/m/Y', strtotime($lemb['data_aplicacao'])) ?></td>
+                                    <td><?= !empty($lemb['data_prox_dose']) && $lemb['data_prox_dose'] !== '0000-00-00' ? date('d/m/Y', strtotime($lemb['data_prox_dose'])) : '---' ?></td>
+                                    <td><?= $lemb['responsavel_login'] ?></td>
+                                    <td><?= $lemb['nome_pet'] ?></td>
+                                    <td><?= $lemb['cliente_nome'] ?></td>
+                                    <td><?= $lemb['telefone_cliente'] ?></td>
+                                    <td><?= $lemb['nome_servico'] ?></td>
+                                    <td><?= $lemb['status_real'] ?></td>
+                                </tr>
+                            <?php   }
+                        } else { ?>
+                            <tr>
+                                <td colspan="9" class="text-center py-3 fs-5">Nenhum lembrete de vacinação encontrado!!</td>
+                            </tr>
+                        <?php } ?>
+
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <?php require __DIR__ . "/../Modals/CadastrarVacinacaoAtendimentos.php" ?>
+        <?php require __DIR__ . "/../Modals/ResolvidoLembrete.php" ?>
 
 
+        <!-- PAGINAÇÃO -->
         <nav class="mt-2 d-flex justify-content-center align-items-center">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <?php
+                $query = $_GET;
+                unset($query['route']);
+                $range = 8;
+                $start = max(1, $currentPage - $range);
+                $end = min($totalLembretes, $currentPage + $range);
+                ?>
+
+                <?php if ($currentPage > 1) {
+                    $query['page'] = $currentPage - 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/lembretes?<?= http_build_query($query) ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php for ($i = $start; $i <= $end; $i++) {
+                    $query['page'] = $i; ?>
+                    <li class="page-item <?= $i == $currentPage ? "active" : "" ?>"><a class="page-link" href="<?= BASE_URL ?>/lembretes?<?= http_build_query($query) ?>"><?= $i ?></a></li>
+                <?php } ?>
+
+                <?php if ($currentPage < $totalLembretes) {
+                    $query['page'] = $currentPage + 1;
+                ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= BASE_URL ?>/lembretes?<?= http_build_query($query) ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </nav>
     </div>

@@ -16,16 +16,52 @@ class HistoricoVacinacaoRepository
         $this->pdo = $con->getConn();
     }
 
-    public function ReadHistVacRepository($search, $limit, $offset, $id_user, $role)
+    public function ReadHistVacRepository($search, $limit, $offset, $id_user, $role, $resolvido)
     {
         $sql = "SELECT 
                 vac.*, 
                 p.id_pet, p.nome_pet, 
                 cli.id AS cliente_id,
                 cli.nome AS cliente_nome,
+                cli.telefone AS telefone_cliente,
                 resp.id AS responsavel_id, 
                 resp.login AS responsavel_login,
-                s.nome_servico
+                s.nome_servico,
+
+                CASE 
+                    WHEN (vac.data_prox_dose IS NOT NULL AND vac.data_prox_dose <> '0000-00-00' AND vac.data_prox_dose <> '') THEN
+                        CASE 
+                            WHEN vac.data_prox_dose < CURDATE() THEN '🔴 Atrasado (Segunda Dose)'
+                            WHEN vac.data_prox_dose = CURDATE() THEN '🔵 Hoje (Segunda Dose)'
+                            WHEN vac.data_prox_dose BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN '🟠 Atenção (Segunda Dose)'
+                            ELSE '🟢 Em Dia (Segunda Dose)'
+                        END
+                    ELSE
+                        CASE 
+                            WHEN vac.data_aplicacao < CURDATE() THEN '🔴 Atrasado (Aplicação)'
+                            WHEN vac.data_aplicacao = CURDATE() THEN '🔵 Hoje (Aplicação)'
+                            WHEN vac.data_aplicacao BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN '🟠 Atenção (Aplicação)'
+                            ELSE '🟢 Em dia (Aplicação)'
+                        END
+                END AS status_real,
+
+                CASE 
+                    WHEN (vac.data_prox_dose IS NOT NULL AND vac.data_prox_dose <> '0000-00-00' AND vac.data_prox_dose <> '') THEN
+                        CASE 
+                            WHEN vac.data_prox_dose < CURDATE() THEN 2
+                            WHEN vac.data_prox_dose = CURDATE() THEN 4
+                            WHEN vac.data_prox_dose BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 6
+                            ELSE 8
+                        END
+                    ELSE
+                        CASE 
+                            WHEN vac.data_aplicacao < CURDATE() THEN 1
+                            WHEN vac.data_aplicacao = CURDATE() THEN 3
+                            WHEN vac.data_aplicacao BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) THEN 5
+                            ELSE 7
+                        END
+                END AS prioridade_vacinacao
+
             FROM vacinacao AS vac
             INNER JOIN servicos AS s ON s.id_servico = vac.id_vacina_servico
             LEFT JOIN pets AS p ON p.id_pet = vac.id_pet_vacinacao
@@ -35,20 +71,25 @@ class HistoricoVacinacaoRepository
 
         $params = [];
 
-        if ($role !== 'Admin') {
-            $sql .= ' AND vac.id_vet_vacinacao = :id_user';
+        if ($role !== 'Admin' && $role !== 'Atendente') {
+            $sql .= ' AND (vac.id_vet_vacinacao = :id_user)';
             $params[':id_user'] = $id_user;
+        }
+
+        if ($resolvido) {
+            $sql .= ' AND (vac.resolvido = :resolvido)';
+            $params[':resolvido'] = $resolvido;
         }
 
         if (!empty($search)) {
             $sql .= " AND (vac.created_at LIKE :search OR resp.login LIKE :search 
-                            OR p.nome_pet LIKE :search  OR cli.nome LIKE :search 
+                            OR p.nome_pet LIKE :search  OR cli.nome LIKE :search OR cli.telefone LIKE :search
                             OR s.nome_servico LIKE :search OR vac.data_aplicacao LIKE :search
                             OR vac.data_prox_dose LIKE :search)";
             $params[":search"] = "%" . $search . "%";
         }
 
-        $sql .= ' ORDER BY vac.created_at DESC';
+        $sql .= ' ORDER BY prioridade_vacinacao ASC, vac.data_aplicacao ASC';
 
         if ($limit !== null && $offset !== null) {
             $sql .= " LIMIT :limit OFFSET :offset";
@@ -69,7 +110,7 @@ class HistoricoVacinacaoRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function CountHistVacRepository($search, $id_user, $role)
+    public function CountHistVacRepository($search, $id_user, $role, $resolvido)
     {
         $sql = "SELECT COUNT(DISTINCT vac.id_vacinacao)
             FROM vacinacao AS vac
@@ -86,9 +127,14 @@ class HistoricoVacinacaoRepository
             $params[':id_user'] = $id_user;
         }
 
+        if ($resolvido) {
+            $sql .= ' AND (vac.resolvido = :resolvido)';
+            $params[':resolvido'] = $resolvido;
+        }
+
         if (!empty($search)) {
             $sql .= " AND (vac.created_at LIKE :search OR resp.login LIKE :search 
-                            OR p.nome_pet LIKE :search  OR cli.nome LIKE :search 
+                            OR p.nome_pet LIKE :search  OR cli.nome LIKE :search OR cli.telefone LIKE :search
                             OR s.nome_servico LIKE :search OR vac.data_aplicacao LIKE :search
                             OR vac.data_prox_dose LIKE :search)";
             $params[":search"] = "%" . $search . "%";

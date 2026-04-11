@@ -83,9 +83,9 @@ class HistoricoVacinacaoController
 
         $search = $_GET['search'] ?? "";
 
-        $results = $this->histVacRepository->ReadHistVacRepository($search, $limit, $offset, $id_user, $role);
+        $results = $this->histVacRepository->ReadHistVacRepository($search, $limit, $offset, $id_user, $role, null);
 
-        $total = $this->histVacRepository->CountHistVacRepository($search, $id_user, $role);
+        $total = $this->histVacRepository->CountHistVacRepository($search, $id_user, $role, null);
 
         $totalCeil = ceil($total / $limit);
 
