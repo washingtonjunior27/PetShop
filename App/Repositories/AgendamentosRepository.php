@@ -319,7 +319,7 @@ class AgendamentosRepository
         }
 
         $sql .= ' GROUP BY ag.id_agend';
-        $sql .= ' ORDER BY status_order ASC, ag.data_agend ASC, ag.hora_agend_inicio ASC';
+        $sql .= ' ORDER BY status_order ASC, ag.data_agend ASC, ag.hora_agend_inicio ASC LIMIT 4';
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -347,6 +347,15 @@ class AgendamentosRepository
         if ($role == "Atendente") {
             $sql .= " AND (status_agend = 'Agendado' OR status_agend = 'Confirmado')";
         }
+
+        if ($status == "Em atendimento") {
+            $sql .= " AND (status_agend = 'Em atendimento')";
+        }
+
+        if ($status == "Finalizado") {
+            $sql .= " AND (status_agend = 'Finalizado')";
+        }
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
 

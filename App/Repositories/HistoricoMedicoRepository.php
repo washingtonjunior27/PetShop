@@ -25,9 +25,12 @@ class HistoricoMedicoRepository
                 cli.id AS cliente_id,
                 cli.nome AS cliente_nome,
                 resp.id AS responsavel_id, 
-                resp.login AS responsavel_login
+                resp.login AS responsavel_login,
+                GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos
             FROM atendimentos AS at
             INNER JOIN agendamentos AS ag ON ag.id_agend = at.id_agend
+            INNER JOIN agendamentos_servicos AS agse ON ag.id_agend = agse.id_agend_fk
+            INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk
             LEFT JOIN pets AS p ON p.id_pet = at.pet_id
             LEFT JOIN usuarios AS cli ON cli.id = at.cliente_id
             LEFT JOIN usuarios AS resp ON resp.id = at.veterinario_id
@@ -48,6 +51,7 @@ class HistoricoMedicoRepository
             $params[":search"] = "%" . $search . "%";
         }
 
+        $sql .= ' GROUP BY at.id_atendimento';
         $sql .= ' ORDER BY at.created_at DESC';
 
         if ($limit !== null && $offset !== null) {

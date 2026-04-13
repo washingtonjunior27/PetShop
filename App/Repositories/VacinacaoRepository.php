@@ -128,7 +128,7 @@ class VacinacaoRepository
         $stmt->execute([':id_vacinacao' => $id_vacinacao]);
     }
 
-    public function CountVacPendentes($status)
+    public function CountVacPendentes($id_user, $role, $status)
     {
         $sql = "SELECT COUNT(DISTINCT vac.id_vacinacao)
             FROM vacinacao AS vac
@@ -141,13 +141,19 @@ class VacinacaoRepository
             ((vac.data_prox_dose IS NULL OR vac.data_prox_dose = '0000-00-00') AND vac.data_aplicacao < CURDATE())
         )";
         } elseif ($status === "Proximas") {
-            // Está próxima se:
-            // A data (seja de reforço ou aplicação) está entre hoje e os próximos 7 dias
             $sql .= " AND (
             (vac.data_prox_dose BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY))
             OR 
             ((vac.data_prox_dose IS NULL OR vac.data_prox_dose = '0000-00-00') AND vac.data_aplicacao BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY))
         )";
+        }
+
+        if ($status === "Hoje") {
+            $sql .= " AND vac.data_aplicacao = CURDATE()";
+        }
+
+        if ($role == "Veterinario") {
+            $sql .= " AND vac.id_vet_vacinacao = $id_user";
         }
 
         $stmt = $this->pdo->prepare($sql);

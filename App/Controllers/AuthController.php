@@ -10,6 +10,7 @@ use App\Repositories\AgendamentosServicosRepository;
 use App\Repositories\ClientesRepository;
 use App\Repositories\VacinacaoRepository;
 use App\Repositories\HistoricoVacinacaoRepository;
+use App\Repositories\HistoricoMedicoRepository;
 
 class AuthController
 {
@@ -21,6 +22,7 @@ class AuthController
     private $agendamentosServicosRepository;
     private $vacinacaoRepository;
     private $histVacRepo;
+    private $histMedRepo;
 
     public function __construct()
     {
@@ -32,6 +34,7 @@ class AuthController
         $this->agendsRepository = new AgendamentosRepository();
         $this->vacinacaoRepository = new VacinacaoRepository();
         $this->histVacRepo = new HistoricoVacinacaoRepository();
+        $this->histMedRepo = new HistoricoMedicoRepository();
     }
 
     public function index()
@@ -75,20 +78,29 @@ class AuthController
         $id_user = $_SESSION['user']['id'];
         $role = $_SESSION['user']['role'];
 
-        $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null);
 
         if ($_SESSION['user']['role'] === "Admin") {
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null);
             $orcamento = $this->agendamentosServicosRepository->ReadOrcamentoRepository();
             $totalClientes = $this->clientesRepository->CountClienteRepository(null);
-            $vacPends = $this->vacinacaoRepository->CountVacPendentes(null);
+            $vacPends = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, null);
             $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null);
             $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
         } elseif ($_SESSION['user']['role'] === "Atendente") {
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null);
             $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null);
             $agendsNaoConf = $this->agendsRepository->CountAgendsNaoConfRepository();
-            $vacProx = $this->vacinacaoRepository->CountVacPendentes("Proximas");
-            $vacAtras = $this->vacinacaoRepository->CountVacPendentes("Atrasadas");
+            $vacProx = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, "Proximas");
+            $vacAtras = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, "Atrasadas");
             $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
+        } elseif ($_SESSION['user']['role'] === "Veterinario") {
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null);
+            $agendsPendentes = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento");
+            $agendsFinalizados = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Finalizado");
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Atendimentos");
+            $histMedRecentes = $this->histMedRepo->ReadHistMedRepository(null, 4, 0, $id_user, $role, null);
+            $vacinasHoje = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, 'Hoje');
+            // $countAtendsPends = $this->agendsRepository->CountAgendsRepositoryPends();
         }
 
         $user = $this->InicioController();

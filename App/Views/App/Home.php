@@ -1,6 +1,7 @@
 <div class="container">
     <h2 class="fs-3 fw-bold my-5">Inicio</h2>
 
+    <!-- AGENDAMENTOS HOJE - TODOS -->
     <div class="row g-3">
         <div class="col-12 col-md-6 col-xl-3">
             <div class="card shadow-lg">
@@ -21,22 +22,7 @@
             </div>
         </div>
 
-        <?php if ($_SESSION['user']['role'] === "Atendente") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="card shadow-lg">
-                    <div class="card-body">
-                        <h5 class="card-title fs-5 fw-bold mb-4">Agendamentos não <br> Confirmados Hoje</h5>
-
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text fs-2 fw-bold mb-0"><?= $agendsNaoConf ?></p>
-                            <i class="fa-solid fa-calendar-xmark fs-1 text-danger"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php } ?>
-
-
+        <!-- ADMIN -->
         <?php if ($_SESSION['user']['role'] === "Admin") { ?>
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
@@ -76,6 +62,22 @@
             </div>
         <?php } ?>
 
+        <!-- ATENDENTE -->
+        <?php if ($_SESSION['user']['role'] === "Atendente") { ?>
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5 fw-bold mb-4">Agendamentos não <br> Confirmados Hoje</h5>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text fs-2 fw-bold mb-0"><?= $agendsNaoConf ?></p>
+                            <i class="fa-solid fa-calendar-xmark fs-1 text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+
         <?php if ($_SESSION['user']['role'] == "Atendente") { ?>
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
@@ -100,14 +102,57 @@
                 </div>
             </div>
         <?php } ?>
+
+        <!-- VETERINARIO -->
+        <?php if ($_SESSION['user']['role'] == "Veterinario") { ?>
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5 fw-bold mb-4">Atendimentos <br> Pendentes Hoje</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text fs-2 fw-bold mb-0"><?= $agendsPendentes ?></p>
+                            <i class="fa-solid fa-house-medical-circle-exclamation fs-1 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5 fw-bold mb-4">Atendimentos <br> Concluidos Hoje</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text fs-2 fw-bold mb-0"><?= $agendsFinalizados ?></p>
+                            <i class="fa-solid fa-house-medical-circle-check fs-1 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5 fw-bold mb-4">Vacinas <br> Hoje</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text fs-2 fw-bold mb-0"><?= $vacinasHoje ?></p>
+                            <i class="fa-solid fa-crutch fs-1 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 
 
     <div class="container p-0 my-4">
         <div class="row g-3">
-            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded">
+            <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">
                 <div class="rounded">
-                    <h2 class="fs-4 fw-bold ">Agendamentos Hoje</h2>
+                    <?php if ($_SESSION['user']['role'] == "Veterinario" || $_SESSION['user']['role'] == "Esteticista") { ?>
+                        <h2 class="fs-4 fw-bold ">Atendimentos Hoje</h2>
+                    <?php } else { ?>
+                        <h2 class="fs-4 fw-bold ">Agendamentos Hoje</h2>
+                    <?php } ?>
                     <?php if (count($agendsHojeRead) > 0) {
                         foreach ($agendsHojeRead as $agHj) {
                             $statusAgend = "";
@@ -138,10 +183,9 @@
                         <?php }
                     } else { ?>
                         <div
-                            class="text-light main-bg py-3 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                            class="text-light main-bg py-4 d-flex align-items-center justify-content-center rounded mt-4 px-3">
                             <div class="d-flex text-light gap-2">
-                                <span>🟢</span>
-                                <p class="mb-0">Nenhum agendamento hoje!</p>
+                                <p class="mb-0 text-uppercase fw-bold">Nenhum agendamento hoje!</p>
                             </div>
                         </div>
                     <?php } ?>
@@ -150,42 +194,75 @@
 
             <div class="col-12 col-xl-5">
                 <div class="bg-white shadow-lg p-3 rounded">
-                    <h2 class="fs-4 fw-bold ">Vacinas</h2>
-                    <p class="text-secondary">Vacinas proximas do vencimento</p>
+                    <?php if ($_SESSION['user']['role'] == "Veterinario") { ?>
+                        <h2 class="fs-4 fw-bold ">Histórico Recente</h2>
+                        <p class="text-secondary">Ultimos Atendimentos</p>
 
-                    <div class="rounded">
-                        <?php if (count($readVacsPends) > 0) {
-                            foreach ($readVacsPends as $rvp) {
-                        ?>
+                        <div class="rounded">
+                            <?php if (count($histMedRecentes) > 0) {
+                                foreach ($histMedRecentes as $hmr) {
+                            ?>
+                                    <div
+                                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                        <div class="d-flex flex-column text-light">
+                                            <small><?= $hmr['nome_pet'] ?></small>
+                                            <small><?= $hmr['cliente_nome'] ?></small>
+                                            <small><?= $hmr['nomes_servicos'] ?></small>
+                                        </div>
+                                        <div class="d-flex flex-column text-light gap-2 align-items-end">
+                                            <small>
+                                                <?= date('d/m/Y', strtotime($hmr['created_at'])) ?>
+                                            </small>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else { ?>
                                 <div
-                                    class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                                    <div class="d-flex flex-column text-light">
-                                        <small><?= $rvp['nome_pet'] ?></small>
-                                        <small><?= $rvp['nome_servico'] ?></small>
-                                        <small><?= $rvp['cliente_nome'] ?></small>
-                                    </div>
-                                    <div class="d-flex flex-column text-light gap-2 align-items-end">
-                                        <small>
-                                            <?= $rvp['data_prox_dose'] != "0000-00-00" && !empty($rvp['data_prox_dose']) ?
-                                                date('d/m/Y', strtotime($rvp['data_prox_dose'])) :
-                                                date('d/m/Y', strtotime($rvp['data_aplicacao']))
-                                            ?>
-                                        </small>
-                                        <small class="align-self-end"><?= $rvp['status_real'] ?></small>
+                                    class="text-light main-bg py-3 d-flex align-items-center justify-content-center rounded mt-4 px-3">
+                                    <div class="d-flex text-light gap-2">
+                                        <p class="mb-0 text-uppercase fw-bold">Nenhum atendimento recente!</p>
                                     </div>
                                 </div>
-                            <?php }
-                        } else { ?>
-                            <div
-                                class="text-light main-bg py-3 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                                <div class="d-flex text-light gap-2">
-                                    <span>🟢</span>
-                                    <p class="mb-0">Nenhuma vacina proxima do vencimento!</p>
-                                </div>
-                            </div>
-                        <?php } ?>
+                            <?php } ?>
 
-                    </div>
+                        </div>
+                    <?php } else { ?>
+                        <h2 class="fs-4 fw-bold ">Vacinas</h2>
+                        <p class="text-secondary">Vacinas proximas do vencimento</p>
+
+                        <div class="rounded">
+                            <?php if (count($readVacsPends) > 0) {
+                                foreach ($readVacsPends as $rvp) {
+                            ?>
+                                    <div
+                                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                        <div class="d-flex flex-column text-light">
+                                            <small><?= $rvp['nome_pet'] ?></small>
+                                            <small><?= $rvp['nome_servico'] ?></small>
+                                            <small><?= $rvp['cliente_nome'] ?></small>
+                                        </div>
+                                        <div class="d-flex flex-column text-light gap-2 align-items-end">
+                                            <small>
+                                                <?= $rvp['data_prox_dose'] != "0000-00-00" && !empty($rvp['data_prox_dose']) ?
+                                                    date('d/m/Y', strtotime($rvp['data_prox_dose'])) :
+                                                    date('d/m/Y', strtotime($rvp['data_aplicacao']))
+                                                ?>
+                                            </small>
+                                            <small class="align-self-end"><?= $rvp['status_real'] ?></small>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else { ?>
+                                <div
+                                    class="text-light main-bg py-3 d-flex align-items-center justify-content-center rounded mt-4 px-3">
+                                    <div class="d-flex text-light gap-2">
+                                        <p class="mb-0">Nenhuma vacina proxima do vencimento!</p>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
 
