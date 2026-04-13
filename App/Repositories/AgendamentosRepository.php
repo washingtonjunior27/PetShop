@@ -253,4 +253,114 @@ class AgendamentosRepository
         $stmt->execute([':id_agend' => $id_agend]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
+    public function ReadAgendsRepositoryHoje($id_user, $role, $categoriaDesejada)
+    {
+        $sql = "SELECT 
+                ag.*, 
+                p.nome_pet, 
+                cli.id AS cliente_id,
+                cli.nome AS cliente_nome,
+                cli.telefone AS cliente_telefone,
+                resp.id AS responsavel_id, 
+                resp.login AS responsavel_login,
+                resp.role AS responsavel_role,
+                vet.especialidade AS veterinario_especialidade,
+                CASE 
+                    WHEN (ag.status_agend IN ('Agendado', 'Confirmado', 'Em atendimento')) AND 
+                            (TIMESTAMP(ag.data_agend, ag.hora_agend_inicio) < NOW())
+                    THEN 'Atrasado'
+                    ELSE 'Em dia'
+                END AS status_real,
+                CASE
+                    WHEN (ag.status_agend = 'Agendado') THEN 1
+                    WHEN (ag.status_agend = 'Confirmado') THEN 2
+                    WHEN (ag.status_agend = 'Em atendimento') THEN 3
+                    WHEN (ag.status_agend = 'Finalizado') THEN 4
+                    ELSE 5
+                END AS status_order,
+                GROUP_CONCAT(s.nome_servico SEPARATOR ', ') AS nomes_servicos,
+                GROUP_CONCAT(s.categoria_servico SEPARATOR ', ') AS categorias_servicos,
+                GROUP_CONCAT(CASE WHEN s.categoria_servico = 'Vacina' THEN s.id_servico END) AS vacina_id,
+                GROUP_CONCAT(CASE WHEN s.categoria_servico = 'Vacina' THEN s.nome_servico END) AS vacina_nome
+            FROM agendamentos AS ag
+            INNER JOIN agendamentos_servicos AS agse ON ag.id_agend = agse.id_agend_fk
+            INNER JOIN servicos AS s ON s.id_servico = agse.id_serv_fk
+            LEFT JOIN pets AS p ON p.id_pet = ag.pet_id_agend
+            LEFT JOIN usuarios AS cli ON cli.id = ag.cliente_id_agend
+            LEFT JOIN usuarios AS resp ON resp.id = ag.responsavel_id_agend
+            LEFT JOIN veterinarios AS vet ON vet.id_usuario = ag.responsavel_id_agend
+            WHERE ag.data_agend = CURDATE()";
+
+        $params = [];
+
+        if ($role != 'Admin') {
+            if ($categoriaDesejada) {
+                if ($categoriaDesejada === "Atendimentos") {
+                    $categorias = "'Consulta', 'Vacina'";
+                } else {
+                    $categorias = "'$categoriaDesejada'";
+                }
+
+                $sql .= " AND (ag.status_agend = 'Em atendimento') AND ag.id_agend IN (
+                SELECT id_agend_fk FROM agendamentos_servicos AS agse2
+                INNER JOIN servicos AS s2 ON s2.id_servico = agse2.id_serv_fk
+                WHERE s2.categoria_servico IN ($categorias)
+                )";
+            } else {
+                $sql .= " AND (ag.status_agend = 'Agendado' OR ag.status_agend = 'Confirmado')";
+            }
+        }
+
+        if ($role !== 'Admin' && $role !== 'Atendente') {
+            $sql .= ' AND ag.responsavel_id_agend = :id_user';
+            $params[':id_user'] = $id_user;
+        }
+
+        $sql .= ' GROUP BY ag.id_agend';
+        $sql .= ' ORDER BY status_order ASC, ag.data_agend ASC, ag.hora_agend_inicio ASC';
+
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function CountAgendsRepositoryHoje($id_user, $role, $status)
+    {
+        $sql = "SELECT COUNT(DISTINCT ag.id_agend)
+            FROM agendamentos AS ag
+            WHERE ag.data_agend = CURDATE()";
+
+        $params = [];
+
+        if ($role != 'Admin' && $role != "Atendente") {
+            $sql .= " AND (responsavel_id_agend = :id_user)";
+            $params['id_user'] = $id_user;
+        }
+
+        if ($role == "Atendente") {
+            $sql .= " AND (status_agend = 'Agendado' OR status_agend = 'Confirmado')";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchColumn();
+    }
+
+    public function CountAgendsNaoConfRepository()
+    {
+        $sql = "SELECT COUNT(DISTINCT ag.id_agend)
+            FROM agendamentos AS ag
+            WHERE ag.data_agend = CURDATE() AND ag.status_agend = 'Agendado'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
 }

@@ -28,7 +28,10 @@
             </div>
         </div>
 
-
+        <span class="d-block my-4 p-2  shadow-lg text-bg-light rounded text-center">
+            <strong>Atenção!!!</strong> Finalize as vacinações que passaram do prazo e não terão retorno ou as que foram confirmadas por clientes.
+            <br><strong>Lembre-se</strong> de abrir novo agendamento para as confirmações.
+        </span>
 
         <div class="bg-white shadow-lg px-3 pt-3 rounded mt-3">
             <h2 class="fs-4 fw-bold ">Lista de Vacinações Pendentes</h2>

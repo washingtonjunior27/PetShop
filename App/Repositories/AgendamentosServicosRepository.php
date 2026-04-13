@@ -30,6 +30,19 @@ class AgendamentosServicosRepository
         ]);
     }
 
+    public function ReadOrcamentoRepository()
+    {
+        $sql = "SELECT SUM(agse.orcamento) AS total_receita FROM agendamentos_servicos AS agse
+                INNER JOIN agendamentos AS ag ON ag.id_agend = agse.id_agend_fk
+                WHERE agse.executado = 'Sim'
+                        AND (MONTH(ag.data_agend) = MONTH(CURDATE())
+                            AND YEAR(ag.data_agend) = YEAR(CURDATE()))";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_receita'] ?? 0;
+    }
+
     public function buscarPorIdAgendServs($id_agend)
     {
         $sql = "SELECT *

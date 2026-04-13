@@ -5,18 +5,33 @@ namespace App\Controllers;
 use App\Models\Usuarios;
 use App\Services\AuthService;
 use App\Repositories\FuncionariosRepository;
+use App\Repositories\AgendamentosRepository;
+use App\Repositories\AgendamentosServicosRepository;
+use App\Repositories\ClientesRepository;
+use App\Repositories\VacinacaoRepository;
+use App\Repositories\HistoricoVacinacaoRepository;
 
 class AuthController
 {
     private $usuarios;
     private $authService;
     private $funcionarioRepository;
+    private $clientesRepository;
+    private $agendsRepository;
+    private $agendamentosServicosRepository;
+    private $vacinacaoRepository;
+    private $histVacRepo;
 
     public function __construct()
     {
         $this->usuarios = new Usuarios();
         $this->authService = new AuthService();
         $this->funcionarioRepository = new FuncionariosRepository();
+        $this->agendamentosServicosRepository = new AgendamentosServicosRepository();
+        $this->clientesRepository = new ClientesRepository();
+        $this->agendsRepository = new AgendamentosRepository();
+        $this->vacinacaoRepository = new VacinacaoRepository();
+        $this->histVacRepo = new HistoricoVacinacaoRepository();
     }
 
     public function index()
@@ -57,8 +72,26 @@ class AuthController
             exit;
         }
 
-        $user = $this->InicioController();
+        $id_user = $_SESSION['user']['id'];
+        $role = $_SESSION['user']['role'];
 
+        $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null);
+
+        if ($_SESSION['user']['role'] === "Admin") {
+            $orcamento = $this->agendamentosServicosRepository->ReadOrcamentoRepository();
+            $totalClientes = $this->clientesRepository->CountClienteRepository(null);
+            $vacPends = $this->vacinacaoRepository->CountVacPendentes(null);
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null);
+            $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
+        } elseif ($_SESSION['user']['role'] === "Atendente") {
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null);
+            $agendsNaoConf = $this->agendsRepository->CountAgendsNaoConfRepository();
+            $vacProx = $this->vacinacaoRepository->CountVacPendentes("Proximas");
+            $vacAtras = $this->vacinacaoRepository->CountVacPendentes("Atrasadas");
+            $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
+        }
+
+        $user = $this->InicioController();
         extract($user ?? []);
 
         require __DIR__ . "/../Views/Layouts/Header.php";

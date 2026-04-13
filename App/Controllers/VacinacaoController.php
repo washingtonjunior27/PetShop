@@ -80,4 +80,25 @@ class VacinacaoController
             'currentPage' => $page
         ];
     }
+
+    public function ResolvidoVacinacao()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if ($_SESSION['user']['role'] !== "Admin" && $_SESSION['user']['role'] !== "Atendente") {
+                header("location: " . BASE_URL . "/home");
+                exit;
+            }
+
+            $this->vacinacao->setId_vacinacao((int) ($_POST['id_vacinacao_resolvido'] ?? 0));
+
+            $this->vacinacaoRepository->UpdateResolvidoVac($this->vacinacao->getId_vacinacao());
+
+            $_SESSION['sucesso'] = "Vacinação resolvida com sucesso!";
+            header('location:' . BASE_URL . '/lembretes');
+            exit;
+        } else {
+            header("location: " . BASE_URL . "/home");
+            exit;
+        }
+    }
 }

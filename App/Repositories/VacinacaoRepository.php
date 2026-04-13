@@ -127,4 +127,31 @@ class VacinacaoRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id_vacinacao' => $id_vacinacao]);
     }
+
+    public function CountVacPendentes($status)
+    {
+        $sql = "SELECT COUNT(DISTINCT vac.id_vacinacao)
+            FROM vacinacao AS vac
+            WHERE vac.resolvido <> 1";
+
+        if ($status === "Atrasadas") {
+            $sql .= " AND (
+            (vac.data_prox_dose IS NOT NULL AND vac.data_prox_dose <> '0000-00-00' AND vac.data_prox_dose < CURDATE()) 
+            OR 
+            ((vac.data_prox_dose IS NULL OR vac.data_prox_dose = '0000-00-00') AND vac.data_aplicacao < CURDATE())
+        )";
+        } elseif ($status === "Proximas") {
+            // Está próxima se:
+            // A data (seja de reforço ou aplicação) está entre hoje e os próximos 7 dias
+            $sql .= " AND (
+            (vac.data_prox_dose BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY))
+            OR 
+            ((vac.data_prox_dose IS NULL OR vac.data_prox_dose = '0000-00-00') AND vac.data_aplicacao BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY))
+        )";
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
 }
