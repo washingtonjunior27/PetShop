@@ -123,7 +123,7 @@ class VeterinariosService
 
             $this->pdo->commit();
 
-            return ["sucesso" => "Usuario cadastrado com sucesso!"];
+            return ["sucesso" => "Usuario atualizado com sucesso!"];
         } catch (\Throwable $th) {
             $this->pdo->rollBack();
             return ['erro' => $th->getMessage()];

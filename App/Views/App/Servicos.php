@@ -117,9 +117,9 @@
                             <?php    }
                         } else { ?>
                             <div
-                                class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                class="text-light main-bg py-4 d-flex align-items-center justify-content-center rounded mt-4 px-3">
                                 <div class="d-flex flex-column text-light gap-1">
-                                    <span>Nenhum serviço encontrado!</span>
+                                    <span class="text-uppercase fw-bold">Nenhum serviço encontrado!</span>
                                 </div>
                             </div>
                         <?php } ?>

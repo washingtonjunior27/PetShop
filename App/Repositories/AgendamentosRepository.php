@@ -255,7 +255,7 @@ class AgendamentosRepository
     }
 
 
-    public function ReadAgendsRepositoryHoje($id_user, $role, $categoriaDesejada)
+    public function ReadAgendsRepositoryHoje($id_user, $role, $categoriaDesejada, $data)
     {
         $sql = "SELECT 
                 ag.*, 
@@ -291,7 +291,7 @@ class AgendamentosRepository
             LEFT JOIN usuarios AS cli ON cli.id = ag.cliente_id_agend
             LEFT JOIN usuarios AS resp ON resp.id = ag.responsavel_id_agend
             LEFT JOIN veterinarios AS vet ON vet.id_usuario = ag.responsavel_id_agend
-            WHERE ag.data_agend = CURDATE()";
+            WHERE ag.data_agend $data";
 
         $params = [];
 
@@ -331,11 +331,11 @@ class AgendamentosRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function CountAgendsRepositoryHoje($id_user, $role, $status)
+    public function CountAgendsRepositoryHoje($id_user, $role, $status, $data)
     {
         $sql = "SELECT COUNT(DISTINCT ag.id_agend)
             FROM agendamentos AS ag
-            WHERE ag.data_agend = CURDATE()";
+            WHERE ag.data_agend $data";
 
         $params = [];
 
