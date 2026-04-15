@@ -1,7 +1,7 @@
-<div class="container">
+<div class="px-4">
     <h1 class="fs-3 fw-bold my-5">Histórico de Atendimentos</h1>
 
-    <div class="container p-0 my-4">
+    <div class=p-0 my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
                 <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/historicoMedico">

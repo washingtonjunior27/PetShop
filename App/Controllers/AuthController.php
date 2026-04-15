@@ -81,7 +81,11 @@ class AuthController
 
         if ($_SESSION['user']['role'] === "Admin") {
             $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
-            $orcamento = $this->agendamentosServicosRepository->ReadOrcamentoRepository();
+
+            $preco = $this->agendamentosServicosRepository->ReadOrcamentoRepository();
+            $preco = str_replace('.', ',', $preco);
+            $orcamento =   number_format((float)$preco, 2, ',', '');
+
             $totalClientes = $this->clientesRepository->CountClienteRepository(null);
             $vacPends = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, null);
             $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");

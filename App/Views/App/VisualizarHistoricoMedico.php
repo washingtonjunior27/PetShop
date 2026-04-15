@@ -1,4 +1,4 @@
-<div class="container">
+<div class="px-4">
     <h1 class="fs-3 fw-bold mt-5">Visualizar Histórico</h1>
 
     <div class="my-4">
@@ -7,7 +7,7 @@
         </a>
     </div>
 
-    <div class="container p-0 my-4">
+    <div class="my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
                 <div class="mb-3 d-flex justify-content-between">

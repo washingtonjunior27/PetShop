@@ -1,4 +1,4 @@
-<div class="container">
+<div class="px-4">
     <h1 class="fs-3 fw-bold my-5">Confirmar Agendamentos</h1>
 
     <?php if (isset($_SESSION['erro'])) { ?>
@@ -17,7 +17,7 @@
     <?php }
     unset($_SESSION['sucesso']) ?>
 
-    <div class="container p-0 my-4">
+    <div class="my-4">
         <div class="bg-white shadow-lg p-3 rounded w-100">
             <div class="rounded">
                 <form class="d-flex" role="search" method="GET" action="<?= BASE_URL ?>/confirmacoes">

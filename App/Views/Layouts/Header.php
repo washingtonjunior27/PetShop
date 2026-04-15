@@ -52,7 +52,7 @@ switch ($hojeDiaSemana) {
 
     <div class="container-fluid home-bg">
         <div class="row min-vh-100">
-            <div class="col-md-2 main-bg position-sticky top-0 p-0 d-none d-md-flex flex-column border-light border-5 border-end vh-100">
+            <div id="sidenav-section" class="col-md-2 main-bg position-sticky top-0 p-0 d-none d-md-flex flex-column border-light border-5 border-end vh-100">
                 <!-- LOGO -->
                 <a href="<?= BASE_URL ?>/home" class="nav-link d-flex justify-content-center gap-1 p-4 border-5 border-white border-bottom">
                     <i class="fa-solid fa-paw fs-2 text-light"></i>
@@ -69,25 +69,25 @@ switch ($hojeDiaSemana) {
 
                 <!-- LOGOUT -->
                 <div class="w-100 border-5 border-top border-light mb-4">
-                    <a href="<?= BASE_URL ?>/logout" class="ps-5 sidenav-item w-100 nav-link d-flex align-items-center gap-3 mt-4">
-                        <i class="fa-solid fa-arrow-right-from-bracket text-light fs-2"></i>
+                    <a href="<?= BASE_URL ?>/logout" class="sidenav-item w-100 nav-link d-flex align-items-center justify-content-center gap-2 mt-4" style="padding: 10px 0;">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-light fs-4"></i>
                         <span class="text-light fs-6 fw-semibold">Logout</span>
                     </a>
                 </div>
 
             </div>
 
-            <div class="col-md-10 p-0">
-                <nav class="navbar navbar-expand-md navbar-dark main-bg p-3" style="height: 80px;">
-                    <div class="container">
-                        <h2 class="fs-6 text-light mb-0 d-none d-md-block">Olá, <?= $user['usuario']['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana . " | " . $user['usuario']['role'] ?>
+            <div class="col-md-10 p-0 flex-grow-1" id="content-section">
+                <nav class="navbar navbar-expand-md navbar-dark main-bg py-3 px-4" style="height: 80px;">
+                    <div class="d-flex justify-content-between align-items-center flex-fill">
+                        <h2 class="fs-6 text-light mb-0 d-none d-md-flex">Olá, <?= $user['usuario']['login'] ?> 👋 | <?= $hojeData, " " . $diaSemana . " | " . $user['usuario']['role'] ?>
                         </h2>
                         <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#sidebarMenu">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="ms-auto text-white d-flex gap-2">
+                        <div class="text-white gap-2">
                             <a href="#" class="nav-link d-flex gap-2">
                                 <span><?= $user['usuario']['login'] ?></span>
                                 <i class="fa-solid fa-user fs-4"></i>

@@ -3,24 +3,24 @@
 
 
 <!-- HOME -->
-<div class="sidenav-item w-100 ps-5 <?= $page == "home" ? "active-sidenav" : "" ?>">
+<div class="sidenav-item w-100 ps-4 <?= $page == "home" ? "active-sidenav" : "" ?>">
     <a href="<?= BASE_URL ?>/home" class="nav-link d-flex align-items-center gap-3">
-        <i class="fa-solid fa-house text-light fs-2"></i>
+        <i class="fa-solid fa-house text-light fs-4"></i>
         <span class="text-light fs-6 fw-semibold">Inicio</span>
     </a>
 </div>
 
 <!-- DROPDOWN MENU USERS PARA ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= $page == "funcionarios" || $page == "veterinarios" || $page == "clientes" ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex justify-content-between align-items-center <?= $page == "funcionarios" || $page == "veterinarios" || $page == "clientes" ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#usuariosSidebar"
         role="button"
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-solid fa-users text-light fs-2"></i>
-            <span class="text-light fs-6 fw-semibold">Usuários</span>
+            <i class="fa-solid fa-users text-light fs-4"></i>
+            <span class="text-light fw-semibold">Usuários</span>
         </span>
 
         <i class="fa-solid fa-angles-down"></i>
@@ -47,9 +47,9 @@
 
 <!-- CLIENTES PARA ATENDENTE FORA DE DROPDOWN -->
 <?php if ($_SESSION['user']['role'] == "Atendente") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "clientes" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "clientes" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/clientes" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-user text-light fs-2"></i>
+            <i class="fa-solid fa-user text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Clientes</span>
         </a>
     </div>
@@ -57,14 +57,14 @@
 
 <!-- DROPDOWN CADASTROS DE ESPECIES, RACAS, SERVICOS E VACINAS PARA ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "especies") || ($page == "racas") || ($page == "servicos") || ($page == "vacinas") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex justify-content-between align-items-center <?= ($page == "especies") || ($page == "racas") || ($page == "servicos") || ($page == "vacinas") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#cadastrosSidebar"
         role="button"
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-solid fa-paw text-light fs-2"></i>
+            <i class="fa-solid fa-paw text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Cadastros</span>
         </span>
 
@@ -91,9 +91,9 @@
 
 <!-- PETS PARA ADMIN E ATENDENTE-->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "pets" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "pets" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/pets" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-dog text-light fs-2"></i>
+            <i class="fa-solid fa-dog text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Pets</span>
         </a>
     </div>
@@ -101,14 +101,14 @@
 
 <!-- AGENDAMENTOS DROPDOWN -->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "agendamentos") || ($page == "confirmacoes") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex justify-content-between align-items-center <?= ($page == "agendamentos") || ($page == "confirmacoes") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#agendaSidebar"
         role="button"
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-regular fa-calendar-days text-light fs-2"></i>
+            <i class="fa-regular fa-calendar-days text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Agenda</span>
         </span>
 
@@ -132,14 +132,14 @@
 
 <!-- Atendimento - Meus serviços, Atendimentos e Vacinação - ADMIN DROPDOWN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") || ($page == "vacinacao") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex justify-content-between align-items-center <?= ($page == "meusServicos") || ($page == "atendimentos") || ($page == "vacinacao") || ($page == "atendimentos/Diagnostico") ? "active-sidenav" : "" ?>"
         data-bs-toggle="collapse"
         href="#atendimentoSidebar"
         role="button"
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-solid fa-stethoscope text-light fs-2"></i>
+            <i class="fa-solid fa-stethoscope text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Atendimento</span>
         </span>
 
@@ -163,9 +163,9 @@
 
 <!-- MEUS SERVIÇOS DO ESTETICISTA -->
 <?php if ($_SESSION['user']['role'] === "Esteticista") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "meusServicos" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "meusServicos" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/meusServicos" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-shower text-light fs-2"></i>
+            <i class="fa-solid fa-shower text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Meus Serviços</span>
         </a>
     </div>
@@ -173,9 +173,9 @@
 
 <!-- ATENDIMENTOS VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "atendimentos" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "atendimentos" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/atendimentos" class="nav-link d-flex align-items-center gap-3">
-            <i class="fa-solid fa-stethoscope text-light fs-2"></i>
+            <i class="fa-solid fa-stethoscope text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Atendimento</span>
         </a>
     </div>
@@ -184,7 +184,7 @@
 
 <!-- HISTORICOS - ADMIN -->
 <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex 
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex 
                 justify-content-between align-items-center 
                 <?= ($page == "historicoMedico") || ($page == "historicoMedico/VisualizarHistoricoMedico") ||
                     ($page == "historicoServicos") || ($page == "historicoServicos/VisualizarHistoricoServicos") ||
@@ -196,7 +196,7 @@
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-regular fa-clock fs-2 text-light"></i>
+            <i class="fa-regular fa-clock fs-4 text-light"></i>
             <span class="text-light fs-6 fw-semibold">Histórico</span>
         </span>
 
@@ -223,7 +223,7 @@
 
 <!-- HISTORICO MEDICO VETERINARIO -->
 <?php if ($_SESSION['user']['role'] === "Veterinario") { ?>
-    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-5 d-flex 
+    <a class="sidenav-item btn rounded-0 main-bg text-light w-100 px-4 d-flex 
             justify-content-between align-items-center 
             <?=
             ($page == "historicoMedico") || ($page == "historicoMedico/VisualizarHistoricoMedico") ||
@@ -235,7 +235,7 @@
         aria-expanded="false">
 
         <span class="d-flex align-items-center gap-3">
-            <i class="fa-regular fa-clock fs-2 text-light"></i>
+            <i class="fa-regular fa-clock fs-4 text-light"></i>
             <span class="text-light fs-6 fw-semibold">Histórico</span>
         </span>
 
@@ -260,9 +260,9 @@
 
 <!-- HISTORICO DE SERVIÇOS ESTETICISTA -->
 <?php if ($_SESSION['user']['role'] === "Esteticista") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "historicoServicos" || $page == "historicoServicos/VisualizarHistoricoServicos" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "historicoServicos" || $page == "historicoServicos/VisualizarHistoricoServicos" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/historicoServicos" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-clipboard text-light fs-2"></i>
+            <i class="fa-solid fa-clipboard text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Historico de Serviços</span>
         </a>
     </div>
@@ -271,9 +271,9 @@
 
 <!-- LEMBRETES -->
 <?php if ($_SESSION['user']['role'] === "Admin" || $_SESSION['user']['role'] === "Atendente") { ?>
-    <div class="sidenav-item w-100 ps-5 <?= $page == "lembretes" ? "active-sidenav" : "" ?>">
+    <div class="sidenav-item w-100 ps-4 <?= $page == "lembretes" ? "active-sidenav" : "" ?>">
         <a href="<?= BASE_URL ?>/lembretes" class="nav-link d-flex align-items-center gap-3 ">
-            <i class="fa-solid fa-bookmark text-light fs-2"></i>
+            <i class="fa-solid fa-bookmark text-light fs-4"></i>
             <span class="text-light fs-6 fw-semibold">Lembretes</span>
         </a>
     </div>

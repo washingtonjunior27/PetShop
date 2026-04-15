@@ -1,7 +1,7 @@
-<div class="container">
+<div class="px-4">
     <h1 class="fs-3 fw-bold my-5">Agendamentos</h1>
 
-    <div class="container p-0 my-4">
+    <div class="my-4">
         <form class="mt-3" method="POST" action="<?= BASE_URL ?>/agendamentos/CriarAgendamento">
             <div class="row g-3">
                 <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">

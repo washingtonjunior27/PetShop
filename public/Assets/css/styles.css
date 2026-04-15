@@ -31,20 +31,30 @@
 }
 .active-sidenav{
     background-color: white !important;
-    padding: 10px 0;
+    padding: 10px 0 !important;
     
 }
 .active-sidenav span, .active-sidenav i{
     color: black !important;
 
 }
+.sidenav-item{
+    padding: 10px 0;
+}
 .sidenav-item:hover{
     background-color: white !important;
-    padding: 10px 0;
     transition: .5s;
 }
 .sidenav-item:hover span, .sidenav-item:hover i{
     color: black !important;
     transition: .5s;
 
+}
+
+#sidenav-section{
+    width: 270px;
+    min-width: 250px;
+}
+#content-section{
+    width: 0;
 }

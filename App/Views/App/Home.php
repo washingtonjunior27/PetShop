@@ -1,9 +1,9 @@
-<div class="container">
+<div class="px-4">
     <h2 class="fs-3 fw-bold my-5">Inicio</h2>
 
     <!-- AGENDAMENTOS HOJE - TODOS -->
-    <div class="row g-3">
-        <div class="col-12 col-md-6 col-xl-3">
+    <div class="row g-2">
+        <div class="col-sm-6 col-md-6 col-xl-3">
             <div class="card shadow-lg">
                 <div class="card-body">
                     <?php if ($_SESSION['user']['role'] === "Esteticista") { ?>
@@ -24,7 +24,7 @@
 
         <!-- ADMIN -->
         <?php if ($_SESSION['user']['role'] === "Admin") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Receita<br>Mensal</h5>
@@ -37,7 +37,7 @@
             </div>
 
 
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Total <br>Clientes</h5>
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Vacinas <br> Pendentes</h5>
@@ -64,7 +64,7 @@
 
         <!-- ATENDENTE -->
         <?php if ($_SESSION['user']['role'] === "Atendente") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Agendamentos não <br> Confirmados Hoje</h5>
@@ -79,7 +79,7 @@
         <?php } ?>
 
         <?php if ($_SESSION['user']['role'] == "Atendente") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Vacinas <br> Proximas</h5>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Vacinas <br> Atrasadas</h5>
@@ -105,7 +105,7 @@
 
         <!-- VETERINARIO E ESTETICISTA 2 PRIMEIROS CARDS-->
         <?php if ($_SESSION['user']['role'] == "Veterinario" || $_SESSION['user']['role'] == "Esteticista") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Atendimentos <br> Pendentes Hoje</h5>
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Atendimentos <br> Concluidos Hoje</h5>
@@ -132,7 +132,7 @@
 
         <!-- VETERINARIO -->
         <?php if ($_SESSION['user']['role'] == "Veterinario") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Vacinas <br> Hoje</h5>
@@ -147,7 +147,7 @@
 
         <!-- ESTETICISTA -->
         <?php if ($_SESSION['user']['role'] == "Esteticista") { ?>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-sm-6 col-md-6 col-xl-3">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h5 class="card-title fs-5 fw-bold mb-4">Atendimentos <br> Futuros</h5>
@@ -162,7 +162,7 @@
     </div>
 
 
-    <div class="container p-0 my-4">
+    <div class="p-0 my-4">
         <div class="row g-3">
             <div class="col-12 col-xl-7 bg-white shadow-lg p-3 rounded align-self-start">
                 <div class="rounded">
@@ -187,10 +187,11 @@
                             }
 
                     ?>
-                            <div
-                                class="text-light main-bg py-3 d-flex align-items-center justify-content-between rounded mt-4 px-3">
-                                <span><?= date('H:i', strtotime($agHj['hora_agend_inicio'])) ?></span>
-                                <div class="d-flex flex-column text-light gap-2">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center main-bg p-3 rounded mt-4 gap-3 text-light">
+                                <span>
+                                    <?= date('H:i', strtotime($agHj['hora_agend_inicio'])) ?>
+                                </span>
+                                <div class="d-flex flex-column text-light gap-1">
                                     <p class="mb-0"><?= $agHj['nome_pet'] ?> - <?= $agHj['nomes_servicos'] ?></p>
                                     <small><?= $agHj['cliente_nome'] ?></small>
                                 </div>
@@ -230,8 +231,7 @@
                             <?php if (count($histMedRecentes) > 0) {
                                 foreach ($histMedRecentes as $hmr) {
                             ?>
-                                    <div
-                                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center main-bg p-3 rounded mt-4 gap-1 text-light">
                                         <div class="d-flex flex-column text-light">
                                             <small><?= $hmr['nome_pet'] ?></small>
                                             <small><?= $hmr['cliente_nome'] ?></small>
@@ -262,14 +262,13 @@
                             <?php if (count($agendsProxRead) > 0) {
                                 foreach ($agendsProxRead as $apr) {
                             ?>
-                                    <div
-                                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center main-bg p-3 rounded mt-4 gap-1 text-light">
                                         <div class="d-flex flex-column text-light">
                                             <small><?= $apr['nome_pet'] ?></small>
                                             <small><?= $apr['cliente_nome'] ?></small>
                                             <small><?= $apr['nomes_servicos'] ?></small>
                                         </div>
-                                        <div class="d-flex flex-column text-light gap-2 align-items-end">
+                                        <div class="d-flex flex-column text-light gap-1 align-items-start align-items-md-end">
                                             <small>
                                                 <?= date('d/m/Y', strtotime($apr['data_agend'])) ?>
                                             </small>
@@ -297,14 +296,14 @@
                             <?php if (count($readVacsPends) > 0) {
                                 foreach ($readVacsPends as $rvp) {
                             ?>
-                                    <div
-                                        class="text-light main-bg py-2 d-flex align-items-center justify-content-between rounded mt-4 px-3">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center main-bg py-2 px-3 rounded mt-4 gap-1 text-light">
+
                                         <div class="d-flex flex-column text-light">
                                             <small><?= $rvp['nome_pet'] ?></small>
                                             <small><?= $rvp['nome_servico'] ?></small>
                                             <small><?= $rvp['cliente_nome'] ?></small>
                                         </div>
-                                        <div class="d-flex flex-column text-light gap-2 align-items-end">
+                                        <div class="d-flex flex-column text-light gap-1 align-items-start align-items-md-end">
                                             <small>
                                                 <?= $rvp['data_prox_dose'] != "0000-00-00" && !empty($rvp['data_prox_dose']) ?
                                                     date('d/m/Y', strtotime($rvp['data_prox_dose'])) :
