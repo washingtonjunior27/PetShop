@@ -165,4 +165,72 @@ document.addEventListener('DOMContentLoaded', function(){
     [...checksEstetica, ...checksClinico].forEach(input => {
         input.addEventListener('change', atualizarInterface);
     });
+
+    const inputData = document.getElementById('data_agend');
+    const selectResp = document.getElementById('responsavel_id_agend');
+    // Melhor usar ID para não haver erro de seleção
+    
+    const containerHorarios = document.querySelector('#container-horarios-dinamicos');
+
+    function atualizarHorarios() {
+        const data = inputData.value;
+        const resp = selectResp.value;
+        // Pega a URL base do atributo que colocamos no HTML
+        const baseUrl = inputData.getAttribute('data-url');
+
+        if (!data || !resp) {
+            containerHorarios.innerHTML = `
+                <div class="col-12 mt-4">
+                    <p class="text-muted italic">
+                        <i class="fa-solid fa-calendar-check me-2"></i>
+                        Selecione a <strong>data</strong> e o <strong>responsável</strong> para visualizar os horários.
+                    </p>
+                </div>`;
+            return;
+        }
+
+        if (!baseUrl) return;
+
+        if (!data || !resp || !baseUrl) return;
+
+        // Agora a URL será montada corretamente pelo navegador
+        const url = `${baseUrl}/agendamentos/buscarHorariosLivres?data=${data}&responsavel=${resp}`;
+
+        containerHorarios.innerHTML = '<p class="text-center mt-3">Buscando horários...</p>';
+
+        fetch(url)
+            .then(response => {
+                // Se der erro 404 ou 500, a gente consegue ver aqui
+                if (!response.ok) throw new Error('Erro na rede');
+                return response.json();
+            })
+            .then(horariosLivres => {
+                containerHorarios.innerHTML = ''; 
+
+                if (horariosLivres.length === 0) {
+                    containerHorarios.innerHTML = '<p class="text-danger mt-3 text-center">Nenhum horário disponível para este profissional nesta data.</p>';
+                    return;
+                }
+
+                horariosLivres.forEach(hora => {
+                    const html = `
+                        <div class="col-3">
+                            <div class="text-light main-bg py-3 rounded mt-3">
+                                <div class="d-flex text-light gap-1 justify-content-center">
+                                    <input type="radio" value="${hora}" name="hora_agend_inicio" required id="hora_${hora.replace(':', '')}">
+                                    <label for="hora_${hora.replace(':', '')}">${hora}</label>
+                                </div>
+                            </div>
+                        </div>`;
+                    containerHorarios.insertAdjacentHTML('beforeend', html);
+                });
+            })
+            .catch(error => {
+                console.error('Erro no Fetch de horários:', error);
+                containerHorarios.innerHTML = '<p class="text-danger mt-3 text-center">Erro ao carregar horários. Verifique se a rota existe.</p>';
+            });
+    }
+
+    inputData.addEventListener('change', atualizarHorarios);
+    selectResp.addEventListener('change', atualizarHorarios);
 })

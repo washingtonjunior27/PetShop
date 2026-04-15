@@ -225,4 +225,41 @@ class AgendamentosController
             exit;
         }
     }
+
+    public function buscarHorariosLivres()
+    {
+        $data = $_GET['data'] ?? '';
+        $responsavel_id = $_GET['responsavel'] ?? '';
+
+        $todosHorarios = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"];
+
+        $ocupados = $this->agendamentosRepository->GetHorariosOcupados($data, $responsavel_id);
+
+        $livres = [];
+
+        foreach ($todosHorarios as $hora) {
+            $estaOcupado = false;
+
+            foreach ($ocupados as $agend) {
+                // Formatamos para garantir que a comparação de string seja 08:00 vs 08:00:00
+                $inicio = date("H:i", strtotime($agend['hora_agend_inicio']));
+                $fim = date("H:i", strtotime($agend['hora_agend_fim']));
+
+                // A HORA está ocupada se: for IGUAL ao início OU estiver ENTRE o início e o fim.
+                // Ela NÃO está ocupada se for IGUAL ao fim (pois o vet já liberou).
+                if ($hora >= $inicio && $hora < $fim) {
+                    $estaOcupado = true;
+                    break;
+                }
+            }
+
+            if (!$estaOcupado) {
+                $livres[] = $hora;
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($livres);
+        exit;
+    }
 }

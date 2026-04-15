@@ -45,7 +45,7 @@
                         <!-- DATA AGENDADA -->
                         <div class="mb-3">
                             <label for="data_agend" class="form-label">Data Agendada</label>
-                            <input type="date" name="data_agend" class="form-control" id="data_agend">
+                            <input type="date" name="data_agend" class="form-control" id="data_agend" data-url="<?= BASE_URL ?>">
                         </div>
 
                         <!-- SERVIÇOS -->
@@ -163,22 +163,17 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-xl-5">
-                    <div class="bg-white shadow-lg p-3 rounded">
-                        <h2 class="fs-4 fw-bold ">Horários</h2>
+                <div class="col-12 col-xl-5 align-self-start">
+                    <div class="bg-white shadow-lg p-3 rounded h-100 pb-2">
+                        <h2 class="fs-4 fw-bold">Horários Disponíveis</h2>
 
-                        <div class="rounded row g-2">
-                            <?php foreach ($horarios as $horario) { ?>
-                                <div class="col-3">
-                                    <div
-                                        class="text-light main-bg py-3 rounded mt-3">
-                                        <div class="d-flex text-light gap-1 justify-content-center">
-                                            <input type="radio" value="<?= $horario ?>" name="hora_agend_inicio">
-                                            <label for="horario"><?= $horario ?></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
+                        <div id="container-horarios-dinamicos" class="row g-2">
+                            <div class="col-12 mt-4">
+                                <p class="text-muted italic">
+                                    <i class="fa-solid fa-calendar-check me-2"></i>
+                                    Selecione a <strong>data</strong> e o <strong>responsável</strong> para visualizar os horários.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -372,4 +372,21 @@ class AgendamentosRepository
 
         return $stmt->fetchColumn();
     }
+
+    public function GetHorariosOcupados($data, $responsavel_id)
+    {
+        $sql = "SELECT hora_agend_inicio, hora_agend_fim 
+            FROM agendamentos 
+            WHERE data_agend = :data 
+            AND responsavel_id_agend = :responsavel 
+            AND status_agend != 'Cancelado'";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "data" => $data,
+            "responsavel" => $responsavel_id
+        ]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
