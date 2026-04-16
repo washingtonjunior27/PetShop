@@ -1,4 +1,4 @@
-<h1 align="center">🐾 PetShop Project - ERP Hospitalar e Estético</h1>
+<h1 align="center">🐾 PetShop Project</h1>
 
 <p align="center">
   <a href="https://petshop-project.infinityfreeapp.com" target="_blank">
