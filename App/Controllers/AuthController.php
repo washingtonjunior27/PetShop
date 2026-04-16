@@ -78,9 +78,10 @@ class AuthController
         $id_user = $_SESSION['user']['id'];
         $role = $_SESSION['user']['role'];
 
+        $hoje = date('Y-m-d');
 
         if ($_SESSION['user']['role'] === "Admin") {
-            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
 
             $preco = $this->agendamentosServicosRepository->ReadOrcamentoRepository();
             $preco = str_replace('.', ',', $preco);
@@ -88,30 +89,30 @@ class AuthController
 
             $totalClientes = $this->clientesRepository->CountClienteRepository(null);
             $vacPends = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, null);
-            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
             $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
         } elseif ($_SESSION['user']['role'] === "Atendente") {
-            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
-            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
             $agendsNaoConf = $this->agendsRepository->CountAgendsNaoConfRepository();
             $vacProx = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, "Proximas");
             $vacAtras = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, "Atrasadas");
             $readVacsPends = $this->histVacRepo->ReadHistVacRepository(null, 4, 0, $id_user, $role, 2);
         } elseif ($_SESSION['user']['role'] === "Veterinario") {
-            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
-            $agendsPendentes = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "= CURDATE()");
-            $agendsFinalizados = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Finalizado", "= CURDATE()");
-            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Atendimentos", "= CURDATE()");
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
+            $agendsPendentes = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "= '$hoje'");
+            $agendsFinalizados = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Finalizado", "= '$hoje'");
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Atendimentos", "= '$hoje'");
             $histMedRecentes = $this->histMedRepo->ReadHistMedRepository(null, 4, 0, $id_user, $role, null);
             $vacinasHoje = $this->vacinacaoRepository->CountVacPendentes($id_user, $role, 'Hoje');
             // $countAtendsPends = $this->agendsRepository->CountAgendsRepositoryPends();
         } elseif ($_SESSION['user']['role'] === "Esteticista") {
-            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= CURDATE()");
-            $agendsPendentes = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "= CURDATE()");
-            $agendsFinalizados = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Finalizado", "= CURDATE()");
-            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Estetica", "= CURDATE()");
-            $agendsProxRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Estetica", "> CURDATE()");
-            $agendsPendentesFuturo = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "> CURDATE()");
+            $agendsHoje = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, null, "= '$hoje'");
+            $agendsPendentes = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "= '$hoje'");
+            $agendsFinalizados = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Finalizado", "= '$hoje'");
+            $agendsHojeRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Estetica", "= '$hoje'");
+            $agendsProxRead = $this->agendsRepository->ReadAgendsRepositoryHoje($id_user, $role, "Estetica", "> '$hoje'");
+            $agendsPendentesFuturo = $this->agendsRepository->CountAgendsRepositoryHoje($id_user, $role, "Em atendimento", "> '$hoje'");
         }
 
         $user = $this->InicioController();

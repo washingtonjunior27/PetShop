@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petshop</title>
-    <link rel="stylesheet" href="/petshop/public/Assets/css/styles.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/Assets/css/styles.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- GOOGLE FONTS POPPINS -->
@@ -26,7 +26,7 @@
         <div class="bg-white shadow-sm rounded row overflow-hidden g-0" style="max-width: 1100px; width: 100%;">
 
             <div class="col-md-6 d-none d-md-block">
-                <img src="/petshop/public/Assets/img/img1.jpg" alt="Imagem" class="w-100 h-100">
+                <img src="<?= BASE_URL ?>/Assets/img/img1.jpg" alt="Imagem" class="w-100 h-100">
             </div>
 
             <form class="col-md-6 p-3 d-flex flex-column justify-content-center" method="POST" action="<?= BASE_URL ?>/login">
