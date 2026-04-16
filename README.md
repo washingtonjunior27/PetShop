@@ -72,28 +72,28 @@ O ciclo se fecha com o Atendente monitorando a tela de **Lembretes**, onde vacin
 #### **Dashboard Administrativo**
 Visão global de produtividade de todos os setores.
 <p align="center">
-<img src="public/assets/screenshots/Dashboard-Admin.png" width="90%" title="Dashboard Admin">
+<img src="public/Assets/screenshots/Dashboard-Admin.png" width="90%" title="Dashboard Admin">
 </p>
 
 #### **Módulo do Atendente**
 Foco em controle de agendamentos com criação e confirmação, bem como controle de vacinações pendentes.
 <p align="center">
-<img src="public/assets/screenshots/Dashboard-Atendente.png" width="45%" title="Dashboard atendente">
-<img src="public/assets/screenshots/Atendente-Agendamentos" width="45%" title="Agendamentos Atendente">
+<img src="public/Assets/screenshots/Dashboard-Atendente.png" width="45%" title="Dashboard atendente">
+<img src="public/Assets/screenshots/Atendente-Agendamentos" width="45%" title="Agendamentos Atendente">
 </p>
 
 #### **Módulo do Veterinário**
 Foco em dados clínicos e histórico de saúde.
 <p align="center">
-<img src="public/assets/screenshots/Dashboard-Veterinario.png" width="45%" title="Dashboard Veterinario">
-<img src="public/assets/screenshots/Veterinario-Diagnostico.png" width="45%" title="Veterinario Diagnostico">
+<img src="public/Assets/screenshots/Dashboard-Veterinario.png" width="45%" title="Dashboard Veterinario">
+<img src="public/Assets/screenshots/Veterinario-Diagnostico.png" width="45%" title="Veterinario Diagnostico">
 </p>
 
 #### **Módulo do Esteticista**
 Interface limpa focada na execução dos serviços de banho e tosa.
 <p align="center">
-<img src="public/assets/screenshots/Dashboard-Esteticista.png" width="45%" title="Dashboard Esteticista">
-<img src="public/assets/screenshots/Visualizar-Historico-Estetico.png" width="45%" title="Visualização de Historico de Atendimento Estetico">
+<img src="public/Assets/screenshots/Dashboard-Esteticista.png" width="45%" title="Dashboard Esteticista">
+<img src="public/Assets/screenshots/Visualizar-Historico-Estetico.png" width="45%" title="Visualização de Historico de Atendimento Estetico">
 </p>
 
 ---
