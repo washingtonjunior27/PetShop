@@ -70,6 +70,7 @@ O ciclo se fecha com o Atendente monitorando a tela de **Lembretes**, onde vacin
 ### 📸 Visualização por Perfil
 
 #### **Dashboard Administrativo**
+<<<<<<< HEAD
 Visão global de produtividade de todos os setores.
 <p align="center">
 <img src="public/assets/screenshots/Admin-Dashboard.png" width="90%" title="Dashboard Admin">
@@ -94,6 +95,32 @@ Foco em dados clínicos e histórico de saúde.
 <p align="center">
 <img src="public/assets/screenshots/Veterinario-Dashboard.png" width="45%" title="Dashboard Veterinario">
 <img src="public/assets/screenshots/Veterinario-Diagnostico.png" width="45%" title="Veterinario Diagnostico">
+=======
+- Visão global de produtividade de todos os setores.
+<p align="center">
+<img src="public/Assets/screenshots/Admin-Dashboard.png" width="90%" title="Dashboard Admin">
+</p>
+
+#### **Módulo do Atendente**
+- Foco em controle de agendamentos com criação e confirmação, bem como controle de vacinações pendentes.
+<p align="center">
+<img src="public/Assets/screenshots/Atendente-Dashboard.png" width="45%" title="Dashboard atendente">
+<img src="public/Assets/screenshots/Atendente-Agendamentos.png" width="45%" title="Agendamentos Atendente">
+</p>
+
+#### **Módulo do Veterinário**
+- Foco em dados clínicos e histórico de saúde.
+<p align="center">
+<img src="public/Assets/screenshots/Veterinario-Dashboard.png" width="45%" title="Dashboard Veterinario">
+<img src="public/Assets/screenshots/Veterinario-Diagnostico.png" width="45%" title="Veterinario Diagnostico">
+</p>
+
+#### **Módulo do Esteticista**
+- Interface limpa focada na execução dos serviços de banho e tosa.
+<p align="center">
+<img src="public/Assets/screenshots/Esteticista-Dashboard.png" width="45%" title="Dashboard Esteticista">
+<img src="public/Assets/screenshots/Historico-de-Servicos-Esteticos.png" width="45%" title="Visualização de Historico de Atendimento Estetico">
+>>>>>>> ccf84b031401521283327d4ad8b30a2e46a01cc4
 </p>
 
 ---
@@ -106,10 +133,15 @@ Foco em dados clínicos e histórico de saúde.
 
 ---
 
+<<<<<<< HEAD
 ### 📷 Anexos
 - Mais imagens podem ser visualizadas em /public/Assets/screenshots.
 
 ---
+=======
+### 📷 Imagens
+- Mais imagens em /public/Assets/screenshots
+>>>>>>> ccf84b031401521283327d4ad8b30a2e46a01cc4
 
 ### 👨‍💻 Desenvolvedor
 <h3 align="left">Washington Júnior</h3>
