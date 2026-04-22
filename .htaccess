@@ -1,0 +1,3 @@
+RewriteEngine On
+# Joga tudo o que chegar para a pasta public
+RewriteRule ^(.*)$ public/$1 [L]

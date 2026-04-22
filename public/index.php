@@ -6,7 +6,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 session_start();
 
-define("BASE_URL", "/Petshop/public");
+define("BASE_URL", "/petshop");
 
 $route = $_GET['route'] ?? "login";
 $parts = explode("/", $route);
